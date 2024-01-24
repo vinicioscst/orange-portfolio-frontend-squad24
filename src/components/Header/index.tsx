@@ -1,4 +1,4 @@
-import { AppBar, Avatar, IconButton, useMediaQuery, useTheme } from "@mui/material";
+import { AppBar, Avatar, IconButton, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { Menu, Notifications } from "@mui/icons-material";
 import Logo from "../../assets/logo.svg"
 
@@ -29,8 +29,8 @@ function Header() {
           draggable={false}
         />
         <div className="sm:flex gap-6 ml-[5.75rem] hidden">
-          <h6>Meus Projetos</h6>
-          <h6>Descobrir</h6>
+          <Typography variant="h6">Meus Projetos</Typography>
+          <Typography variant="h6">Descobrir</Typography>
         </div>
       </div>
       <div className="flex items-center gap-2">
