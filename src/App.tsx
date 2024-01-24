@@ -1,13 +1,16 @@
-import './App.css'
+import { ThemeProvider } from "@mui/material/styles"
+import theme from "./style/globalStyle"
+import { Typography } from "@mui/material"
 
 function App() {
 
   return (
-    <>
-      <h1 className="text-3xl text-blue-500 font-bold underline">
-        Hello world!!
-      </h1>
-    </>
+
+    <ThemeProvider theme={theme}>
+      <Typography variant="h1">
+        Roboto
+      </Typography>
+    </ThemeProvider>
   )
 }
 
