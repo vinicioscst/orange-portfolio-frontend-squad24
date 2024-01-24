@@ -31,7 +31,7 @@ function MobileMenu() {
         aria-expanded={isOpen ? "true" : undefined}
         onClick={handleClick}
       >
-        <MenuIcon />
+        <MenuIcon htmlColor="white" />
       </IconButton>
       <Menu
         id="basic-menu"
@@ -62,7 +62,7 @@ function MobileMenu() {
             gap: "0.75rem",
           }}
         >
-          <Logout />
+          <Logout htmlColor="#707070"/>
           Sair
         </MenuItem>
       </Menu>
