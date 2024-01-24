@@ -10,12 +10,6 @@ function App() {
       <Typography variant="h1">
         Roboto
       </Typography>
-      <Typography variant="h6">
-        Hello world!!
-      </Typography>
-      <Typography variant="h3">
-        Hello world!!
-      </Typography>
     </ThemeProvider>
   )
 }
