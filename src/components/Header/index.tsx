@@ -1,44 +1,86 @@
-import { AppBar, Avatar, IconButton, Typography, useMediaQuery, useTheme } from "@mui/material";
-import { Menu, Notifications } from "@mui/icons-material";
-import Logo from "../../assets/logo.svg"
+import {
+  AppBar,
+  Avatar,
+  Box,
+  CardMedia,
+  IconButton,
+  Link,
+  Toolbar,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import { Notifications } from "@mui/icons-material";
+import MobileMenu from "../MobileMenu";
+import Logo from "../../assets/logo.svg";
 
 function Header() {
   const theme = useTheme();
-  const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <AppBar
       sx={{
-        padding: "0.75rem 1.5rem",
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        borderBottomLeftRadius: "0.25rem",
-        borderBottomRightRadius: "0.25rem"
+        position: "static",
       }}
     >
-      <div className="flex items-center gap-2">
-        <IconButton sx={{display: smallScreen ? "inline-flex" : "none"}}>
-          <Menu />
-        </IconButton>
-        <img
-          src={Logo}
-          alt="Logo da Orange Portfólio. Possui uma figura de uma laranja ilustrada, junto com o nome da aplicação em caixa alta. O 'Orange' está na cor branca e o 'Portfólio' na cor laranja"
-          className="h-8"
-          draggable={false}
-        />
-        <div className="sm:flex gap-6 ml-[5.75rem] hidden">
-          <Typography variant="h6">Meus Projetos</Typography>
-          <Typography variant="h6">Descobrir</Typography>
-        </div>
-      </div>
-      <div className="flex items-center gap-2">
-        <Avatar sx={{ width: 40, height: 40 }} />
-        <IconButton>
-          <Notifications />
-        </IconButton>
-      </div>
+      <Toolbar
+        sx={{
+          padding: "0.75rem 1.5rem",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          borderBottomLeftRadius: "0.25rem",
+          borderBottomRightRadius: "0.25rem",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            justifyItems: "center",
+            alignItems: "center",
+            gap: "0.5rem",
+          }}
+        >
+          <MobileMenu />
+          <CardMedia
+            component="img"
+            image={Logo}
+            alt="Logo da Orange Portfólio. Possui uma figura de uma laranja ilustrada, junto com o nome da aplicação em caixa alta. O 'Orange' está na cor branca e o 'Portfólio' na cor laranja"
+            sx={{ maxHeight: "2rem", width: "auto" }}
+          />
+          <Box
+            sx={{
+              gap: "1.5rem",
+              marginLeft: "5.75rem",
+              display: isMobile ? "none" : "flex",
+            }}
+          >
+            <Link
+              variant="h6"
+              underline="hover"
+              href="#"
+              color={theme.palette.neutral.main}
+            >
+              Meus Projetos
+            </Link>
+            <Link
+              variant="h6"
+              underline="hover"
+              href="#"
+              color={theme.palette.neutral.main}
+            >
+              Descobrir
+            </Link>
+          </Box>
+        </Box>
+        <Box sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <Avatar sx={{ width: 40, height: 40 }} />
+          <IconButton>
+            <Notifications sx={{ color: theme.palette.neutral.main }} />
+          </IconButton>
+        </Box>
+      </Toolbar>
     </AppBar>
   );
 }
