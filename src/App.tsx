@@ -1,17 +1,13 @@
-import { ThemeProvider } from "@mui/material/styles"
-import theme from "./style/globalStyle"
-import { Typography } from "@mui/material"
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "./style/globalStyle";
+import RoutesConfig from "./routes/RoutesConfig";
 
 function App() {
-
   return (
-
     <ThemeProvider theme={theme}>
-      <Typography variant="h1">
-        Roboto
-      </Typography>
+      <RoutesConfig />
     </ThemeProvider>
-  )
+  );
 }
 
-export default App
+export default App;
