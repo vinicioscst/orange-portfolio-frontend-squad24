@@ -3,7 +3,6 @@ import theme from "./style/globalStyle"
 import { Typography } from "@mui/material"
 
 function App() {
-
   return (
 
     <ThemeProvider theme={theme}>
@@ -14,4 +13,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
