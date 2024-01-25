@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Input from "../Input";
+import Button from "../Button";
 
 export default function Register() {
   const registerFormSchema = z
@@ -71,7 +72,7 @@ export default function Register() {
         label={"Confirm Password"}
         type="password"
       />
-      <button type="submit">Cadastrar</button>
+      <Button variant="primaryContained" text="Cadastrar" onClick={() => {}}/> // Função vazia
     </form>
   );
 }
