@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Input from "../Input";
 import Button from "../Button";
+import { Box } from "@mui/material";
 
 export default function RegisterForm() {
   const registerFormSchema = z
@@ -43,22 +44,25 @@ export default function RegisterForm() {
 
   return (
     <form
-      className="flex flex-col gap-2 w-96 p-4"
+      className="flex flex-col gap-2 w-full max-w-[32.3125rem] p-4"
       onSubmit={handleSubmit(onSubmit)}
       noValidate
-    >
+    ><Box sx={{display: "flex", flexWrap: "wrap", gap: "0.5rem"}}>
       <Input
         label={"Nome"}
         type="text"
+        flexBasis="11rem"
         {...register("name")}
         error={errors.name}
       />
       <Input
         label={"Sobrenome"}
         type="text"
+        flexBasis="11rem"
         {...register("surname")}
         error={errors.surname}
       />
+      </Box>
       <Input
         label={"Email"}
         type="email"
