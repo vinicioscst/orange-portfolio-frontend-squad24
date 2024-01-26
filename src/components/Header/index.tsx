@@ -2,6 +2,7 @@ import {
   AppBar,
   Avatar,
   Box,
+  Button,
   CardMedia,
   IconButton,
   Link,
@@ -16,6 +17,7 @@ import Logo from "../../assets/logo.svg";
 function Header() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMediumSize = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
     <AppBar
@@ -52,7 +54,7 @@ function Header() {
           <Box
             sx={{
               gap: "1.5rem",
-              marginLeft: "5.75rem",
+              marginLeft: isMediumSize ? "1.5rem" : "5.75rem",
               display: isMobile ? "none" : "flex",
             }}
           >
@@ -79,6 +81,9 @@ function Header() {
           <IconButton>
             <Notifications sx={{ color: theme.palette.neutral.main }} />
           </IconButton>
+          <Button sx={{ color: theme.palette.neutral.main, display: isMobile ? "none" : "flex" }}>
+            Sair
+          </Button>
         </Box>
       </Toolbar>
     </AppBar>
