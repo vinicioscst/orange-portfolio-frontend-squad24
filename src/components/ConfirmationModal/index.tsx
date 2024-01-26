@@ -7,10 +7,11 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 type ConfirmationModalProps = {
     open: boolean;
     onClose: () => void;
-    onClick: () => {}
+    onDelete: () => {};
+    onCancel: () => {};
 }
 
-function ConfirmationModal({ open, onClose, onClick }: ConfirmationModalProps) {
+function ConfirmationModal({ open, onClose, onDelete, onCancel }: ConfirmationModalProps) {
     const theme = useTheme()
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
@@ -56,13 +57,13 @@ function ConfirmationModal({ open, onClose, onClick }: ConfirmationModalProps) {
                 <Grid container spacing={2}>
                     <Grid>
                         <Button
-                            onClick={onClick}
+                            onClick={onDelete}
                             variant="primaryContained"
                             text="EXCLUIR" />
                     </Grid>
                     <Grid>
                         <Button
-                            onClick={onClick}
+                            onClick={onCancel}
                             variant="secondaryContained"
                             text="CANCELAR" />
                     </Grid>
