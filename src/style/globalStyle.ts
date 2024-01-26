@@ -238,6 +238,7 @@ const theme = createTheme({
         }
       }
     },
+
     MuiMenuItem: {
       styleOverrides: {
         root: {
@@ -246,19 +247,7 @@ const theme = createTheme({
           }
         }
       }
-    },
-    MuiIconButton: {
-      styleOverrides: {
-        root: {
-          backgroundColor: '#FFEE99',
-          color: '#0B0C0D',
-
-          '&:hover': {
-            backgroundColor: '#FFCC00'
-          }
-        }
-      }
-    },
+    }
 
   }
 
