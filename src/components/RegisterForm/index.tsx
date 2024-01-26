@@ -4,7 +4,7 @@ import { z } from "zod";
 import Input from "../Input";
 import Button from "../Button";
 
-export default function Register() {
+export default function RegisterForm() {
   const registerFormSchema = z
     .object({
       email: z
