@@ -18,7 +18,7 @@ export default function LoginForm() {
   const {
     handleSubmit,
     register,
-    formState: { errors },
+    formState: { errors, isValid, isSubmitting },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginFormSchema),
   });
@@ -45,7 +45,7 @@ export default function LoginForm() {
         {...register("password")}
         error={errors.password}
       />
-      <Button variant="primaryContained" text="Entrar" type="submit" />
+      <Button variant="primaryContained" text="Entrar" type="submit" disabled={isSubmitting || !isValid}/>
     </form>
   );
 }

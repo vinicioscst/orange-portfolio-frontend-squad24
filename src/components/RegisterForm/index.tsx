@@ -35,7 +35,7 @@ export default function RegisterForm() {
   const {
     handleSubmit,
     register,
-    formState: { errors },
+    formState: { errors, isValid, isSubmitting },
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerFormSchema),
     mode: "onChange",
@@ -84,7 +84,7 @@ export default function RegisterForm() {
         {...register("confirmPassword")}
         error={errors.confirmPassword}
       />
-      <Button variant="primaryContained" text="Cadastrar" type="submit" />
+      <Button variant="primaryContained" text="Cadastrar" type="submit" disabled={isSubmitting || !isValid}/>
     </form>
   );
 }
