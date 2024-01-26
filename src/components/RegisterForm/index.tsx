@@ -18,8 +18,8 @@ export default function Register() {
         .string({ required_error: "Senha obrigatória" })
         .min(8, "Senha tem que ser maior que 8 dígitos")
         .max(32, "Senha tem que ser menor que 32 dígitos"),
-      name: z.string({ required_error: "Preencha o nome" }),
-      lastName: z.string({ required_error: "Preencha o sobrenome" }),
+      name: z.string().min(1, { message: "Preencha o nome" }),
+      surname: z.string().min(1, { message: "Preencha o sobrenome" }),
     })
     .refine(({ password, confirmPassword }) => password === confirmPassword, {
       message: "As senhas são diferentes",
@@ -28,7 +28,11 @@ export default function Register() {
 
   type LoginFormData = z.infer<typeof registerFormSchema>;
 
-  const { handleSubmit, control } = useForm<LoginFormData>({
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<LoginFormData>({
     resolver: zodResolver(registerFormSchema),
     mode: "onChange",
   });
@@ -41,38 +45,39 @@ export default function Register() {
     <form
       className="flex flex-col gap-2 w-96 p-4"
       onSubmit={handleSubmit(onSubmit)}
+      noValidate
     >
-      <Input<LoginFormData>
-        name={"name"}
-        control={control}
+      <Input
         label={"Nome"}
         type="text"
+        {...register("name")}
+        error={errors.name}
       />
-      <Input<LoginFormData>
-        name={"lastName"}
-        control={control}
+      <Input
         label={"Sobrenome"}
         type="text"
+        {...register("surname")}
+        error={errors.surname}
       />
-      <Input<LoginFormData>
-        name={"email"}
-        control={control}
+      <Input
         label={"Email"}
         type="email"
+        {...register("email")}
+        error={errors.email}
       />
-      <Input<LoginFormData>
-        name={"password"}
-        control={control}
+      <Input
         label={"Password"}
         type="password"
+        {...register("password")}
+        error={errors.password}
       />
-      <Input<LoginFormData>
-        name={"confirmPassword"}
-        control={control}
+      <Input
         label={"Confirm Password"}
         type="password"
+        {...register("confirmPassword")}
+        error={errors.confirmPassword}
       />
-      <Button variant="primaryContained" text="Cadastrar" onClick={() => {}}/> // Função vazia
+      <Button variant="primaryContained" text="Cadastrar" type="submit" />
     </form>
   );
 }
