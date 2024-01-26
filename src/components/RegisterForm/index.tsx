@@ -9,16 +9,19 @@ export default function RegisterForm() {
   const registerFormSchema = z
     .object({
       email: z
-        .string({ required_error: "Preencha o e-mail" })
-        .email("Email inválido"),
+        .string()
+        .min(1, {message: "Preencha o e-mail"})
+        .email({message: "Email inválido"}),
       password: z
-        .string({ required_error: "Senha obrigatória" })
-        .min(8, "Senha tem que ser maior que 8 dígitos")
-        .max(32, "Senha tem que ser menor que 32 dígitos"),
+        .string()
+        .min(1, {message: "Senha obrigatória"})
+        .min(8, {message: "Senha tem que ser maior que 8 dígitos"})
+        .max(32, {message: "Senha tem que ser menor que 32 dígitos"}),
       confirmPassword: z
-        .string({ required_error: "Senha obrigatória" })
-        .min(8, "Senha tem que ser maior que 8 dígitos")
-        .max(32, "Senha tem que ser menor que 32 dígitos"),
+        .string()
+        .min(1, {message: "Senha obrigatória"})
+        .min(8, {message: "Senha tem que ser maior que 8 dígitos"})
+        .max(32, {message: "Senha tem que ser menor que 32 dígitos"}),
       name: z.string().min(1, { message: "Preencha o nome" }),
       surname: z.string().min(1, { message: "Preencha o sobrenome" }),
     })
@@ -27,18 +30,18 @@ export default function RegisterForm() {
       path: ["confirmPassword"],
     });
 
-  type LoginFormData = z.infer<typeof registerFormSchema>;
+  type RegisterFormData = z.infer<typeof registerFormSchema>;
 
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<LoginFormData>({
+  } = useForm<RegisterFormData>({
     resolver: zodResolver(registerFormSchema),
     mode: "onChange",
   });
 
-  function onSubmit(formData: LoginFormData) {
+  function onSubmit(formData: RegisterFormData) {
     console.log(formData);
   }
 
