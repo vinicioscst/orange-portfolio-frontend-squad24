@@ -13,6 +13,7 @@ import {
 import { Notifications } from "@mui/icons-material";
 import MobileMenu from "../MobileMenu";
 import Logo from "../../assets/logo.svg";
+import {Link as Navigation} from "react-router-dom"
 
 function Header() {
   const theme = useTheme();
@@ -58,22 +59,24 @@ function Header() {
               display: isMobile ? "none" : "flex",
             }}
           >
+            <Navigation to={"my-projects"}>
             <Link
               variant="h6"
               underline="hover"
-              href="#"
               color={theme.palette.neutral.main}
             >
               Meus Projetos
             </Link>
+            </Navigation>
+            <Navigation to={"discover"}>
             <Link
               variant="h6"
               underline="hover"
-              href="#"
               color={theme.palette.neutral.main}
             >
               Descobrir
             </Link>
+            </Navigation>
           </Box>
         </Box>
         <Box sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
