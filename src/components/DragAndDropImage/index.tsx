@@ -25,7 +25,7 @@ function DragAndDropImage() {
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
-    accept: { images: ["image/*"] }, // Aceitar apenas arquivos de imagem
+    accept: { images: ["image/*"] },
     multiple: false,
   });
 
