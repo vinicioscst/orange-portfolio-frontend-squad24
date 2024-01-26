@@ -20,8 +20,12 @@ function EditMenu() {
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
                 onClick={handleClick}
+                sx={{
+                    width: '28px',
+                    height: '28px'
+                }}
             >
-                <Edit />
+                <Edit sx={{ fontSize: "18px" }} />
             </IconButton>
             <Menu
                 id="edit-menu"
