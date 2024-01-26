@@ -12,6 +12,16 @@ function EditMenu() {
         setAnchorEl(null);
     };
 
+    const handleEdit = () => {
+        console.log('editar');
+        setAnchorEl(null);
+    }
+
+    const handleDelete = () => {
+        console.log('excluir');
+        setAnchorEl(null);
+    }
+
     return (
         <>
             <IconButton
@@ -36,8 +46,8 @@ function EditMenu() {
                     'aria-labelledby': 'edit-button',
                 }}
             >
-                <MenuItem onClick={handleClose}>Editar</MenuItem>
-                <MenuItem onClick={handleClose}>Excluir</MenuItem>
+                <MenuItem onClick={handleEdit}>Editar</MenuItem>
+                <MenuItem onClick={handleDelete}>Excluir</MenuItem>
             </Menu>
         </>
     )
