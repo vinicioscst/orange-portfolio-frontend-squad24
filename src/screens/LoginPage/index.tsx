@@ -1,5 +1,7 @@
+import EditMenu from "../../components/EditMenu";
+
 function LoginPage() {
-  return <><h1>Login Page</h1></>;
+  return <><EditMenu /></>;
 }
 
 export default LoginPage
