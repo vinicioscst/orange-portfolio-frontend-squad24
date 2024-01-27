@@ -1,5 +1,4 @@
 import { Button as MuiButton } from "@mui/material";
-import React from "react";
 
 type ButtonProps = {
   onClick?: () => void;
@@ -9,7 +8,7 @@ type ButtonProps = {
   variant: "primaryContained" | "secondaryContained";
 };
 
-function Button({ onClick, text, variant, disabled, type }: ButtonProps) {
+function Button({ onClick, text, variant, disabled, type = 'button' }: ButtonProps) {
   return (
     <MuiButton
       variant={variant}
