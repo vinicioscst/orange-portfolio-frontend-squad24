@@ -7,8 +7,8 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 type ConfirmationModalProps = {
     open: boolean;
     onClose: () => void;
-    onDelete: () => {};
-    onCancel: () => {};
+    onDelete: () => void;
+    onCancel: () => void;
 }
 
 function ConfirmationModal({ open, onClose, onDelete, onCancel }: ConfirmationModalProps) {
@@ -31,7 +31,7 @@ function ConfirmationModal({ open, onClose, onDelete, onCancel }: ConfirmationMo
                 flexDirection="column"
                 bgcolor={theme.palette.neutral.main}
                 sx={{
-                    position: 'absolute' as 'absolute',
+                    position: 'absolute',
                     top: '50%',
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
