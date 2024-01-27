@@ -1,23 +1,21 @@
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { TextField, TextFieldVariants } from "@mui/material";
-import { useState } from "react";
-import { Control, Controller } from "react-hook-form";
+import { useState, ForwardedRef, forwardRef } from "react";
+import { FieldError } from "react-hook-form";
+import theme from "../../style/globalStyle";
 
-interface InputProps<T> {
-  name: keyof T;
-  control: unknown;
+interface InputProps {
   label: string;
   variant?: TextFieldVariants;
   type?: React.HTMLInputTypeAttribute;
+  error?: FieldError;
+  flexBasis?: string;
 }
 
-export default function Input<T>({
-  control,
-  label,
-  name,
-  variant = "outlined",
-  type = "text",
-}: InputProps<T>) {
+function Input(
+  { label, variant = "outlined", type = "text", error, flexBasis, ...rest }: InputProps,
+  ref: ForwardedRef<HTMLInputElement>
+) {
   const [showPassword, setShowPassword] = useState(false);
 
   function toggleShowPassword() {
@@ -26,29 +24,33 @@ export default function Input<T>({
 
   return (
     <>
-      <Controller
-        name={name as string}
-        control={control as Control}
-        render={({ field: { onChange, value }, fieldState: { error } }) => (
-          <TextField
-            type={showPassword ? "text" : type}
-            label={label}
-            variant={variant}
-            value={value}
-            onChange={onChange}
-            error={!!error}
-            helperText={error ? error.message : null}
-            InputProps={{
-              endAdornment:
-                type !== "password" ? null : showPassword ? (
-                  <VisibilityOff onClick={toggleShowPassword} className="text-neutral-600"/>
-                ) : (
-                  <Visibility onClick={toggleShowPassword} className="text-neutral-600" />
-                ),
-            }}
-          />
-        )}
+      <TextField
+        type={showPassword ? "text" : type}
+        label={label}
+        variant={variant}
+        error={!!error}
+        helperText={error ? error.message : null}
+        ref={ref}
+        {...rest}
+        sx={{width: "100%", maxWidth: "32rem", flexGrow: "1", flexBasis: flexBasis}}
+        InputProps={{
+          endAdornment:
+            type !== "password" ? null : showPassword ? (
+              <VisibilityOff
+                onClick={toggleShowPassword}
+                sx={{color: theme.palette.action.active}}
+              />
+            ) : (
+              <Visibility
+                onClick={toggleShowPassword}
+                sx={{color: theme.palette.action.active}}
+              />
+            ),
+        }}
       />
     </>
   );
 }
+
+const ForwardedInput = forwardRef(Input);
+export default ForwardedInput;
