@@ -3,8 +3,11 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Input from "../Input";
 import Button from "../Button";
+import { useToast } from "../../context/ToastContext";
 
 export default function Login() {
+  const { displayToast } = useToast();
+
   const loginFormSchema = z.object({
     email: z
       .string({ required_error: "Preencha o e-mail" })
@@ -21,8 +24,18 @@ export default function Login() {
     resolver: zodResolver(loginFormSchema),
   });
 
-  function onSubmit(formData: LoginFormData) {
-    console.log(formData);
+  function delay(ms: number) {
+    return new Promise(resolve => {
+      setTimeout( () => {
+        displayToast({ message: '', severity: "success", title: "Login", variant: "filled" });
+        return resolve
+      }, ms)
+    })
+  }
+
+  async function onSubmit(formData: LoginFormData) {
+    displayToast({ message: '', severity: "info", title: "Carregando", variant: "filled", isLoading: true});
+    await delay(2000)
   }
 
   return (
@@ -42,7 +55,7 @@ export default function Login() {
         label={"Password"}
         type="password"
       />
-      <Button variant="primaryContained" text="Entrar" onClick={() => {}} />
+      <Button variant="primaryContained" text="Entrar" type="submit" />
     </form>
   );
 }
