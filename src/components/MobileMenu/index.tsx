@@ -50,7 +50,7 @@ function MobileMenu() {
           }}
         >
           Nome
-          <Typography variant="body2" color="#00000099">seuemail@mail.com</Typography>
+          <Typography variant="body2" color={theme.palette.common.black} sx={{opacity: "0.6"}}>seuemail@mail.com</Typography>
         </MenuItem>
         <Divider />
         <MenuItem>Meus Projetos</MenuItem>
@@ -62,7 +62,7 @@ function MobileMenu() {
             gap: "0.75rem",
           }}
         >
-          <Logout htmlColor="#0000008e"/>
+          <Logout sx={{opacity: "0.56"}}/>
           Sair
         </MenuItem>
       </Menu>
