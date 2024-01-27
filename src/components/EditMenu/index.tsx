@@ -42,6 +42,15 @@ function EditMenu() {
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
+                elevation={0}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
                 MenuListProps={{
                     'aria-labelledby': 'edit-button',
                 }}
