@@ -5,6 +5,8 @@ import Input from "../Input";
 import Button from "../Button";
 
 export default function LoginForm() {
+  // const { displayToast } = useToast();
+
   const loginFormSchema = z.object({
     email: z
       .string()
@@ -24,6 +26,7 @@ export default function LoginForm() {
   });
 
   function onSubmit(formData: LoginFormData) {
+    // displayToast({ message: '', severity: "info", title: "Carregando", variant: "filled", isLoading: true});
     console.log(formData);
   }
 

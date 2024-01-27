@@ -57,12 +57,14 @@ function ConfirmationModal({ open, onClose, onDelete, onCancel }: ConfirmationMo
                 <Grid container spacing={2}>
                     <Grid>
                         <Button
+                            type="button"
                             onClick={onDelete}
                             variant="primaryContained"
                             text="EXCLUIR" />
                     </Grid>
                     <Grid>
                         <Button
+                            type="button"
                             onClick={onCancel}
                             variant="secondaryContained"
                             text="CANCELAR" />
