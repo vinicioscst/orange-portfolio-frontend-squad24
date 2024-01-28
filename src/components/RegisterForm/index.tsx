@@ -47,10 +47,10 @@ export default function RegisterForm() {
 
   return (
     <form
-      className="flex flex-col gap-2 w-full max-w-[32.3125rem] p-4"
+      className="flex flex-col gap-4 w-full max-w-[32.3125rem] p-4"
       onSubmit={handleSubmit(onSubmit)}
       noValidate
-    ><Box sx={{display: "flex", flexWrap: "wrap", gap: "0.5rem"}}>
+    ><Box sx={{display: "flex", flexWrap: "wrap", gap: "1rem"}}>
       <Input
         label={"Nome"}
         type="text"
