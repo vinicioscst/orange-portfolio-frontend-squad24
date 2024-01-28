@@ -13,7 +13,7 @@ const theme = createTheme({
       letterSpacing: '-0.5px'
     },
     h3: {
-      fontSize: '3 rem',
+      fontSize: '3rem',
       fontWeight: 400
     },
     h4: {
