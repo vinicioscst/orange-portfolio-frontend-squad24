@@ -2,7 +2,11 @@ import { Edit } from "@mui/icons-material"
 import { IconButton, Menu, MenuItem } from "@mui/material"
 import { useState } from "react";
 
-function EditMenu() {
+type MenuProps = {
+    handleEdit: () => void;
+    handleDelete: () => void;
+}
+function EditMenu({ handleEdit, handleDelete }: MenuProps) {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -11,16 +15,6 @@ function EditMenu() {
     const handleClose = () => {
         setAnchorEl(null);
     };
-
-    const handleEdit = () => {
-        console.log('editar');
-        setAnchorEl(null);
-    }
-
-    const handleDelete = () => {
-        console.log('excluir');
-        setAnchorEl(null);
-    }
 
     return (
         <>
