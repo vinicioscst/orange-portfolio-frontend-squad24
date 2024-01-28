@@ -2,7 +2,11 @@ import { Edit } from "@mui/icons-material"
 import { IconButton, Menu, MenuItem } from "@mui/material"
 import { useState } from "react";
 
-function EditMenu() {
+type MenuProps = {
+    handleEdit: () => void;
+    handleDelete: () => void;
+}
+function EditMenu({ handleEdit, handleDelete }: MenuProps) {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -32,12 +36,21 @@ function EditMenu() {
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
+                elevation={0}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
                 MenuListProps={{
                     'aria-labelledby': 'edit-button',
                 }}
             >
-                <MenuItem onClick={handleClose}>Editar</MenuItem>
-                <MenuItem onClick={handleClose}>Excluir</MenuItem>
+                <MenuItem onClick={handleEdit}>Editar</MenuItem>
+                <MenuItem onClick={handleDelete}>Excluir</MenuItem>
             </Menu>
         </>
     )
