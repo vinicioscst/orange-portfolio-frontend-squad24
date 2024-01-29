@@ -1,21 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import Input from "../Input";
 import Button from "../Button";
+import { LoginFormData, loginFormSchema } from "../../schemas/userSchemas";
 
 export default function LoginForm() {
   // const { displayToast } = useToast();
-
-  const loginFormSchema = z.object({
-    email: z
-      .string()
-      .min(1, { message: "Preencha o e-mail" })
-      .email({ message: "Email inválido" }),
-    password: z.string().min(1, { message: "Senha obrigatória" }),
-  });
-
-  type LoginFormData = z.infer<typeof loginFormSchema>;
 
   const {
     handleSubmit,
