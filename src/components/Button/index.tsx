@@ -6,9 +6,10 @@ type ButtonProps = {
   text: React.ReactNode;
   disabled?: boolean;
   variant: "primaryContained" | "secondaryContained";
+  form?: string;
 };
 
-function Button({ onClick, text, variant, disabled, type = 'button' }: ButtonProps) {
+function Button({ onClick, text, variant, disabled, type = 'button', form }: ButtonProps) {
   return (
     <MuiButton
       variant={variant}
@@ -16,8 +17,9 @@ function Button({ onClick, text, variant, disabled, type = 'button' }: ButtonPro
       onClick={onClick}
       type={type}
       sx={{
-        width: "100%",
+        margin: '0'
       }}
+      form={form}
     >
       {text}
     </MuiButton>
