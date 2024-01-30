@@ -3,15 +3,17 @@ import theme from "./style/globalStyle";
 import RoutesConfig from "./routes/RoutesConfig";
 import { ToastProvider } from "./context/ToastContext";
 import UserProvider from "./context/UserContext/UserContext";
+import Alert from "./components/Alert";
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <UserProvider>
-        <ToastProvider>
+      <ToastProvider>
+        <UserProvider>
           <RoutesConfig />
-        </ToastProvider>
-      </UserProvider>
+          <Alert />
+        </UserProvider>
+      </ToastProvider>
     </ThemeProvider>
   );
 }
