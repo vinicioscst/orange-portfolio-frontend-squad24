@@ -17,6 +17,7 @@
     "@mui/material": "^5.15.6",
     "@types/react-dropzone": "^5.1.0",
     "axios": "^1.6.7",
+    "js-cookie": "^3.0.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
@@ -26,6 +27,7 @@
     "zustand": "^4.5.0"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@typescript-eslint/eslint-plugin": "^6.14.0",
