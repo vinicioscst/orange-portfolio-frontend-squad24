@@ -5,17 +5,17 @@ import EditMenu from '../EditMenu';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 type CardProps = {
-    image: string;
+    image: string | undefined;
     title: React.ReactNode;
     date: React.ReactNode;
     alt: string;
     avatar: string;
     tags: string[];
-    handleEdit: () => void;
-    handleDelete: () => void;
+    handleEdit?: () => void;
+    handleDelete?: () => void;
 }
 
-function Card({ image, title, date, alt, avatar, tags, handleDelete, handleEdit }: CardProps) {
+function Card({ image, title, date, alt, avatar, tags, handleDelete = () => {}, handleEdit = () => {} }: CardProps) {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
     return (
@@ -48,7 +48,7 @@ function Card({ image, title, date, alt, avatar, tags, handleDelete, handleEdit 
                 image={image}
             />
 
-            <CardContent>
+            <CardContent sx={{padding: '0', paddingTop: '8px'}}>
                 <Grid
                     container
                     alignItems="center"

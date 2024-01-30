@@ -31,7 +31,7 @@ function Input(
             helperText={error ? error.message : null}
             ref={ref}
             {...rest}
-            sx={{width: "100%", maxWidth: "32rem", flexGrow: "1", flexBasis: flexBasis}}
+            sx={{width: "100%", maxWidth: "45.1875rem", flexGrow: "1", flexBasis: flexBasis}}
             InputProps={{
               endAdornment: (
                 <>
