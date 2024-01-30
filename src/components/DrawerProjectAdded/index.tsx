@@ -1,6 +1,4 @@
 import { Avatar, Box, Chip, Grid, IconButton, Link, SwipeableDrawer, Typography, useTheme } from "@mui/material";
-import React from "react";
-import { useState } from "react";
 import CloseIcon from '@mui/icons-material/Close';
 
 type DrawerProps = {
