@@ -24,13 +24,24 @@ function RegisterPage() {
           width: "42.8vw",
           objectFit: "cover",
           display: isMediumSize ? "none" : "block",
-          objectPosition: "left"
+          objectPosition: "left",
         }}
       />
       <Box
-        sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "1rem", width: isMediumSize ? "100vw" : "57.2vw", minHeight: "100dvh" }}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "1rem",
+          width: isMediumSize ? "100vw" : "57.2vw",
+          minHeight: "100dvh",
+        }}
       >
-        <Typography variant={isMobile ? "h5" : "h3"} color={theme.palette.primary[90]}>
+        <Typography
+          variant={isMobile ? "h5" : "h3"}
+          color={theme.palette.primary[90]}
+        >
           Cadastre-se
         </Typography>
         <FormRegister />

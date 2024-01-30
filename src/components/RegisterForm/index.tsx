@@ -3,7 +3,12 @@ import { useForm } from "react-hook-form";
 import Input from "../Input";
 import Button from "../Button";
 import { Box } from "@mui/material";
-import { RegisterFormData, registerFormSchema } from "../../schemas/userSchemas";
+import {
+  RegisterFormData,
+  registerFormSchema,
+} from "../../schemas/userSchemas";
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext/UserContext";
 
 export default function RegisterForm() {
   const {
@@ -15,8 +20,10 @@ export default function RegisterForm() {
     mode: "onChange",
   });
 
+  const { createUser } = useContext(UserContext);
+
   function onSubmit(formData: RegisterFormData) {
-    console.log(formData);
+    createUser(formData);
   }
 
   return (
@@ -25,7 +32,7 @@ export default function RegisterForm() {
       onSubmit={handleSubmit(onSubmit)}
       noValidate
     >
-      <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+      <Box sx={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
         <Input
           label={"Nome"}
           type="text"
