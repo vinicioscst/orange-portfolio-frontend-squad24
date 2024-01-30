@@ -1,37 +1,16 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import Input from "../Input";
 import Button from "../Button";
 import { Box } from "@mui/material";
+import {
+  RegisterFormData,
+  registerFormSchema,
+} from "../../schemas/userSchemas";
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext/UserContext";
 
 export default function RegisterForm() {
-  const registerFormSchema = z
-    .object({
-      email: z
-        .string()
-        .min(1, {message: "Preencha o e-mail"})
-        .email({message: "Email inválido"}),
-      password: z
-        .string()
-        .min(1, {message: "Senha obrigatória"})
-        .min(8, {message: "Senha tem que ser maior que 8 dígitos"})
-        .max(32, {message: "Senha tem que ser menor que 32 dígitos"}),
-      confirmPassword: z
-        .string()
-        .min(1, {message: "Senha obrigatória"})
-        .min(8, {message: "Senha tem que ser maior que 8 dígitos"})
-        .max(32, {message: "Senha tem que ser menor que 32 dígitos"}),
-      name: z.string().min(1, { message: "Preencha o nome" }),
-      surname: z.string().min(1, { message: "Preencha o sobrenome" }),
-    })
-    .refine(({ password, confirmPassword }) => password === confirmPassword, {
-      message: "As senhas são diferentes",
-      path: ["confirmPassword"],
-    });
-
-  type RegisterFormData = z.infer<typeof registerFormSchema>;
-
   const {
     handleSubmit,
     register,
@@ -41,30 +20,33 @@ export default function RegisterForm() {
     mode: "onChange",
   });
 
+  const { createUser } = useContext(UserContext);
+
   function onSubmit(formData: RegisterFormData) {
-    console.log(formData);
+    createUser(formData);
   }
 
   return (
     <form
-      className="flex flex-col gap-2 w-full max-w-[32.3125rem] p-4"
+      className="flex flex-col gap-4 w-full max-w-[32.3125rem] p-4"
       onSubmit={handleSubmit(onSubmit)}
       noValidate
-    ><Box sx={{display: "flex", flexWrap: "wrap", gap: "0.5rem"}}>
-      <Input
-        label={"Nome"}
-        type="text"
-        flexBasis="11rem"
-        {...register("name")}
-        error={errors.name}
-      />
-      <Input
-        label={"Sobrenome"}
-        type="text"
-        flexBasis="11rem"
-        {...register("surname")}
-        error={errors.surname}
-      />
+    >
+      <Box sx={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+        <Input
+          label={"Nome"}
+          type="text"
+          flexBasis="11rem"
+          {...register("name")}
+          error={errors.name}
+        />
+        <Input
+          label={"Sobrenome"}
+          type="text"
+          flexBasis="11rem"
+          {...register("surname")}
+          error={errors.surname}
+        />
       </Box>
       <Input
         label={"Email"}
@@ -84,7 +66,12 @@ export default function RegisterForm() {
         {...register("confirmPassword")}
         error={errors.confirmPassword}
       />
-      <Button variant="primaryContained" text="Cadastrar" type="submit" disabled={isSubmitting || !isValid}/>
+      <Button
+        variant="primaryContained"
+        text="Cadastrar"
+        type="submit"
+        disabled={isSubmitting || !isValid}
+      />
     </form>
   );
 }
