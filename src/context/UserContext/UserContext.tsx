@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { IUser, IUserContext, IUserProvider } from "./types";
+import { IGoogleLoginData, IUser, IUserContext, IUserProvider } from "./types";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useToast } from "../ToastContext";
@@ -100,8 +100,49 @@ function UserProvider({ children }: IUserProvider) {
     }
   }
 
+  async function googleLogin(formData: IGoogleLoginData) {
+    displayToast({
+      message: "",
+      severity: "info",
+      title: "Carregando",
+      variant: "filled",
+      isLoading: true,
+    });
+    
+    try {
+      const { data } = await api.post<IUser>("/session/google", formData);
+      setUser(data)
+      
+      Cookies.set('auth_token', data.token, { expires: 7 })
+
+      displayToast({
+        message: "",
+        severity: "success",
+        title: "Login realizado com sucesso",
+        variant: "filled",
+        isLoading: false,
+      });
+      
+      reset();
+      setTimeout(() => {
+        navigate("/my-projects");
+      }, 2000);
+
+    } catch (error: any) {
+      const err = error.response.data.mensagem;
+
+      displayToast({
+        message: "",
+        severity: "error",
+        title: `${err}`,
+        variant: "filled",
+        isLoading: false,
+      });
+    }
+  }
+
   return (
-    <UserContext.Provider value={{ createUser, loginUser, user }}>
+    <UserContext.Provider value={{ createUser, loginUser, googleLogin, user }}>
       {children}
     </UserContext.Provider>
   );

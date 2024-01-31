@@ -12,9 +12,17 @@ export interface IUser {
   };
   token: string;
 }
+export interface IGoogleLoginData {
+  fullName: string;
+  email: string;
+  password: string;
+  image?: string | undefined;
+  isGoogleAccount?: boolean | undefined;
+}
 
 export interface IUserContext {
   createUser: (formData: RegisterFormData) => Promise<void>;
   loginUser: (formData: LoginFormData) => Promise<void>;
+  googleLogin: (formData: IGoogleLoginData) => Promise<void>;
   user: IUser | null | undefined;
 }
