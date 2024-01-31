@@ -53,6 +53,7 @@ function Card({ image, title, date, alt, avatar, tags, handleDelete = () => {}, 
                     container
                     alignItems="center"
                     justifyContent="space-between"
+                    gap={1}
                 >
                     <Grid
                         display="flex"
@@ -95,7 +96,7 @@ function Card({ image, title, date, alt, avatar, tags, handleDelete = () => {}, 
                     </Grid>
                     <Grid>
                         {tags.map((item) => (
-                            <Chip label={item} sx={{ marginLeft: '12px' }} />
+                            <Chip label={item} sx={{ marginRight: '12px' }} />
                         )).slice(0, 2)}
                     </Grid>
                 </Grid>
