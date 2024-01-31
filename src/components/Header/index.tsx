@@ -25,6 +25,7 @@ function Header() {
     <AppBar
       sx={{
         position: "static",
+        width: "100%"
       }}
     >
       <Container>
