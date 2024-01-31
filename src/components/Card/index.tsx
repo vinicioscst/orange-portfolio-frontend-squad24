@@ -22,7 +22,7 @@ function Card({ image, title, date, alt, avatar, tags, handleDelete = () => {}, 
         <MuiCard
             elevation={0}
             sx={{
-                width: isMobile ? 312 : 389,
+                width: '100%',
                 position: "relative",
             }}
         >
@@ -42,7 +42,7 @@ function Card({ image, title, date, alt, avatar, tags, handleDelete = () => {}, 
             <CardMedia
                 sx={{
                     height: 258,
-                    width: isMobile ? 312 : 389,
+                    width: '100%',
                     borderRadius: "4px"
                 }}
                 image={image}
@@ -53,6 +53,7 @@ function Card({ image, title, date, alt, avatar, tags, handleDelete = () => {}, 
                     container
                     alignItems="center"
                     justifyContent="space-between"
+                    gap={1}
                 >
                     <Grid
                         display="flex"
@@ -93,9 +94,9 @@ function Card({ image, title, date, alt, avatar, tags, handleDelete = () => {}, 
                             </Typography>
                         </Grid>
                     </Grid>
-                    <Grid>
+                    <Grid sx={{display: 'flex', gap: '0.5rem'}}>
                         {tags.map((item) => (
-                            <Chip label={item} sx={{ marginLeft: '12px' }} />
+                            <Chip label={item} />
                         )).slice(0, 2)}
                     </Grid>
                 </Grid>
