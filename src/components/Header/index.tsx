@@ -83,7 +83,15 @@ function Header() {
           </Box>
           <Box sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
             <Avatar sx={{ width: 40, height: 40 }} />
-            <IconButton>
+            <IconButton
+              sx={{
+                backgroundColor: theme.palette.primary.main,
+                color: theme.palette.neutral.main,
+                "&:hover": {
+                  backgroundColor: theme.palette.primary[80],
+                },
+              }}
+            >
               <Notifications sx={{ color: theme.palette.neutral.main }} />
             </IconButton>
             <Button
