@@ -94,9 +94,9 @@ function Card({ image, title, date, alt, avatar, tags, handleDelete = () => {}, 
                             </Typography>
                         </Grid>
                     </Grid>
-                    <Grid>
+                    <Grid sx={{display: 'flex', gap: '0.5rem'}}>
                         {tags.map((item) => (
-                            <Chip label={item} sx={{ marginRight: '12px' }} />
+                            <Chip label={item} />
                         )).slice(0, 2)}
                     </Grid>
                 </Grid>
