@@ -8,6 +8,7 @@ import {
 import Illustration from "../../assets/loginpage-illustration.svg";
 import LoginForm from "../../components/LoginForm";
 import { Link } from "react-router-dom";
+import GoogleLoginButton from "../../components/GoogleLoginButton";
 
 function LoginPage() {
   const theme = useTheme();
@@ -47,7 +48,19 @@ function LoginPage() {
         >
           Entre no Orange Portfólio
         </Typography>
-        <Box sx={{display:"flex", flexDirection: "column", gap: "1rem", width: "100%", maxWidth: "32.3125rem", paddingY: "1rem"}}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "1rem",
+            width: "100%",
+            maxWidth: "32.3125rem",
+            paddingY: "1rem",
+          }}
+        >
+          <Box sx={{alignSelf: "center", paddingBottom: "1rem"}}>
+            <GoogleLoginButton />
+          </Box>
           <LoginForm />
           <Link to={"/register"}>
             <Typography variant="subtitle1" color={theme.palette.neutral[100]}>
