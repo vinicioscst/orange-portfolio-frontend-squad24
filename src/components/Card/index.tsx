@@ -22,7 +22,7 @@ function Card({ image, title, date, alt, avatar, tags, handleDelete = () => {}, 
         <MuiCard
             elevation={0}
             sx={{
-                width: isMobile ? 312 : 389,
+                width: '100%',
                 position: "relative",
             }}
         >
@@ -42,7 +42,7 @@ function Card({ image, title, date, alt, avatar, tags, handleDelete = () => {}, 
             <CardMedia
                 sx={{
                     height: 258,
-                    width: isMobile ? 312 : 389,
+                    width: '100%',
                     borderRadius: "4px"
                 }}
                 image={image}
