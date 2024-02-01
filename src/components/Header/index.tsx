@@ -66,7 +66,7 @@ function Header() {
                 display: isMobile ? "none" : "flex",
               }}
             >
-              <Navigation to={"my-projects"}>
+              <Navigation to={"/my-projects"}>
                 <Link
                   variant="h6"
                   underline="hover"
@@ -75,7 +75,7 @@ function Header() {
                   Meus Projetos
                 </Link>
               </Navigation>
-              <Navigation to={"discover"}>
+              <Navigation to={"/discover"}>
                 <Link
                   variant="h6"
                   underline="hover"
@@ -87,7 +87,7 @@ function Header() {
             </Box>
           </Box>
           <Box sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <Avatar sx={{ width: 40, height: 40 }} />
+            <Avatar sx={{ width: 40, height: 40 }} src={user?.image} alt={user?.fullname}/>
             <IconButton
               sx={{
                 backgroundColor: theme.palette.primary.main,
