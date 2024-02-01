@@ -15,11 +15,15 @@ import MobileMenu from "../MobileMenu";
 import Logo from "../../assets/logo.svg";
 import { Link as Navigation } from "react-router-dom";
 import { Container } from "../Container";
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext/UserContext";
 
 function Header() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isMediumSize = useMediaQuery(theme.breakpoints.down("md"));
+
+  const {user, userLogout} = useContext(UserContext)
 
   return (
     <AppBar
@@ -100,6 +104,7 @@ function Header() {
                 color: theme.palette.neutral.main,
                 display: isMobile ? "none" : "flex",
               }}
+              onClick={() => userLogout()}
             >
               Sair
             </Button>
