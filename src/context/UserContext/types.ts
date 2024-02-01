@@ -35,5 +35,7 @@ export interface IUserContext {
   createUser: (formData: RegisterFormData) => Promise<void>;
   loginUser: (formData: LoginFormData) => Promise<void>;
   googleLogin: (formData: IGoogleLoginData) => Promise<void>;
+  userLogout(): void;
   user: IUser | null | undefined;
+  loading: boolean;
 }

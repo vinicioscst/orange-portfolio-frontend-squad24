@@ -23,7 +23,7 @@ function Header() {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isMediumSize = useMediaQuery(theme.breakpoints.down("md"));
 
-  const {user} = useContext(UserContext)
+  const {user, userLogout} = useContext(UserContext)
 
   return (
     <AppBar
@@ -104,6 +104,7 @@ function Header() {
                 color: theme.palette.neutral.main,
                 display: isMobile ? "none" : "flex",
               }}
+              onClick={() => userLogout()}
             >
               Sair
             </Button>
