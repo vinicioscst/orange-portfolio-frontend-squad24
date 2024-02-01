@@ -6,14 +6,17 @@ import { Container } from "../../components/Container";
 import Button from "../../components/Button";
 import dados from "../DiscoverPage/dados.ts";
 import Card from "../../components/Card";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import AddProjectModal from "../../components/AddProjectModal/index.tsx";
+import { UserContext } from "../../context/UserContext/UserContext.tsx";
 
 function MyProjectsPage() {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.down("lg"));
 
   const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const {user} = useContext(UserContext)
 
   function handleAddProject() {
     setIsModalOpen(true)
@@ -40,10 +43,10 @@ function MyProjectsPage() {
               gap: '2.625rem'
             }}
           >
-            <Avatar src="/path/to/avatar.jpg" sx={{ width: 122, height: 122}}/>
+            <Avatar src={user?.image} sx={{ width: 122, height: 122}}/>
           <Box>
             <Typography variant="h6" component="div" gutterBottom>
-              Camila Soares
+              {user?.fullname}
             </Typography>
             <Typography variant="subtitle1" component="div" gutterBottom>
               Brasil
