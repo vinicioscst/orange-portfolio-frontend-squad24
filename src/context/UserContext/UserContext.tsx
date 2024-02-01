@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { IGoogleLoginData, IUser, IUserContext, IUserProvider } from "./types";
+import { IGoogleLoginData, IUser, IUserContext, IUserProvider, UserResponse } from "./types";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useToast } from "../ToastContext";
@@ -69,8 +69,8 @@ function UserProvider({ children }: IUserProvider) {
     });
 
     try {
-      const { data } = await api.post<IUser>("/session", formData);
-      setUser(data)
+      const { data } = await api.post<UserResponse>("/session", formData);
+      setUser(data.usuario)
       
       Cookies.set('auth_token', data.token, { expires: 7 })
 
@@ -110,8 +110,8 @@ function UserProvider({ children }: IUserProvider) {
     });
     
     try {
-      const { data } = await api.post<IUser>("/session/google", formData);
-      setUser(data)
+      const { data } = await api.post<UserResponse>("/session/google", formData);
+      setUser(data.usuario)
       
       Cookies.set('auth_token', data.token, { expires: 7 })
 
