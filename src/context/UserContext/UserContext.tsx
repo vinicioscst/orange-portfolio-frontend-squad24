@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { IGoogleLoginData, IUser, IUserContext, IUserProvider } from "./types";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -14,6 +14,35 @@ function UserProvider({ children }: IUserProvider) {
   const navigate = useNavigate();
   const { displayToast } = useToast();
   const [user, setUser] = useState<IUser | null>();
+  const [loading, setLoading] = useState(false);
+
+  const currentPath = window.location.pathname;
+
+  useEffect(() => {
+    const token = Cookies.get("auth_token")
+
+    const loadUser = async () => {
+      console.log(loading)
+      try {
+        setLoading(true);
+        const { data } = await api.get("/user/profile", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setUser(data);
+        navigate(currentPath);
+      } catch (error: any) {
+        console.log(error)
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (token) {
+      loadUser();
+    }
+  }, []);
 
   async function createUser(formData: RegisterFormData) {
     const { name, surname, email, password } = formData;
@@ -141,8 +170,25 @@ function UserProvider({ children }: IUserProvider) {
     }
   }
 
+  function userLogout() {
+    setTimeout(() => {
+    displayToast({
+      message: "",
+      severity: "success",
+      title: "Logout realizado com sucesso",
+      variant: "filled",
+      isLoading: false,
+    });
+
+    Cookies.remove("auth_token")
+    setUser(null);
+    
+      navigate("/");
+    }, 1000);
+  };
+
   return (
-    <UserContext.Provider value={{ createUser, loginUser, googleLogin, user }}>
+    <UserContext.Provider value={{ createUser, loginUser, googleLogin, userLogout, user, loading }}>
       {children}
     </UserContext.Provider>
   );
