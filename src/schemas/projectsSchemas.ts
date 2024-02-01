@@ -13,8 +13,8 @@ export const projectFormSchema = z.object({
       .string(),
     description: z
       .string(),
-    // images: z
-    //   .string()   Descomentar quando lógica da imagem convertida para link estiver pronta
+    images: z
+      .string()
   });
 
 export type projectFormData = z.infer<typeof projectFormSchema>;
