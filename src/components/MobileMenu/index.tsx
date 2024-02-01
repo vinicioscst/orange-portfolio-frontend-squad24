@@ -8,13 +8,18 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { UserContext } from "../../context/UserContext/UserContext";
+import { Link } from "react-router-dom";
 
 function MobileMenu() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const isOpen = Boolean(anchorEl);
+
+  const { user } = useContext(UserContext);
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -25,7 +30,14 @@ function MobileMenu() {
   return (
     <>
       <IconButton
-        sx={{ display: smallScreen ? "inline-flex" : "none" }}
+        sx={{
+          display: smallScreen ? "inline-flex" : "none",
+          backgroundColor: theme.palette.primary.main,
+          color: theme.palette.neutral.main,
+          "&:hover": {
+            backgroundColor: theme.palette.primary[80],
+          },
+        }}
         aria-controls={isOpen ? "basic-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={isOpen ? "true" : undefined}
@@ -49,20 +61,30 @@ function MobileMenu() {
             alignItems: "flex-start",
           }}
         >
-          Nome
-          <Typography variant="body2" color={theme.palette.common.black} sx={{opacity: "0.6"}}>seuemail@mail.com</Typography>
+          {user?.fullname}
+          <Typography
+            variant="body2"
+            color={theme.palette.common.black}
+            sx={{ opacity: "0.6" }}
+          >
+            {user?.email}
+          </Typography>
         </MenuItem>
         <Divider />
-        <MenuItem>Meus Projetos</MenuItem>
-        <MenuItem>Descobrir</MenuItem>
-        <Divider />
+        <Link to={"/my-projects"}>
+          <MenuItem>Meus Projetos</MenuItem>
+        </Link>
+        <Link to={"/discover"}>
+          <MenuItem>Descobrir</MenuItem>
+        </Link>
+        <Divider sx={{ marginY: "0.5rem" }} />
         <MenuItem
           sx={{
             display: "flex",
             gap: "0.75rem",
           }}
         >
-          <Logout sx={{opacity: "0.56"}}/>
+          <Logout sx={{ opacity: "0.56" }} />
           Sair
         </MenuItem>
       </Menu>
