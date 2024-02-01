@@ -22,7 +22,8 @@ export default function AddProjectModal({ isOpen, onClose}: AddProjectModalProps
     }, [isOpen])
 
     const theme = useTheme();
-    const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const smallScreen = useMediaQuery(theme.breakpoints.down('md'));
+
     const { handleSubmit, register, formState: { errors } } = useForm<projectFormData>({
         resolver: zodResolver(projectFormSchema)
     }) 
@@ -39,9 +40,9 @@ export default function AddProjectModal({ isOpen, onClose}: AddProjectModalProps
     }
 
     return (
-        <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth sx={{maxWidth: '890'}} fullScreen={fullScreen}>
+        <Dialog open={open} onClose={handleClose} maxWidth={smallScreen ? 'sm' : 'md'} fullWidth sx={{maxWidth: smallScreen ? '100%' : '890'}}>
             <DialogTitle sx={{padding: "1.5rem 2rem"}}>Adicionar Projeto</DialogTitle>
-            <form className="flex gap-8 px-8 pb-8" noValidate id="form-modal" onSubmit={handleSubmit(submitData)}>
+            <form className={smallScreen ? "flex flex-col-reverse gap-8 px-8 pb-8" : "flex gap-8 px-8 pb-8"} noValidate id="form-modal" onSubmit={handleSubmit(submitData)}>
                 <div className="w-full">
                 <DragAndDropImage/> 
                 </div>

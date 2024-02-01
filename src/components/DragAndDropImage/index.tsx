@@ -43,7 +43,6 @@ function DragAndDropImage() {
         justifyItems: "center",
         alignItems: "center",
         width: "100%",
-        maxWidth: "24.375rem",
         height: "19rem",
         backgroundColor: theme.palette.neutral[70],
         borderRadius: "0.25rem",
