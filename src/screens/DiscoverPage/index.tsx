@@ -48,7 +48,6 @@ function DiscoverPage() {
                 .getFullYear()
                 .toString()
                 .slice(-2)}`;
-              // Criar responsividade para o grid / Simulação de dados de uma API
               return (
                 <Grid item xs={12} sm={6} md={4} key={dado.id}>
                   <Card

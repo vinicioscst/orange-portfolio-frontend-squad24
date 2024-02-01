@@ -1,16 +1,25 @@
 import { Box, Dialog, DialogActions, DialogTitle, TextField, useMediaQuery, useTheme } from "@mui/material";
-// import DragAndDropImage from "../DragAndDropImage";
+import DragAndDropImage from "../DragAndDropImage";
 import Input from "../Input"
 import Button from "../Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ChipInput from "../ChipInput";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { projectFormData, projectFormSchema } from "../../schemas/projectsSchemas";
 
-export default function AddProjectModal() {
+interface AddProjectModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+}
 
-    const [open, setOpen] = useState(true);
+export default function AddProjectModal({ isOpen, onClose}: AddProjectModalProps) {
+
+    const [open, setOpen] = useState(isOpen);
+
+    useEffect( () => {
+        setOpen(isOpen);
+    }, [isOpen])
 
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -20,6 +29,9 @@ export default function AddProjectModal() {
 
     function handleClose() {
         setOpen(false);
+        if (onClose) {
+            onClose();
+        }
     }
 
     function submitData(data: projectFormData) {
@@ -31,8 +43,7 @@ export default function AddProjectModal() {
             <DialogTitle sx={{padding: "1.5rem 2rem"}}>Adicionar Projeto</DialogTitle>
             <form className="flex gap-8 px-8 pb-8" noValidate id="form-modal" onSubmit={handleSubmit(submitData)}>
                 <div className="w-full">
-                {/*Descomentar drag and drop quando converter para link, o mesmo no project Schema */}
-                {/* <DragAndDropImage/>  */}
+                <DragAndDropImage/> 
                 </div>
                 <Box sx={{display: "flex", flexDirection: "column", gap:"1rem", justifyContent: "stretch", width: '100%',  }}>
                     <Input label="Título" type="text" {...register("title")} error={errors.title}/>
