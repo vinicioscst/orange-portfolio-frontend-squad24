@@ -18,7 +18,7 @@ function MobileMenu() {
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const isOpen = Boolean(anchorEl);
 
-  const { user } = useContext(UserContext);
+  const { user, userLogout } = useContext(UserContext);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -83,6 +83,7 @@ function MobileMenu() {
             display: "flex",
             gap: "0.75rem",
           }}
+          onClick={() => userLogout()}
         >
           <Logout sx={{ opacity: "0.56" }} />
           Sair
