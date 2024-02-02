@@ -11,8 +11,8 @@ type CardProps = {
     alt: string;
     avatar: string;
     tags: string[];
-    handleEdit: () => void;
-    handleDelete: () => void;
+    handleEdit?: () => void;
+    handleDelete?: () => void;
 }
 
 function Card({ image, title, date, alt, avatar, tags, handleDelete, handleEdit }: CardProps) {
@@ -26,19 +26,20 @@ function Card({ image, title, date, alt, avatar, tags, handleDelete, handleEdit 
                 position: "relative",
             }}
         >
-            <CardActions
-                sx={{
-                    position: "absolute",
-                    top: 0,
-                    right: 0,
-
-                }}
-            >
-                <EditMenu
-                    handleDelete={handleDelete}
-                    handleEdit={handleEdit}
-                />
-            </CardActions>
+            {handleEdit && handleDelete ? (
+                <CardActions
+                    sx={{
+                        position: "absolute",
+                        top: 0,
+                        right: 0,
+                    }}
+                >
+                    <EditMenu
+                        handleDelete={handleDelete}
+                        handleEdit={handleEdit}
+                    />
+                </CardActions>
+            ) : null}
             <CardMedia
                 sx={{
                     height: 258,
