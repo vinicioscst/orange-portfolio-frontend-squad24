@@ -17,4 +17,4 @@ export const projectFormSchema = z.object({
       .string()
   });
 
-export type projectFormData = z.infer<typeof projectFormSchema>;
+export type ProjectFormData = z.infer<typeof projectFormSchema>;
