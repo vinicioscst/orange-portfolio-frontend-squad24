@@ -15,7 +15,7 @@ type CardProps = {
     handleDelete?: () => void;
 }
 
-function Card({ image, title, date, alt, avatar, tags, handleDelete = () => {}, handleEdit = () => {} }: CardProps) {
+function Card({ image, title, date, alt, avatar, tags, handleDelete, handleEdit }: CardProps) {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
     return (
@@ -26,19 +26,20 @@ function Card({ image, title, date, alt, avatar, tags, handleDelete = () => {}, 
                 position: "relative",
             }}
         >
-            <CardActions
-                sx={{
-                    position: "absolute",
-                    top: 0,
-                    right: 0,
-
-                }}
-            >
-                <EditMenu
-                    handleDelete={handleDelete}
-                    handleEdit={handleEdit}
-                />
-            </CardActions>
+            {handleEdit && handleDelete ? (
+                <CardActions
+                    sx={{
+                        position: "absolute",
+                        top: 0,
+                        right: 0,
+                    }}
+                >
+                    <EditMenu
+                        handleDelete={handleDelete}
+                        handleEdit={handleEdit}
+                    />
+                </CardActions>
+            ) : null}
             <CardMedia
                 sx={{
                     height: 258,

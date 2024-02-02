@@ -23,6 +23,14 @@ function MyProjectsPage() {
     console.log('projeto adicionado')
   }
 
+  function handleEdit() {
+    console.log('edit')
+  }
+
+  function handleDelete() {
+    console.log('delete')
+  }
+
   return (
     <>
       <Header />
@@ -74,6 +82,8 @@ function MyProjectsPage() {
                     date={formattedDate}
                     avatar={dado.userid.toString()}
                     alt={dado.title}
+                    handleDelete={handleDelete}
+                    handleEdit={handleEdit}
                   />
                 </Grid>
               );
