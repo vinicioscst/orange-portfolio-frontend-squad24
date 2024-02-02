@@ -2,9 +2,9 @@ import {
   ICreateUserBody,
   IGoogleLoginData,
   IImageUploadResponse,
-  IUser,
   IUserContext,
   IUserProvider,
+  LoadUserResponse,
   UserResponse,
 } from "./types";
 import { createContext, useEffect, useState } from "react";
@@ -21,35 +21,38 @@ function UserProvider({ children }: IUserProvider) {
   const { reset } = useForm();
   const navigate = useNavigate();
   const { displayToast } = useToast();
-  const [user, setUser] = useState<IUser | null>();
+  const [user, setUser] = useState<LoadUserResponse | null>();
   const [loading, setLoading] = useState(false);
 
   const currentPath = window.location.pathname;
 
   useEffect(() => {
     const token = Cookies.get("auth_token");
-
-    const loadUser = async () => {
-      try {
-        setLoading(true);
-        const { data } = await api.get("/user/profile", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setUser(data[0]);
-        navigate(currentPath);
-      } catch (error: any) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
+    
     if (token) {
-      loadUser();
+      loadUser(token);
     }
   }, []);
+
+  async function loadUser(token: string) {
+    try {
+      setLoading(true);
+      const { data } = await api.get<LoadUserResponse>("/user/profile", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(data)
+      setUser(data);
+      navigate(currentPath);
+      return data
+    } catch (error: any) {
+      console.log(error);
+    } finally {
+      console.log("dados: " + user)
+      setLoading(false);
+    }
+  };
 
   async function createUser(body: ICreateUserBody) {
     displayToast({
@@ -127,9 +130,12 @@ function UserProvider({ children }: IUserProvider) {
 
     try {
       const { data } = await api.post<UserResponse>("/session", formData);
-      setUser(data.usuario);
 
       Cookies.set("auth_token", data.token, { expires: 7 });
+      const token = Cookies.get("auth_token");
+      const user: LoadUserResponse | undefined = await loadUser(token!)
+
+      setUser(user);
 
       displayToast({
         message: "",
@@ -170,9 +176,12 @@ function UserProvider({ children }: IUserProvider) {
         "/session/google",
         formData
       );
-      setUser(data.usuario);
 
       Cookies.set("auth_token", data.token, { expires: 7 });
+      const token = Cookies.get("auth_token");
+      const user: LoadUserResponse | undefined = await loadUser(token!)
+
+      setUser(user);
 
       displayToast({
         message: "",
