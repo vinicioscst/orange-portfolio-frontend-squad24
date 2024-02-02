@@ -51,10 +51,10 @@ function MyProjectsPage() {
               gap: '2.625rem'
             }}
           >
-            <Avatar src={user?.image} sx={{ width: 122, height: 122}}/>
+            <Avatar src={user?.user.image} sx={{ width: 122, height: 122}}/>
           <Box>
             <Typography variant="h6" component="div" gutterBottom>
-              {user?.fullname}
+              {user?.user.fullname}
             </Typography>
             <Typography variant="subtitle1" component="div" gutterBottom>
               Brasil
@@ -67,21 +67,28 @@ function MyProjectsPage() {
         <Input type="text" variant="outlined" label="Buscar tags" />
         {dados.length > 0 ? (
           <Grid container spacing={2} sx={{ marginTop: "40px", marginBottom: "77px" }}>
-            {dados.map((dado) => {
-              const date = new Date(dado.createddate);
-              const formattedDate = `${date.getMonth() + 1}/${date
-                .getFullYear()
-                .toString()
-                .slice(-2)}`;
+            {user?.projects.map((project) => {
+              const fullDate = new Date(project.createddate)
+              let year: number | string = fullDate.getFullYear() % 100
+              let month: number | string = fullDate.getMonth() + 1
+
+              if (month < 10) {
+                month = '0' + month;
+              }
+              if (year < 10) {
+                year = '0' + year;
+              }
+
+              const formattedDate = `${month}/${year}`;
               return (
-                <Grid item xs={12} sm={6} md={4} key={dado.id}>
+                <Grid item xs={12} sm={6} md={4} key={project.id}>
                   <Card
-                    title={dado.title}
-                    tags={dado.tags.split(", ")}
-                    image={dado.image || undefined}
+                    title={project.title}
+                    tags={project.tags.split(", ")}
+                    image={project.image}
                     date={formattedDate}
-                    avatar={dado.userid.toString()}
-                    alt={dado.title}
+                    avatar={project.image}
+                    alt={project.title}
                     handleDelete={handleDelete}
                     handleEdit={handleEdit}
                   />
