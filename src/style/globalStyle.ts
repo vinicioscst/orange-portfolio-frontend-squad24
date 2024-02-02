@@ -13,7 +13,7 @@ const theme = createTheme({
       letterSpacing: '-0.5px'
     },
     h3: {
-      fontSize: '3 rem',
+      fontSize: '3rem',
       fontWeight: 400
     },
     h4: {
@@ -270,6 +270,7 @@ declare module '@mui/material/styles' {
     70?: string,
     80?: string,
     90?: string,
+    100?: string,
     110?: string,
     120?: string,
     130?: string,
@@ -280,6 +281,7 @@ declare module '@mui/material/styles' {
     70?: string,
     80?: string,
     90?: string,
+    100?: string,
     110?: string,
     120?: string,
     130?: string,

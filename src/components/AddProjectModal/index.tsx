@@ -1,0 +1,70 @@
+import { Box, Dialog, DialogActions, DialogTitle, TextField, useMediaQuery, useTheme } from "@mui/material";
+import DragAndDropImage from "../DragAndDropImage";
+import Input from "../Input"
+import Button from "../Button";
+import { useEffect, useState } from "react";
+import ChipInput from "../ChipInput";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { projectFormData, projectFormSchema } from "../../schemas/projectsSchemas";
+
+interface AddProjectModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+}
+
+export default function AddProjectModal({ isOpen, onClose}: AddProjectModalProps) {
+
+    const [open, setOpen] = useState(isOpen);
+
+    useEffect( () => {
+        setOpen(isOpen);
+    }, [isOpen])
+
+    const theme = useTheme();
+    const smallScreen = useMediaQuery(theme.breakpoints.down('md'));
+
+    const { handleSubmit, register, formState: { errors } } = useForm<projectFormData>({
+        resolver: zodResolver(projectFormSchema)
+    }) 
+
+    function handleClose() {
+        setOpen(false);
+        if (onClose) {
+            onClose();
+        }
+    }
+
+    function submitData(data: projectFormData) {
+        console.log(data)
+    }
+
+    return (
+        <Dialog open={open} onClose={handleClose} maxWidth={smallScreen ? 'sm' : 'md'} fullWidth sx={{maxWidth: smallScreen ? '100%' : '890'}}>
+            <DialogTitle sx={{padding: "1.5rem 2rem"}}>Adicionar Projeto</DialogTitle>
+            <form className={smallScreen ? "flex flex-col-reverse gap-8 px-8 pb-8" : "flex gap-8 px-8 pb-8"} noValidate id="form-modal" onSubmit={handleSubmit(submitData)}>
+                <div className="w-full">
+                <DragAndDropImage/> 
+                </div>
+                <Box sx={{display: "flex", flexDirection: "column", gap:"1rem", justifyContent: "stretch", width: '100%',  }}>
+                    <Input label="Título" type="text" {...register("title")} error={errors.title}/>
+                    <ChipInput {...register("tags")}/>
+                    <Input label="Link" type="text" {...register("link")} error={errors.link}/>
+                    <TextField
+                        sx={{width: "100%"}}
+                        label="Descrição"
+                        multiline={true}
+                        minRows={5}
+                        maxRows={10}
+                        {...register("description")} 
+                        error={!!errors.title}
+                    />
+                </Box>
+            </form>
+            <DialogActions sx={{display: "flex", justifyContent: "flex-start", paddingX: "2rem", paddingBottom: "1.5rem", gap: "0.5rem"}}>
+                <Button type="submit" variant="primaryContained" text="salvar" form="form-modal"/>
+                <Button type="button" variant="secondaryContained" text="cancelar" onClick={handleClose}/>
+            </DialogActions>
+        </Dialog>
+    );
+}
