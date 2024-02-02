@@ -10,12 +10,13 @@ import { useContext } from "react";
 
 function App() {
   const { loading } = useContext(UserContext);
+  const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID
   
   return (
     <ThemeProvider theme={theme}>
       <ToastProvider>
         <GoogleOAuthProvider
-          clientId={`${import.meta.env.VITE_VERCEL_GOOGLE_CLIENTID}`}
+          clientId={googleClientId}
         >
           <UserProvider>
             {loading ? "" : <RoutesConfig />}
