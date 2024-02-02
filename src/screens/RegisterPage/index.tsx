@@ -7,6 +7,7 @@ import {
 } from "@mui/material";
 import FormRegister from "../../components/RegisterForm";
 import Illustration from "../../assets/registerpage-illustration.svg";
+import { Link } from "react-router-dom";
 
 function RegisterPage() {
   const theme = useTheme();
@@ -44,7 +45,22 @@ function RegisterPage() {
         >
           Cadastre-se
         </Typography>
-        <FormRegister />
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "1rem",
+            width: "100%",
+            maxWidth: "32.3125rem",
+            paddingY: "1rem",
+          }}
+        >
+          <FormRegister />
+          
+            <Typography variant="subtitle1" color={theme.palette.neutral[100]}>
+              Já possui cadastro? <Link to={"/"} className="font-medium">Faça login</Link>
+            </Typography>
+        </Box>
       </Box>
     </section>
   );
