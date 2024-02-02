@@ -28,8 +28,8 @@ export const registerFormSchema = z
       .max(32, { message: "Senha tem que ser menor que 32 dígitos" }),
     name: z.string().min(1, { message: "Preencha o nome" }),
     surname: z.string().min(1, { message: "Preencha o sobrenome" }),
-    image: z.instanceof(File).optional(),
-    isGoogleAccount: z.boolean().default(false).optional(),
+    image: z.any().optional(),
+    isGoogleAccount: z.boolean().optional(),
   })
   .refine(({ password, confirmPassword }) => password === confirmPassword, {
     message: "As senhas são diferentes",
