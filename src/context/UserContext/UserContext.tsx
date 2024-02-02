@@ -1,11 +1,19 @@
-import { IGoogleLoginData, IUser, IUserContext, IUserProvider, UserResponse } from "./types";
+import {
+  ICreateUserBody,
+  IGoogleLoginData,
+  IImageUploadResponse,
+  IUser,
+  IUserContext,
+  IUserProvider,
+  UserResponse,
+} from "./types";
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useToast } from "../ToastContext";
 import { LoginFormData, RegisterFormData } from "../../schemas/userSchemas";
 import { api } from "../../services/api";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
 
 export const UserContext = createContext({} as IUserContext);
 
@@ -19,10 +27,9 @@ function UserProvider({ children }: IUserProvider) {
   const currentPath = window.location.pathname;
 
   useEffect(() => {
-    const token = Cookies.get("auth_token")
+    const token = Cookies.get("auth_token");
 
     const loadUser = async () => {
-      console.log(loading)
       try {
         setLoading(true);
         const { data } = await api.get("/user/profile", {
@@ -30,10 +37,10 @@ function UserProvider({ children }: IUserProvider) {
             Authorization: `Bearer ${token}`,
           },
         });
-        setUser(data);
+        setUser(data[0]);
         navigate(currentPath);
       } catch (error: any) {
-        console.log(error)
+        console.log(error);
       } finally {
         setLoading(false);
       }
@@ -44,14 +51,7 @@ function UserProvider({ children }: IUserProvider) {
     }
   }, []);
 
-  async function createUser(formData: RegisterFormData) {
-    const { name, surname, email, password } = formData;
-    const data = {
-      fullName: `${name} ${surname}`,
-      email,
-      password,
-    };
-
+  async function createUser(body: ICreateUserBody) {
     displayToast({
       message: "",
       severity: "info",
@@ -61,8 +61,8 @@ function UserProvider({ children }: IUserProvider) {
     });
 
     try {
-      await api.post("/user", data);
-      
+      await api.post("/user", body);
+
       displayToast({
         message: "",
         severity: "success",
@@ -70,7 +70,7 @@ function UserProvider({ children }: IUserProvider) {
         variant: "filled",
         isLoading: false,
       });
-      
+
       reset();
       setTimeout(() => {
         navigate("/");
@@ -88,6 +88,34 @@ function UserProvider({ children }: IUserProvider) {
     }
   }
 
+  async function handleUser(formBody: RegisterFormData) {
+    if (formBody.image.lenght !== 0) {
+      const formData = new FormData();
+      formData.append("file", formBody.image[0]);
+
+      const { data } = await api.post<IImageUploadResponse>("/projects/upload", formData);
+
+      const { name, surname, email, password } = formBody;
+      const body = {
+        fullName: `${name} ${surname}`,
+        email,
+        password,
+        image: data.Location
+      };
+
+      return await createUser(body);
+    } else {
+      const { name, surname, email, password } = formBody;
+      const body = {
+        fullName: `${name} ${surname}`,
+        email,
+        password,
+      };
+
+      return await createUser(body);
+    }
+  }
+
   async function loginUser(formData: LoginFormData) {
     displayToast({
       message: "",
@@ -99,9 +127,9 @@ function UserProvider({ children }: IUserProvider) {
 
     try {
       const { data } = await api.post<UserResponse>("/session", formData);
-      setUser(data.usuario)
-      
-      Cookies.set('auth_token', data.token, { expires: 7 })
+      setUser(data.usuario);
+
+      Cookies.set("auth_token", data.token, { expires: 7 });
 
       displayToast({
         message: "",
@@ -110,12 +138,11 @@ function UserProvider({ children }: IUserProvider) {
         variant: "filled",
         isLoading: false,
       });
-      
+
       reset();
       setTimeout(() => {
         navigate("/my-projects");
       }, 2000);
-
     } catch (error: any) {
       const err = error.response.data.mensagem;
 
@@ -137,12 +164,15 @@ function UserProvider({ children }: IUserProvider) {
       variant: "filled",
       isLoading: true,
     });
-    
+
     try {
-      const { data } = await api.post<UserResponse>("/session/google", formData);
-      setUser(data.usuario)
-      
-      Cookies.set('auth_token', data.token, { expires: 7 })
+      const { data } = await api.post<UserResponse>(
+        "/session/google",
+        formData
+      );
+      setUser(data.usuario);
+
+      Cookies.set("auth_token", data.token, { expires: 7 });
 
       displayToast({
         message: "",
@@ -151,12 +181,11 @@ function UserProvider({ children }: IUserProvider) {
         variant: "filled",
         isLoading: false,
       });
-      
+
       reset();
       setTimeout(() => {
         navigate("/my-projects");
       }, 2000);
-
     } catch (error: any) {
       const err = error.response.data.mensagem;
 
@@ -172,23 +201,25 @@ function UserProvider({ children }: IUserProvider) {
 
   function userLogout() {
     setTimeout(() => {
-    displayToast({
-      message: "",
-      severity: "success",
-      title: "Logout realizado com sucesso",
-      variant: "filled",
-      isLoading: false,
-    });
+      displayToast({
+        message: "",
+        severity: "success",
+        title: "Logout realizado com sucesso",
+        variant: "filled",
+        isLoading: false,
+      });
 
-    Cookies.remove("auth_token")
-    setUser(null);
-    
+      Cookies.remove("auth_token");
+      setUser(null);
+
       navigate("/");
     }, 1000);
-  };
+  }
 
   return (
-    <UserContext.Provider value={{ createUser, loginUser, googleLogin, userLogout, user, loading }}>
+    <UserContext.Provider
+      value={{ handleUser, loginUser, googleLogin, userLogout, user, loading }}
+    >
       {children}
     </UserContext.Provider>
   );

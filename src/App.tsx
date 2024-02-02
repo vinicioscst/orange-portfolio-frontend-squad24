@@ -15,7 +15,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <ToastProvider>
         <GoogleOAuthProvider
-          clientId={`${import.meta.env.VITE_GOOGLE_CLIENTID}`}
+          clientId={`${import.meta.env.VITE_VERCEL_GOOGLE_CLIENTID}`}
         >
           <UserProvider>
             {loading ? "" : <RoutesConfig />}

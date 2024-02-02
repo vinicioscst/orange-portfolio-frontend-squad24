@@ -31,8 +31,25 @@ export interface IGoogleLoginData {
   isGoogleAccount?: boolean | undefined;
 }
 
+export interface ICreateUserBody {
+  fullName: string;
+  email: string;
+  password: string;
+  image?: string;
+  isGoogleAccount?: boolean;
+}
+
+export interface IImageUploadResponse {
+  ETag: string;
+  VersionId: string;
+  Location: string;
+  key: string;
+  Key: string;
+  Bucket: string;
+}
+
 export interface IUserContext {
-  createUser: (formData: RegisterFormData) => Promise<void>;
+  handleUser: (formData: RegisterFormData) => Promise<void>;
   loginUser: (formData: LoginFormData) => Promise<void>;
   googleLogin: (formData: IGoogleLoginData) => Promise<void>;
   userLogout(): void;

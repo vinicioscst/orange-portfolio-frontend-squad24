@@ -9,6 +9,8 @@ import {
 } from "../../schemas/userSchemas";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext/UserContext";
+import ForwardedFileInput from "../FileInput";
+import { useToast } from "../../context/ToastContext";
 
 export default function RegisterForm() {
   const {
@@ -20,15 +22,30 @@ export default function RegisterForm() {
     mode: "onChange",
   });
 
-  const { createUser } = useContext(UserContext);
+  const { displayToast } = useToast();
+  const { handleUser } = useContext(UserContext);
 
   function onSubmit(formData: RegisterFormData) {
-    createUser(formData);
+    if (formData.image.lenght !== 0) {
+      if (!formData.image[0].type.startsWith("image/")) {
+        displayToast({
+          message: "",
+          severity: "error",
+          title: "Tipo de arquivo não suportado",
+          variant: "filled",
+          isLoading: false,
+        });
+        return
+      }
+      handleUser(formData);
+    } else {
+      handleUser(formData);
+    }
   }
 
   return (
     <form
-      className="flex flex-col gap-4 w-full max-w-[32.3125rem] p-4"
+      className="flex flex-col gap-4 w-full"
       onSubmit={handleSubmit(onSubmit)}
       noValidate
     >
@@ -54,6 +71,7 @@ export default function RegisterForm() {
         {...register("email")}
         error={errors.email}
       />
+      <ForwardedFileInput {...register("image")} />
       <Input
         label={"Password"}
         type="password"
