@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: "https://hackathon-squad24.onrender.com",
+  baseURL: "https://filthy-rose-trousers.cyclic.app",
   timeout: 10000,
 });
