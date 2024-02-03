@@ -1,8 +1,6 @@
 import { Card, CardContent, Grid, Typography, useTheme } from "@mui/material";
-import CheckIcon from '@mui/icons-material/Check';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
-import CloseIcon from '@mui/icons-material/Close';
 import { useEffect, useState } from "react";
 import { numericRegex, specialRegex } from "./checkboxPassword.schemas";
 
