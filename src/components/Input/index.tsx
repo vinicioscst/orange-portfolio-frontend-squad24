@@ -10,10 +10,11 @@ interface InputProps {
   error?: FieldError;
   flexBasis?: string;
   tooltip?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined 
 }
 
 function Input(
-  { label, variant = "outlined", type = "text", error, flexBasis, tooltip, ...rest }: InputProps, ref: ForwardedRef<HTMLInputElement>) {
+  { label, variant = "outlined", type = "text", error, flexBasis, tooltip, onChange, ...rest }: InputProps, ref: ForwardedRef<HTMLInputElement>) {
   
   const [showPassword, setShowPassword] = useState(false);
 
@@ -30,6 +31,7 @@ function Input(
             error={!!error}
             helperText={error ? error.message : null}
             ref={ref}
+            onChange={onChange}
             {...rest}
             sx={{width: "100%", maxWidth: "45.1875rem", flexGrow: "1", flexBasis: flexBasis}}
             InputProps={{
