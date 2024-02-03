@@ -10,21 +10,14 @@ export const projectFormSchema = z.object({
       .min(1, { message: "No mínimo 1 tag necessária" })
       .max(3, { message: "No máximo 3 tags selecionadas"}),
     link: z
-      .string().optional(),
+      .string(),
     description: z
       .string(),
-    images: z
-      .string().optional()
   });
 
-export type projectFormData = z.infer<typeof projectFormSchema>;
-
-export type ModalProjectData = {
-  title: string;
-  tags: string[] | undefined;
-  description: string;
-  images: string | File;
-  link?: string | undefined;
+export type ProjectFormDataZod = z.infer<typeof projectFormSchema>;
+export interface ProjectFormData extends ProjectFormDataZod {
+  images?: File;
 }
 
   export const registerProjectSchema = z.object({

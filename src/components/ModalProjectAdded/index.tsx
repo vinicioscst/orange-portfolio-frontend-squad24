@@ -11,8 +11,8 @@ import {
   useTheme,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { ModalProjectData } from "../../schemas/projectsSchemas";
 import { useEffect, useState } from "react";
+import { ProjectFormData } from "../../schemas/projectsSchemas";
 
 type ProjectAddedProps = {
   projectImage: File | null | undefined;
@@ -23,7 +23,7 @@ type ProjectAddedProps = {
   onClick: () => void;
   open: boolean;
   onClose: () => void;
-  data: ModalProjectData;
+  data: ProjectFormData;
 };
 
 function ModalProjectAdded({

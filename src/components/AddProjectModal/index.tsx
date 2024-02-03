@@ -12,10 +12,10 @@ import Input from "../Input";
 import Button from "../Button";
 import { useContext, useEffect, useState } from "react";
 import ChipInput from "../ChipInput";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  projectFormData,
+  ProjectFormData,
   projectFormSchema,
 } from "../../schemas/projectsSchemas";
 import { UserContext } from "../../context/UserContext/UserContext";
@@ -30,10 +30,10 @@ export default function AddProjectModal({
   isOpen,
   onClose,
 }: AddProjectModalProps) {
-    const [projectImage, setProjectImage] = useState<File | null>()  
-    const [open, setOpen] = useState(isOpen);
+  const [projectImage, setProjectImage] = useState<File>();
+  const [open, setOpen] = useState(isOpen);
 
-    const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewOpen, setPreviewOpen] = useState(false);
 
   useEffect(() => {
     setOpen(isOpen);
@@ -47,19 +47,17 @@ export default function AddProjectModal({
     register,
     formState: { errors },
     watch,
-    control,
-  } = useForm<projectFormData>({
+  } = useForm<ProjectFormData>({
     resolver: zodResolver(projectFormSchema),
     defaultValues: {
       description: "",
-      images: "",
       link: "",
       tags: [],
       title: "",
     },
   });
 
-    const {handleProject} = useContext(UserContext)
+  const { handleProject } = useContext(UserContext);
 
   function handleClose() {
     setOpen(false);
@@ -68,25 +66,24 @@ export default function AddProjectModal({
     }
   }
 
-    function submitData(data: projectFormData) {
-        const body = {
-            title: data.title,
-            tags: data.tags,
-            link: data.link || undefined,
-            description: data.description || "",
-            image: projectImage || null
-        }
+  function submitData(data: ProjectFormData) {
+    const body: ProjectFormData = {
+      title: data.title,
+      tags: data.tags,
+      link: data.link,
+      description: data.description,
+      images: projectImage,
+    };
+    handleProject(body);
+  }
 
-        handleProject(body)
-    }
+  function handlePreview() {
+    setPreviewOpen(true);
+  }
 
-    function handlePreview() {
-      setPreviewOpen(true);
-    }
-
-    function closePreview() {
-      setPreviewOpen(false);
-    }
+  function closePreview() {
+    setPreviewOpen(false);
+  }
 
   return (
     <>
@@ -110,18 +107,9 @@ export default function AddProjectModal({
           id="form-modal"
           onSubmit={handleSubmit(submitData)}
         >
-          <Controller
-            name="images"
-            control={control}
-            defaultValue=""
-            render={() => (
-              <div className="w-full">
-                <DragAndDropImage 
-                  setProjectImage={setProjectImage}
-                />
-              </div>
-            )}
-          />
+          <div className="w-full">
+            <DragAndDropImage setProjectImage={setProjectImage} />
+          </div>
           <Box
             sx={{
               display: "flex",
@@ -193,7 +181,7 @@ export default function AddProjectModal({
         avatar="Avatar do usuário"
         altAvatar="Avatar do usuário"
         altImage="Imagem do usuário"
-        data={{...watch(), title: watch().title || "", images: watch().images || projectImage || ""}}
+        data={watch()}
         onClick={closePreview}
         open={previewOpen}
         onClose={closePreview}

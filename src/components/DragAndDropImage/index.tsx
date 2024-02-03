@@ -6,7 +6,7 @@ import { Collections, Upload } from "@mui/icons-material";
 import { useToast } from "../../context/ToastContext";
 
 interface IDragAndDropImage {
-  setProjectImage: React.Dispatch<React.SetStateAction<File | null | undefined>>
+  setProjectImage: React.Dispatch<React.SetStateAction<File | undefined>>
 }
 
 function DragAndDropImage({setProjectImage}: IDragAndDropImage) {

@@ -16,7 +16,7 @@ import { LoginFormData, RegisterFormData } from "../../schemas/userSchemas";
 import { api } from "../../services/api";
 import Cookies from "js-cookie";
 import {
-  projectFormData,
+  ProjectFormData,
   registerProject,
 } from "../../schemas/projectsSchemas";
 
@@ -279,7 +279,7 @@ function UserProvider({ children }: IUserProvider) {
     }
   }
 
-  async function handleProject(formBody: projectFormData) {
+  async function handleProject(formBody: ProjectFormData) {
     if (formBody.images !== null && formBody.images !== undefined) {
       const formData = new FormData();
   
