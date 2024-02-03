@@ -5,6 +5,7 @@ import MyProjectsPage from "../screens/MyProjectsPage";
 import DiscoverPage from "../screens/DiscoverPage";
 import PublicRoutes from "./PublicRoutes";
 import ProtectedRoutes from "./ProtectedRoutes";
+import NotFoundPage from "../screens/NotFoundPage";
 
 function RoutesConfig() {
   return (
@@ -17,6 +18,7 @@ function RoutesConfig() {
         <Route path="/my-projects" element={<MyProjectsPage />} />
         <Route path="/discover" element={<DiscoverPage />} />
       </Route>
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 }
