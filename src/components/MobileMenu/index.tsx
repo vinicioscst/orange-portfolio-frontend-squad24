@@ -61,13 +61,13 @@ function MobileMenu() {
             alignItems: "flex-start",
           }}
         >
-          {user?.user.fullname}
+          {user?.fullname}
           <Typography
             variant="body2"
             color={theme.palette.common.black}
             sx={{ opacity: "0.6" }}
           >
-            {user?.user.email}
+            {user?.email}
           </Typography>
         </MenuItem>
         <Divider />

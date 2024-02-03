@@ -1,4 +1,5 @@
 import {
+  AllProjectsResponse,
   ICreateUserBody,
   IGoogleLoginData,
   IImageUploadResponse,
@@ -14,7 +15,10 @@ import { useToast } from "../ToastContext";
 import { LoginFormData, RegisterFormData } from "../../schemas/userSchemas";
 import { api } from "../../services/api";
 import Cookies from "js-cookie";
-import { projectFormData, registerProject } from "../../schemas/projectsSchemas";
+import {
+  projectFormData,
+  registerProject,
+} from "../../schemas/projectsSchemas";
 
 export const UserContext = createContext({} as IUserContext);
 
@@ -23,21 +27,23 @@ function UserProvider({ children }: IUserProvider) {
   const navigate = useNavigate();
   const { displayToast } = useToast();
   const [user, setUser] = useState<LoadUserResponse | null>();
+  const [allProjects, setAllProjects] = useState<AllProjectsResponse[] | []>([]);
   const [loading, setLoading] = useState(false);
-  const [isAddProjectModalOpen, setIsAddProjectModalOpen] = useState(false)
+  const [isAddProjectModalOpen, setIsAddProjectModalOpen] = useState(false);
 
   const currentPath = window.location.pathname;
 
   useEffect(() => {
     const token = Cookies.get("auth_token");
-    
+
     if (token) {
       loadUser(token);
     }
   }, []);
 
   async function loadUser(token: string | undefined) {
-    if (token === undefined) return 
+    if (token === undefined) return;
+
     try {
       setLoading(true);
       const { data } = await api.get<LoadUserResponse>("/user/profile", {
@@ -48,13 +54,13 @@ function UserProvider({ children }: IUserProvider) {
 
       setUser(data);
       navigate(currentPath);
-      return data
+      return data;
     } catch (error: any) {
       console.log(error);
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   async function createUser(body: ICreateUserBody) {
     displayToast({
@@ -94,18 +100,21 @@ function UserProvider({ children }: IUserProvider) {
   }
 
   async function handleUser(formBody: RegisterFormData) {
-    if (formBody.image.lenght !== 0) {
+    if (formBody.image.length !== 0) {
       const formData = new FormData();
       formData.append("file", formBody.image[0]);
 
-      const { data } = await api.post<IImageUploadResponse>("/projects/upload", formData);
+      const { data } = await api.post<IImageUploadResponse>(
+        "/upload",
+        formData
+      );
 
       const { name, surname, email, password } = formBody;
       const body = {
         fullName: `${name} ${surname}`,
         email,
         password,
-        image: data.Location
+        image: data.Location,
       };
 
       return await createUser(body);
@@ -135,8 +144,9 @@ function UserProvider({ children }: IUserProvider) {
 
       Cookies.set("auth_token", data.token, { expires: 7 });
       const token = Cookies.get("auth_token");
-      const user: LoadUserResponse | undefined = await loadUser(token!)
-
+      
+      const user: LoadUserResponse | undefined = await loadUser(token!);
+      
       setUser(user);
 
       displayToast({
@@ -181,7 +191,7 @@ function UserProvider({ children }: IUserProvider) {
 
       Cookies.set("auth_token", data.token, { expires: 7 });
       const token = Cookies.get("auth_token");
-      const user: LoadUserResponse | undefined = await loadUser(token!)
+      const user: LoadUserResponse | undefined = await loadUser(token!);
 
       setUser(user);
 
@@ -252,11 +262,10 @@ function UserProvider({ children }: IUserProvider) {
         variant: "filled",
         isLoading: false,
       });
-      
-      loadUser(token)
-      reset();
-      setIsAddProjectModalOpen(false)
 
+      loadUser(token);
+      reset();
+      setIsAddProjectModalOpen(false);
     } catch (error: any) {
       const err = error.response.data.mensagem;
 
@@ -275,37 +284,65 @@ function UserProvider({ children }: IUserProvider) {
       const formData = new FormData();
       formData.append("file", formBody.image);
 
-      const { data } = await api.post<IImageUploadResponse>("/projects/upload", formData);
+      const { data } = await api.post<IImageUploadResponse>(
+        "/upload",
+        formData
+      );
 
-      const { title,  tags, description, link } = formBody;
+      const { title, tags, description, link } = formBody;
       const body = {
         title,
         tags: tags.join(", "),
         description,
         image: data.Location,
         link,
-        createddate: `${new Date()}`
+        createddate: `${new Date()}`,
       };
 
       return await createProject(body);
     } else {
-      const { title,  tags, description, image, link } = formBody;
+      const { title, tags, description, image, link } = formBody;
       const body = {
         title,
         tags: tags.join(", "),
         description,
         image,
         link,
-        createddate: `${new Date()}`
+        createddate: `${new Date()}`,
       };
 
       return await createProject(body);
     }
   }
 
+  async function getProjects() {
+    const token = Cookies.get("auth_token");
+
+    try {
+      const { data } = await api.get("/projects", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setAllProjects(data)
+    } catch (error) {}
+  }
+
   return (
     <UserContext.Provider
-      value={{ handleUser, loginUser, googleLogin, userLogout, user, loading, handleProject, isAddProjectModalOpen, setIsAddProjectModalOpen }}
+      value={{
+        handleUser,
+        loginUser,
+        googleLogin,
+        userLogout,
+        user,
+        loading,
+        handleProject,
+        isAddProjectModalOpen,
+        setIsAddProjectModalOpen,
+        getProjects,
+        allProjects
+      }}
     >
       {children}
     </UserContext.Provider>

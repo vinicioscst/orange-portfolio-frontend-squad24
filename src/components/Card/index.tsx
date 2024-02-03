@@ -6,12 +6,12 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 
 type CardProps = {
     id: number;
-    image: string | undefined;
+    image: string | undefined | null;
     title: React.ReactNode;
     date: React.ReactNode;
     alt: string;
     avatar: string | undefined;
-    tags: string[];
+    tags: string[] | null;
     handleEdit?: () => void;
     handleDelete?: () => void;
 }
@@ -48,7 +48,7 @@ function Card({ id, image, title, date, alt, avatar, tags, handleDelete, handleE
                     width: '100%',
                     borderRadius: "4px"
                 }}
-                image={image}
+                image={image ? image : undefined}
             />
 
             <CardContent sx={{padding: '0', paddingTop: '8px'}}>
@@ -98,7 +98,7 @@ function Card({ id, image, title, date, alt, avatar, tags, handleDelete, handleE
                         </Grid>
                     </Grid>
                     <Grid sx={{display: 'flex', gap: '0.5rem'}}>
-                        {tags.map((item) => (
+                        {tags && tags.map((item) => (
                             <Chip label={item} key={item}/>
                         )).slice(0, 2)}
                     </Grid>

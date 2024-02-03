@@ -16,9 +16,32 @@ export interface UserResponse {
   token: string;
 }
 
+export interface AllProjectsResponse {
+  id: number;
+  title: string;
+  tags: string;
+  link?: string;
+  description?: string;
+  image?: string;
+  createddate: string;
+  userid: number;
+  user: IUserWithoutId;
+}
+
+export interface IUserWithoutId {
+  fullname: string;
+  email: string;
+  profileImage?: string;
+  isGoogleAccount: boolean | null;
+}
+
 export interface LoadUserResponse {
-  user: IUser;
-  projects: IProject[];
+  userid: number;
+  fullname: string;
+  email: string;
+  profileimage: string | null;
+  isgoogleaccount?: boolean | null;
+  projects: IProject[] | [];
 }
 
 export interface IUser {
@@ -33,10 +56,11 @@ export interface IProject {
   id: number;
   title: string;
   tags: string;
-  link: string;
-  description: string;
-  image: string;
+  link?: string | null;
+  description?: string | null;
+  image: string | null;
   createddate: string;
+  userid?: number | null | undefined;
 }
 
 export interface IGoogleLoginData {
@@ -74,4 +98,6 @@ export interface IUserContext {
   handleProject: (formBody: projectFormData) => Promise<void>;
   setIsAddProjectModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isAddProjectModalOpen: boolean;
+  getProjects: () => Promise<void>;
+  allProjects: AllProjectsResponse[];
 }
