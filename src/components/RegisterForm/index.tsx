@@ -29,7 +29,7 @@ export default function RegisterForm() {
   const { handleUser } = useContext(UserContext);
 
   function onSubmit(formData: RegisterFormData) {
-    if (formData.image.lenght !== 0) {
+    if (formData.image.length !== 0) {
       if (!formData.image[0].type.startsWith("image/")) {
         displayToast({
           message: "",

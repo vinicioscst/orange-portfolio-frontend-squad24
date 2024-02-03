@@ -1,10 +1,9 @@
-import { Avatar, Box, Card as MUICard,Grid, Typography, useMediaQuery, useTheme, CardContent } from "@mui/material";
+import { Avatar, Box, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import FilterIcon from '@mui/icons-material/Filter';
 import Header from "../../components/Header";
 import Input from "../../components/Input";
 import { Container } from "../../components/Container";
 import Button from "../../components/Button";
-import dados from "../DiscoverPage/dados.ts";
 import Card from "../../components/Card";
 import { useContext } from "react";
 import AddProjectModal from "../../components/AddProjectModal/index.tsx";
@@ -48,10 +47,10 @@ function MyProjectsPage() {
               gap: '2.625rem'
             }}
           >
-            <Avatar src={user?.user.image} sx={{ width: 122, height: 122}}/>
+            <Avatar src={user?.profileimage !== null ? user?.profileimage : undefined} alt={user?.fullname} sx={{ width: 122, height: 122}}/>
           <Box>
             <Typography variant="h6" component="div" gutterBottom>
-              {user?.user.fullname}
+              {user?.fullname}
             </Typography>
             <Typography variant="subtitle1" component="div" gutterBottom>
               Brasil
@@ -62,10 +61,10 @@ function MyProjectsPage() {
         </Box>
         <Typography mb={2} color={"GrayText"} fontWeight={'bold'}>Meus projetos</Typography>
         <Input type="text" variant="outlined" label="Buscar tags" />
-        {dados.length > 0 ? (
+        {user?.projects[0].id !== null ? (
           <Grid container spacing={2} sx={{ marginTop: "40px", marginBottom: "77px" }}>
             {user?.projects.map((project) => {
-              const fullDate = new Date(project.createddate)
+              const fullDate: Date = new Date(project.createddate)
               let year: number | string = fullDate.getFullYear() % 100
               let month: number | string = fullDate.getMonth() + 1
 
@@ -82,10 +81,10 @@ function MyProjectsPage() {
                   <Card
                     id={project.id}
                     title={project.title}
-                    tags={project.tags.split(", ")}
+                    tags={project.tags !== null ? project.tags.split(", ") : null}
                     image={project.image}
                     date={formattedDate}
-                    avatar={user.user.image}
+                    avatar={user?.profileimage !== null ? user?.profileimage : undefined}
                     alt={project.title}
                     handleDelete={handleDelete}
                     handleEdit={handleEdit}
@@ -95,21 +94,20 @@ function MyProjectsPage() {
             })}
           </Grid>
         ) : (
-          <MUICard onClick={handleAddProject} sx={{
+          <Box onClick={handleAddProject} sx={{
             width: '389px',
             height: '258px',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: '#E6E9F2',
             borderRadius: '4px',
             marginTop: '40px',
             marginBottom: '40px',
             cursor: 'pointer'
           }}
           >
-            <CardContent sx={{
+            <Box sx={{
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
@@ -118,8 +116,8 @@ function MyProjectsPage() {
               <FilterIcon fontSize="large" sx={{ color: 'black', width: 46, height: 46}}/>
               <Typography fontSize="1rem" variant="subtitle1" color={"GrayText"}>Adicione seu primeiro projeto</Typography>
               <Typography fontSize="0.875rem" variant="subtitle1" color={"GrayText"}>Compartilhe seu talento com milhares de pessoas</Typography>
-            </CardContent>
-          </MUICard>
+            </Box>
+          </Box>
         )}
         <AddProjectModal isOpen={isAddProjectModalOpen} onClose={() => setIsAddProjectModalOpen(false)} />
       </Container>
