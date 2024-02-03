@@ -5,6 +5,7 @@ import { useState } from "react";
 type MenuProps = {
     handleEdit: () => void;
     handleDelete: () => void;
+    projectId: number;
 }
 function EditMenu({ handleEdit, handleDelete }: MenuProps) {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);

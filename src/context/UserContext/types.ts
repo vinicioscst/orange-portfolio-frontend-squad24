@@ -1,3 +1,4 @@
+import { projectFormData } from "../../schemas/projectsSchemas";
 import { LoginFormData, RegisterFormData } from "../../schemas/userSchemas";
 
 export interface IUserProvider {
@@ -15,12 +16,27 @@ export interface UserResponse {
   token: string;
 }
 
+export interface LoadUserResponse {
+  user: IUser;
+  projects: IProject[];
+}
+
 export interface IUser {
   id: number;
   fullname: string;
   email: string;
   image?: string;
   isgoogleaccount?: boolean;
+}
+
+export interface IProject {
+  id: number;
+  title: string;
+  tags: string;
+  link: string;
+  description: string;
+  image: string;
+  createddate: string;
 }
 
 export interface IGoogleLoginData {
@@ -53,6 +69,9 @@ export interface IUserContext {
   loginUser: (formData: LoginFormData) => Promise<void>;
   googleLogin: (formData: IGoogleLoginData) => Promise<void>;
   userLogout(): void;
-  user: IUser | null | undefined;
+  user: LoadUserResponse | null | undefined;
   loading: boolean;
+  handleProject: (formBody: projectFormData) => Promise<void>;
+  setIsAddProjectModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isAddProjectModalOpen: boolean;
 }

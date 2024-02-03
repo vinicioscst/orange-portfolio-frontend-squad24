@@ -51,6 +51,7 @@ function DiscoverPage() {
               return (
                 <Grid item xs={12} sm={6} md={4} key={dado.id}>
                   <Card
+                    id={dado.id}
                     title={dado.title}
                     tags={dado.tags.split(", ")}
                     image={dado.image || undefined}

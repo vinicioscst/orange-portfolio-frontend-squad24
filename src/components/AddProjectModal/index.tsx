@@ -2,11 +2,12 @@ import { Box, Dialog, DialogActions, DialogTitle, TextField, useMediaQuery, useT
 import DragAndDropImage from "../DragAndDropImage";
 import Input from "../Input"
 import Button from "../Button";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ChipInput from "../ChipInput";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { projectFormData, projectFormSchema } from "../../schemas/projectsSchemas";
+import { UserContext } from "../../context/UserContext/UserContext";
 
 interface AddProjectModalProps {
     isOpen: boolean;
@@ -14,7 +15,7 @@ interface AddProjectModalProps {
 }
 
 export default function AddProjectModal({ isOpen, onClose}: AddProjectModalProps) {
-
+    const [projectImage, setProjectImage] = useState<File | null>()
     const [open, setOpen] = useState(isOpen);
 
     useEffect( () => {
@@ -28,6 +29,8 @@ export default function AddProjectModal({ isOpen, onClose}: AddProjectModalProps
         resolver: zodResolver(projectFormSchema)
     }) 
 
+    const {handleProject} = useContext(UserContext)
+
     function handleClose() {
         setOpen(false);
         if (onClose) {
@@ -36,7 +39,15 @@ export default function AddProjectModal({ isOpen, onClose}: AddProjectModalProps
     }
 
     function submitData(data: projectFormData) {
-        console.log(data)
+        const body = {
+            title: data.title,
+            tags: data.tags,
+            link: data.link || undefined,
+            description: data.description || undefined,
+            image: projectImage || null
+        }
+
+        handleProject(body)
     }
 
     return (
@@ -44,7 +55,7 @@ export default function AddProjectModal({ isOpen, onClose}: AddProjectModalProps
             <DialogTitle sx={{padding: "1.5rem 2rem"}}>Adicionar Projeto</DialogTitle>
             <form className={smallScreen ? "flex flex-col-reverse gap-8 px-8 pb-8" : "flex gap-8 px-8 pb-8"} noValidate id="form-modal" onSubmit={handleSubmit(submitData)}>
                 <div className="w-full">
-                <DragAndDropImage/> 
+                <DragAndDropImage setProjectImage={setProjectImage}/> 
                 </div>
                 <Box sx={{display: "flex", flexDirection: "column", gap:"1rem", justifyContent: "stretch", width: '100%',  }}>
                     <Input label="Título" type="text" {...register("title")} error={errors.title}/>
