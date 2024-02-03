@@ -33,10 +33,13 @@ function NotFoundPage({ }: Props) {
                     </Typography>
                 </Grid>
                 <Grid>
-                    <img src={NotFound} style={{
-                        width: '25rem',
-                        height: '25rem'
-                    }} />
+                    <img
+                        src={NotFound}
+                        alt="Desenho de dois discos voadores iluminando o número 4, com uma lua entre eles, formando a mensagem 404"
+                        style={{
+                            width: '25rem',
+                            height: '25rem'
+                        }} />
                 </Grid>
                 <Grid mb="2rem">
                     <Typography
