@@ -1,10 +1,9 @@
-import { Avatar, Box, Card as MUICard,Grid, Typography, useMediaQuery, useTheme, CardContent } from "@mui/material";
+import { Avatar, Box, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import FilterIcon from '@mui/icons-material/Filter';
 import Header from "../../components/Header";
 import Input from "../../components/Input";
 import { Container } from "../../components/Container";
 import Button from "../../components/Button";
-import dados from "../DiscoverPage/dados.ts";
 import Card from "../../components/Card";
 import { useContext, useState } from "react";
 import AddProjectModal from "../../components/AddProjectModal/index.tsx";
@@ -14,13 +13,13 @@ function MyProjectsPage() {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.down("lg"));
 
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [inputSearch, setInputSearch] = useState<string>("");
+  const {user, isAddProjectModalOpen, setIsAddProjectModalOpen} = useContext(UserContext)
 
-  const {user} = useContext(UserContext)
+  const filteredProjects = user?.projects.filter((project) => project.tags?.toUpperCase().includes(inputSearch.toUpperCase()));
 
   function handleAddProject() {
-    setIsModalOpen(true)
-    console.log('projeto adicionado')
+    setIsAddProjectModalOpen(true)
   }
 
   function handleEdit() {
@@ -51,7 +50,7 @@ function MyProjectsPage() {
               gap: '2.625rem'
             }}
           >
-            <Avatar src={user?.image} sx={{ width: 122, height: 122}}/>
+            <Avatar src={user?.profileimage !== null ? user?.profileimage : undefined} alt={user?.fullname} sx={{ width: 122, height: 122}}/>
           <Box>
             <Typography variant="h6" component="div" gutterBottom>
               {user?.fullname}
@@ -64,24 +63,32 @@ function MyProjectsPage() {
           </Box>
         </Box>
         <Typography mb={2} color={"GrayText"} fontWeight={'bold'}>Meus projetos</Typography>
-        <Input type="text" variant="outlined" label="Buscar tags" />
-        {dados.length > 0 ? (
+        <Input type="text" variant="outlined" label="Buscar tags" onChange={(e) => setInputSearch(e.target.value)} />
+        {user?.projects[0].id !== null ? (
           <Grid container spacing={2} sx={{ marginTop: "40px", marginBottom: "77px" }}>
-            {dados.map((dado) => {
-              const date = new Date(dado.createddate);
-              const formattedDate = `${date.getMonth() + 1}/${date
-                .getFullYear()
-                .toString()
-                .slice(-2)}`;
+            {filteredProjects?.map((project) => {
+              const fullDate: Date = new Date(project.createddate)
+              let year: number | string = fullDate.getFullYear() % 100
+              let month: number | string = fullDate.getMonth() + 1
+
+              if (month < 10) {
+                month = '0' + month;
+              }
+              if (year < 10) {
+                year = '0' + year;
+              }
+
+              const formattedDate = `${month}/${year}`;
               return (
-                <Grid item xs={12} sm={6} md={4} key={dado.id}>
+                <Grid item xs={12} sm={6} md={4} key={project.id}>
                   <Card
-                    title={dado.title}
-                    tags={dado.tags.split(", ")}
-                    image={dado.image || undefined}
+                    id={project.id}
+                    title={project.title}
+                    tags={project.tags !== null ? project.tags.split(", ") : null}
+                    image={project.image}
                     date={formattedDate}
-                    avatar={dado.userid.toString()}
-                    alt={dado.title}
+                    avatar={user?.profileimage !== null ? user?.profileimage : undefined}
+                    alt={project.title}
                     handleDelete={handleDelete}
                     handleEdit={handleEdit}
                   />
@@ -90,21 +97,20 @@ function MyProjectsPage() {
             })}
           </Grid>
         ) : (
-          <MUICard onClick={handleAddProject} sx={{
+          <Box onClick={handleAddProject} sx={{
             width: '389px',
             height: '258px',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: '#E6E9F2',
             borderRadius: '4px',
             marginTop: '40px',
             marginBottom: '40px',
             cursor: 'pointer'
           }}
           >
-            <CardContent sx={{
+            <Box sx={{
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
@@ -113,10 +119,10 @@ function MyProjectsPage() {
               <FilterIcon fontSize="large" sx={{ color: 'black', width: 46, height: 46}}/>
               <Typography fontSize="1rem" variant="subtitle1" color={"GrayText"}>Adicione seu primeiro projeto</Typography>
               <Typography fontSize="0.875rem" variant="subtitle1" color={"GrayText"}>Compartilhe seu talento com milhares de pessoas</Typography>
-            </CardContent>
-          </MUICard>
+            </Box>
+          </Box>
         )}
-        <AddProjectModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+        <AddProjectModal isOpen={isAddProjectModalOpen} onClose={() => setIsAddProjectModalOpen(false)} />
       </Container>
     </>
   );

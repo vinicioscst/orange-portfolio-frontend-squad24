@@ -11,9 +11,11 @@ import {
   useTheme,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { ProjectFormData } from "../../schemas/projectsSchemas";
+import { ModalProjectData } from "../../schemas/projectsSchemas";
+import { useEffect, useState } from "react";
 
 type ProjectAddedProps = {
+  projectImage: File | null | undefined;
   altImage: string;
   avatar: string;
   altAvatar: string;
@@ -21,10 +23,11 @@ type ProjectAddedProps = {
   onClick: () => void;
   open: boolean;
   onClose: () => void;
-  data: ProjectFormData;
+  data: ModalProjectData;
 };
 
 function ModalProjectAdded({
+  projectImage,
   altImage,
   avatar,
   subtitle,
@@ -42,6 +45,14 @@ function ModalProjectAdded({
     month: "2-digit",
     year: "2-digit",
   }).format(date);
+
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (projectImage) {
+      setPreviewImage(URL.createObjectURL(projectImage));
+    }
+  }, [projectImage]);
 
   return (
     <Modal open={open} onClose={onClose}>
@@ -131,7 +142,7 @@ function ModalProjectAdded({
         </Grid>
         <Grid>
           <img
-            src={data?.images}
+            src={previewImage === null ? undefined : previewImage}
             alt={altImage}
             style={{
               width: isSmall ? "40rem" : "50rem",

@@ -87,7 +87,7 @@ function Header() {
             </Box>
           </Box>
           <Box sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <Avatar sx={{ width: 40, height: 40 }} src={user?.image} alt={user?.fullname}/>
+            <Avatar sx={{ width: 40, height: 40 }} src={user?.profileimage !== null ? user?.profileimage : undefined} alt={user?.fullname}/>
             <IconButton
               sx={{
                 backgroundColor: theme.palette.primary.main,

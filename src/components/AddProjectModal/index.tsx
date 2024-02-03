@@ -10,7 +10,7 @@ import {
 import DragAndDropImage from "../DragAndDropImage";
 import Input from "../Input";
 import Button from "../Button";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ChipInput from "../ChipInput";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,6 +18,7 @@ import {
   ProjectFormData,
   projectFormSchema,
 } from "../../schemas/projectsSchemas";
+import { UserContext } from "../../context/UserContext/UserContext";
 import ModalProjectAdded from "../ModalProjectAdded";
 
 interface AddProjectModalProps {
@@ -29,9 +30,10 @@ export default function AddProjectModal({
   isOpen,
   onClose,
 }: AddProjectModalProps) {
-  const [open, setOpen] = useState(isOpen);
+    const [projectImage, setProjectImage] = useState<File | null>()  
+    const [open, setOpen] = useState(isOpen);
 
-  const [previewOpen, setPreviewOpen] = useState(false);
+    const [previewOpen, setPreviewOpen] = useState(false);
 
   useEffect(() => {
     setOpen(isOpen);
@@ -57,6 +59,8 @@ export default function AddProjectModal({
     },
   });
 
+    const {handleProject} = useContext(UserContext)
+
   function handleClose() {
     setOpen(false);
     if (onClose) {
@@ -64,17 +68,25 @@ export default function AddProjectModal({
     }
   }
 
-  function submitData(data: ProjectFormData) {
-    console.log(data);
-  }
+    function submitData(data: ProjectFormData) {
+        const body = {
+            title: data.title,
+            tags: data.tags,
+            link: data.link || undefined,
+            description: data.description || undefined,
+            image: projectImage || null
+        }
 
-  function handlePreview() {
-    setPreviewOpen(true);
-  }
+        handleProject(body)
+    }
 
-  function closePreview() {
-    setPreviewOpen(false);
-  }
+    function handlePreview() {
+      setPreviewOpen(true);
+    }
+
+    function closePreview() {
+      setPreviewOpen(false);
+    }
 
   return (
     <>
@@ -102,16 +114,10 @@ export default function AddProjectModal({
             name="images"
             control={control}
             defaultValue=""
-            render={({ field: { onChange, value } }) => (
+            render={() => (
               <div className="w-full">
-                <DragAndDropImage
-                  value={value}
-                  onChange={(e) => {
-                    const file = e?.target?.files[0];
-                    if (file) {
-                      convertToBase64(file, onChange);
-                    }
-                  }}
+                <DragAndDropImage 
+                  setProjectImage={setProjectImage}
                 />
               </div>
             )}
@@ -183,6 +189,7 @@ export default function AddProjectModal({
         </DialogActions>
       </Dialog>
       <ModalProjectAdded
+        projectImage={projectImage}
         avatar="Avatar do usuário"
         altAvatar="Avatar do usuário"
         altImage="Imagem do usuário"
@@ -194,18 +201,4 @@ export default function AddProjectModal({
       />
     </>
   );
-}
-
-export function convertToBase64(image: File, applyFunction: (e: unknown) => void) {
-  let base64String = "";
-  if (image) {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      base64String = reader?.result as string;
-      applyFunction(base64String);
-    };
-    reader.readAsDataURL(image);
-  } else {
-    applyFunction(base64String);
-  }
 }

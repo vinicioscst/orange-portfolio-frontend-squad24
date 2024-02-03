@@ -1,35 +1,40 @@
 import { Box, CardMedia, Typography, useMediaQuery } from "@mui/material";
-import { useCallback } from "react";
-import { useDropzone } from "react-dropzone";
 import theme from "../../style/globalStyle";
-import { Collections } from "@mui/icons-material";
-import { convertToBase64 } from "../AddProjectModal";
+import { forwardRef, useCallback, useState } from "react";
+import { useDropzone } from "react-dropzone";
+import { Collections, Upload } from "@mui/icons-material";
+import { useToast } from "../../context/ToastContext";
 
-interface DragAndDropImageProps {
-  onChange: (e: unknown) => void;
-  value: string;
+interface IDragAndDropImage {
+  setProjectImage: React.Dispatch<React.SetStateAction<File | null | undefined>>
 }
 
-function DragAndDropImage({ value, onChange }: DragAndDropImageProps  ) {
-  
+function DragAndDropImage({setProjectImage}: IDragAndDropImage) {
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    const file = acceptedFiles[0];
-    convertToBase64(file, onChange)
+  const {displayToast} = useToast()
 
-    // setSelectedImage({
-    //   preview: URL.createObjectURL(file),
-    // });
-  }, [onChange]);
+  const [file, setFile] = useState<string | null>(null);
+  const onDrop = useCallback((files: File[]) => {
+    const droppedFile = files[0];
+    try {
+      setFile(URL.createObjectURL(droppedFile))
+      setProjectImage(droppedFile)
+    } catch (error) {
+      displayToast({
+        message: "",
+        severity: "error",
+        title: "Tipo de arquivo não suportado",
+        variant: "filled",
+        isLoading: false,
+      });
+    }
 
-  const { getRootProps, getInputProps } = useDropzone({
+  }, []);
+
+  const dropzone = useDropzone({
     onDrop,
-    accept: {
-      "image/*": [".jpg", ".jpeg", ".png", ".webp"],
-    },
-    multiple: false,
-    
+    accept: { "image/*": [] },
   });
 
   return (
@@ -43,62 +48,78 @@ function DragAndDropImage({ value, onChange }: DragAndDropImageProps  ) {
       <Typography variant="subtitle1" color={theme.palette.neutral[110]}>
         Selecione o conteúdo que você deseja fazer upload
       </Typography>
-          <Box
-            {...getRootProps()}
-            sx={{
-              display: "flex",
-              justifyItems: "center",
-              alignItems: "center",
-              width: "100%",
-              height: "19rem",
-              backgroundColor: theme.palette.neutral[70],
-              borderRadius: "0.25rem",
-              cursor: "pointer",
-            }}
-          >
-            <input {...getInputProps({onChange})} name="images"/>
-            {value ? (
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "100%",
-                  maxHeight: "19rem",
-                  width: "100%",
-                  overflow: "hidden",
-                  objectFit: "cover",
-                  borderRadius: "0.25rem",
-                }}
-              >
-                <CardMedia
-                  component="img"
-                  image={value}
-                  alt="Preview"
-                  sx={{ width: "100%", height: "100%" }}
-                />
-              </Box>
-            ) : (
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "1rem",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding: smallScreen ? "0.53125rem" : "3.75rem",
-                  margin: "0 auto",
-                }}
-              >
-                <Collections sx={{ fontSize: "3.75rem", color: "#323232" }} />
-                <Typography variant="body2" color={theme.palette.neutral[120]}>
-                  Compartilhe seu talento com milhares de pessoas
-                </Typography>
-              </Box>
-            )}
-          </Box>
+      
+      <Box
+      {...dropzone.getRootProps()}
+      sx={{
+        position: "relative",
+        display: "flex",
+        justifyItems: "center",
+        alignItems: "center",
+        width: "100%",
+        height: "19rem",
+        backgroundColor: theme.palette.neutral[70],
+        borderRadius: "0.25rem",
+        border: dropzone.isDragActive ? `1px solid ${theme.palette.primary.main}` : "0",
+        cursor: "pointer",
+      }}
+    >
+      {file ? (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+            maxHeight: "19rem",
+            width: "100%",
+            overflow: "hidden",
+            objectFit: "cover",
+            borderRadius: "0.25rem",
+          }}
+        >
+          <CardMedia
+            component="img"
+            image={file}
+            alt="Preview"
+            sx={{ width: "100%", height: "100%" }}
+          />
+        </Box>
+      ) : (
+        <label
+          htmlFor="dropzone-file"
+          className={`flex flex-col gap-4 justify-center items-center mx-auto text-center cursor-pointer ${
+            smallScreen ? "p-[0.53125rem]" : "p-[3.75rem]"
+          }`}
+        >
+          {dropzone.isDragActive ? (
+            <Upload
+              sx={{
+                fontSize: "3.75rem",
+                color: "#323232",
+              }}
+            />
+          ) : (
+            <Collections
+              sx={{
+                fontSize: "3.75rem",
+                color: "#323232",
+              }}
+            />
+          )}
+
+          <Typography variant="body2" color={theme.palette.neutral[120]}>
+            {dropzone.isDragActive
+              ? "Arraste o seu arquivo até aqui"
+              : "Compartilhe seu talento com milhares de pessoas"}
+          </Typography>
+        </label>
+      )}
+      <input {...dropzone.getInputProps()} className="hidden" />
+    </Box>
     </Box>
   );
 }
 
-export default DragAndDropImage;
+const ForwardedDragAndDropImage = forwardRef(DragAndDropImage);
+export default ForwardedDragAndDropImage;

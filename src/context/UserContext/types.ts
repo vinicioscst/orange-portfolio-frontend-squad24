@@ -1,3 +1,4 @@
+import { projectFormData } from "../../schemas/projectsSchemas";
 import { LoginFormData, RegisterFormData } from "../../schemas/userSchemas";
 
 export interface IUserProvider {
@@ -15,12 +16,51 @@ export interface UserResponse {
   token: string;
 }
 
+export interface AllProjectsResponse {
+  id: number;
+  title: string;
+  tags: string;
+  link?: string;
+  description?: string;
+  image?: string;
+  createddate: string;
+  userid: number;
+  user: IUserWithoutId;
+}
+
+export interface IUserWithoutId {
+  fullname: string;
+  email: string;
+  profileImage?: string;
+  isGoogleAccount: boolean | null;
+}
+
+export interface LoadUserResponse {
+  userid: number;
+  fullname: string;
+  email: string;
+  profileimage: string | null;
+  isgoogleaccount?: boolean | null;
+  projects: IProject[] | [];
+}
+
 export interface IUser {
   id: number;
   fullname: string;
   email: string;
   image?: string;
   isgoogleaccount?: boolean;
+}
+
+export interface IProject {
+  id: number;
+  title: string;
+  tags: string;
+  link?: string | null;
+  description?: string | null;
+  image: string | null;
+  createddate: string;
+  userid?: number | null | undefined;
 }
 
 export interface IGoogleLoginData {
@@ -53,6 +93,11 @@ export interface IUserContext {
   loginUser: (formData: LoginFormData) => Promise<void>;
   googleLogin: (formData: IGoogleLoginData) => Promise<void>;
   userLogout(): void;
-  user: IUser | null | undefined;
+  user: LoadUserResponse | null | undefined;
   loading: boolean;
+  handleProject: (formBody: projectFormData) => Promise<void>;
+  setIsAddProjectModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isAddProjectModalOpen: boolean;
+  getProjects: () => Promise<void>;
+  allProjects: AllProjectsResponse[];
 }

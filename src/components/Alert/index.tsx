@@ -19,6 +19,7 @@ export default function Alert() {
         transform: "translateX(-50%)",
         minWidth: "280px",
         maxWidth: "360px",
+        zIndex: "1301"
       }}
     >
       {

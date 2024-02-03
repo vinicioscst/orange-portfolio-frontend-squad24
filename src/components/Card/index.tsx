@@ -5,17 +5,18 @@ import EditMenu from '../EditMenu';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 type CardProps = {
-    image: string | undefined;
+    id: number;
+    image: string | undefined | null;
     title: React.ReactNode;
     date: React.ReactNode;
     alt: string;
-    avatar: string;
-    tags: string[];
+    avatar: string | undefined;
+    tags: string[] | null;
     handleEdit?: () => void;
     handleDelete?: () => void;
 }
 
-function Card({ image, title, date, alt, avatar, tags, handleDelete, handleEdit }: CardProps) {
+function Card({ id, image, title, date, alt, avatar, tags, handleDelete, handleEdit }: CardProps) {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
     return (
@@ -35,6 +36,7 @@ function Card({ image, title, date, alt, avatar, tags, handleDelete, handleEdit 
                     }}
                 >
                     <EditMenu
+                        projectId={id}
                         handleDelete={handleDelete}
                         handleEdit={handleEdit}
                     />
@@ -46,7 +48,7 @@ function Card({ image, title, date, alt, avatar, tags, handleDelete, handleEdit 
                     width: '100%',
                     borderRadius: "4px"
                 }}
-                image={image}
+                image={image ? image : undefined}
             />
 
             <CardContent sx={{padding: '0', paddingTop: '8px'}}>
@@ -95,8 +97,8 @@ function Card({ image, title, date, alt, avatar, tags, handleDelete, handleEdit 
                         </Grid>
                     </Grid>
                     <Grid sx={{display: 'flex', gap: '0.5rem'}}>
-                        {tags.map((item) => (
-                            <Chip label={item} />
+                        {tags && tags.map((item) => (
+                            <Chip label={item} key={item}/>
                         )).slice(0, 2)}
                     </Grid>
                 </Grid>
