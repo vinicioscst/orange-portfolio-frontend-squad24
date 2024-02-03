@@ -21,7 +21,7 @@ export type projectFormData = z.infer<typeof projectFormSchema>;
 
 export type ModalProjectData = {
   title: string;
-  tags: string[];
+  tags: string[] | undefined;
   description: string;
   images: string | File;
   link?: string | undefined;
