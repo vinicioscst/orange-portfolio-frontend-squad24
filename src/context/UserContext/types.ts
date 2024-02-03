@@ -1,3 +1,4 @@
+import { projectFormData } from "../../schemas/projectsSchemas";
 import { LoginFormData, RegisterFormData } from "../../schemas/userSchemas";
 
 export interface IUserProvider {
@@ -70,4 +71,7 @@ export interface IUserContext {
   userLogout(): void;
   user: LoadUserResponse | null | undefined;
   loading: boolean;
+  handleProject: (formBody: projectFormData) => Promise<void>;
+  setIsAddProjectModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isAddProjectModalOpen: boolean;
 }

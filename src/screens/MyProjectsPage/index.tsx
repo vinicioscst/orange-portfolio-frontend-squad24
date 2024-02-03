@@ -6,7 +6,7 @@ import { Container } from "../../components/Container";
 import Button from "../../components/Button";
 import dados from "../DiscoverPage/dados.ts";
 import Card from "../../components/Card";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import AddProjectModal from "../../components/AddProjectModal/index.tsx";
 import { UserContext } from "../../context/UserContext/UserContext.tsx";
 
@@ -14,13 +14,10 @@ function MyProjectsPage() {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.down("lg"));
 
-  const [isModalOpen, setIsModalOpen] = useState(false)
-
-  const {user} = useContext(UserContext)
+  const {user, isAddProjectModalOpen, setIsAddProjectModalOpen} = useContext(UserContext)
 
   function handleAddProject() {
-    setIsModalOpen(true)
-    console.log('projeto adicionado')
+    setIsAddProjectModalOpen(true)
   }
 
   function handleEdit() {
@@ -83,11 +80,12 @@ function MyProjectsPage() {
               return (
                 <Grid item xs={12} sm={6} md={4} key={project.id}>
                   <Card
+                    id={project.id}
                     title={project.title}
                     tags={project.tags.split(", ")}
                     image={project.image}
                     date={formattedDate}
-                    avatar={project.image}
+                    avatar={user.user.image}
                     alt={project.title}
                     handleDelete={handleDelete}
                     handleEdit={handleEdit}
@@ -123,7 +121,7 @@ function MyProjectsPage() {
             </CardContent>
           </MUICard>
         )}
-        <AddProjectModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+        <AddProjectModal isOpen={isAddProjectModalOpen} onClose={() => setIsAddProjectModalOpen(false)} />
       </Container>
     </>
   );

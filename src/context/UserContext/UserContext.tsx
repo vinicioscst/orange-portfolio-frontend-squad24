@@ -14,6 +14,7 @@ import { useToast } from "../ToastContext";
 import { LoginFormData, RegisterFormData } from "../../schemas/userSchemas";
 import { api } from "../../services/api";
 import Cookies from "js-cookie";
+import { projectFormData, registerProject } from "../../schemas/projectsSchemas";
 
 export const UserContext = createContext({} as IUserContext);
 
@@ -23,6 +24,7 @@ function UserProvider({ children }: IUserProvider) {
   const { displayToast } = useToast();
   const [user, setUser] = useState<LoadUserResponse | null>();
   const [loading, setLoading] = useState(false);
+  const [isAddProjectModalOpen, setIsAddProjectModalOpen] = useState(false)
 
   const currentPath = window.location.pathname;
 
@@ -34,7 +36,8 @@ function UserProvider({ children }: IUserProvider) {
     }
   }, []);
 
-  async function loadUser(token: string) {
+  async function loadUser(token: string | undefined) {
+    if (token === undefined) return 
     try {
       setLoading(true);
       const { data } = await api.get<LoadUserResponse>("/user/profile", {
@@ -42,14 +45,13 @@ function UserProvider({ children }: IUserProvider) {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(data)
+
       setUser(data);
       navigate(currentPath);
       return data
     } catch (error: any) {
       console.log(error);
     } finally {
-      console.log("dados: " + user)
       setLoading(false);
     }
   };
@@ -225,9 +227,85 @@ function UserProvider({ children }: IUserProvider) {
     }, 1000);
   }
 
+  async function createProject(body: registerProject) {
+    const token = Cookies.get("auth_token");
+
+    displayToast({
+      message: "",
+      severity: "info",
+      title: "Carregando",
+      variant: "filled",
+      isLoading: true,
+    });
+
+    try {
+      await api.post("/projects", body, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      displayToast({
+        message: "",
+        severity: "success",
+        title: "Projeto cadastrado com sucesso",
+        variant: "filled",
+        isLoading: false,
+      });
+      
+      loadUser(token)
+      reset();
+      setIsAddProjectModalOpen(false)
+
+    } catch (error: any) {
+      const err = error.response.data.mensagem;
+
+      displayToast({
+        message: "",
+        severity: "error",
+        title: `${err}`,
+        variant: "filled",
+        isLoading: false,
+      });
+    }
+  }
+
+  async function handleProject(formBody: projectFormData) {
+    if (formBody.image !== null || formBody.image !== undefined) {
+      const formData = new FormData();
+      formData.append("file", formBody.image);
+
+      const { data } = await api.post<IImageUploadResponse>("/projects/upload", formData);
+
+      const { title,  tags, description, link } = formBody;
+      const body = {
+        title,
+        tags: tags.join(", "),
+        description,
+        image: data.Location,
+        link,
+        createddate: `${new Date()}`
+      };
+
+      return await createProject(body);
+    } else {
+      const { title,  tags, description, image, link } = formBody;
+      const body = {
+        title,
+        tags: tags.join(", "),
+        description,
+        image,
+        link,
+        createddate: `${new Date()}`
+      };
+
+      return await createProject(body);
+    }
+  }
+
   return (
     <UserContext.Provider
-      value={{ handleUser, loginUser, googleLogin, userLogout, user, loading }}
+      value={{ handleUser, loginUser, googleLogin, userLogout, user, loading, handleProject, isAddProjectModalOpen, setIsAddProjectModalOpen }}
     >
       {children}
     </UserContext.Provider>
