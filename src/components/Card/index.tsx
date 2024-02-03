@@ -27,7 +27,7 @@ function Card({ id, image, title, date, alt, avatar, tags, handleDelete, handleE
                 position: "relative",
             }}
         >
-            {handleEdit && handleDelete ? (
+            {!!handleEdit && !!handleDelete && (
                 <CardActions
                     sx={{
                         position: "absolute",
@@ -41,7 +41,7 @@ function Card({ id, image, title, date, alt, avatar, tags, handleDelete, handleE
                         handleEdit={handleEdit}
                     />
                 </CardActions>
-            ) : null}
+            )}
             <CardMedia
                 sx={{
                     height: 258,
@@ -81,8 +81,7 @@ function Card({ id, image, title, date, alt, avatar, tags, handleDelete, handleE
                                 color={theme.palette.neutral[120]}
                             >{title}
                             </Typography>
-                            {isMobile ?
-                                null :
+                            {isMobile &&
                                 <Typography sx={{
                                     marginLeft: '8px',
                                     marginRight: '8px'

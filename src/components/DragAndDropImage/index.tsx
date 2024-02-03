@@ -17,7 +17,6 @@ function DragAndDropImage({setProjectImage}: IDragAndDropImage) {
   const [file, setFile] = useState<string | null>(null);
   const onDrop = useCallback((files: File[]) => {
     const droppedFile = files[0];
-
     try {
       setFile(URL.createObjectURL(droppedFile))
       setProjectImage(droppedFile)

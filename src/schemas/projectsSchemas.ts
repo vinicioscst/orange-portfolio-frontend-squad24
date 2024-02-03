@@ -12,12 +12,20 @@ export const projectFormSchema = z.object({
     link: z
       .string().optional(),
     description: z
-      .string().optional(),
-    image: z
-      .any().optional()
+      .string(),
+    images: z
+      .string().optional()
   });
 
-  export type projectFormData = z.infer<typeof projectFormSchema>;
+export type projectFormData = z.infer<typeof projectFormSchema>;
+
+export type ModalProjectData = {
+  title: string;
+  tags: string[] | undefined;
+  description: string;
+  images: string | File;
+  link?: string | undefined;
+}
 
   export const registerProjectSchema = z.object({
     title: z
