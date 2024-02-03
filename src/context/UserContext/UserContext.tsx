@@ -30,14 +30,12 @@ function UserProvider({ children }: IUserProvider) {
   const [allProjects, setAllProjects] = useState<AllProjectsResponse[] | []>([]);
   const [loading, setLoading] = useState(false);
   const [isAddProjectModalOpen, setIsAddProjectModalOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const currentPath = window.location.pathname;
 
   const handleDeleteProject = async (projectId: number) => {
     try {
       const token = Cookies.get("auth_token");
-      setAnchorEl(null);
       await api.delete(`/projects/${projectId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
