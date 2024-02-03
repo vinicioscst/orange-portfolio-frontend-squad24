@@ -30,8 +30,41 @@ function UserProvider({ children }: IUserProvider) {
   const [allProjects, setAllProjects] = useState<AllProjectsResponse[] | []>([]);
   const [loading, setLoading] = useState(false);
   const [isAddProjectModalOpen, setIsAddProjectModalOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const currentPath = window.location.pathname;
+
+  const handleDeleteProject = async (projectId: number) => {
+    try {
+      const token = Cookies.get("auth_token");
+      setAnchorEl(null);
+      await api.delete(`/projects/${projectId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      getProjects();
+      displayToast({
+        message: "",
+        severity: "success",
+        title: "Projeto deletado com sucesso",
+        variant: "filled",
+        isLoading: false,
+      });
+      loadUser(token);
+    } catch (error: any) {
+      const err = error.response.data.mensagem;
+
+      displayToast({
+        message: "",
+        severity: "error",
+        title: `${err}`,
+        variant: "filled",
+        isLoading: false,
+      });
+    }
+  };
 
   useEffect(() => {
     const token = Cookies.get("auth_token");
@@ -144,9 +177,9 @@ function UserProvider({ children }: IUserProvider) {
 
       Cookies.set("auth_token", data.token, { expires: 7 });
       const token = Cookies.get("auth_token");
-      
+
       const user: LoadUserResponse | undefined = await loadUser(token!);
-      
+
       setUser(user);
 
       displayToast({
@@ -325,7 +358,7 @@ function UserProvider({ children }: IUserProvider) {
         },
       });
       setAllProjects(data)
-    } catch (error) {}
+    } catch (error) { }
   }
 
   return (
@@ -341,7 +374,8 @@ function UserProvider({ children }: IUserProvider) {
         isAddProjectModalOpen,
         setIsAddProjectModalOpen,
         getProjects,
-        allProjects
+        allProjects,
+        handleDeleteProject
       }}
     >
       {children}

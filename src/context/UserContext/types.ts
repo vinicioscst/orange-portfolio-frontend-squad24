@@ -100,4 +100,5 @@ export interface IUserContext {
   isAddProjectModalOpen: boolean;
   getProjects: () => Promise<void>;
   allProjects: AllProjectsResponse[];
+  handleDeleteProject: (projectId: number) => void;
 }
