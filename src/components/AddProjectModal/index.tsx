@@ -193,7 +193,7 @@ export default function AddProjectModal({
         avatar="Avatar do usuário"
         altAvatar="Avatar do usuário"
         altImage="Imagem do usuário"
-        data={{...watch(), images: watch().images || projectImage || ""}}
+        data={{...watch(), title: watch().title || "", images: watch().images || projectImage || ""}}
         onClick={closePreview}
         open={previewOpen}
         onClose={closePreview}
