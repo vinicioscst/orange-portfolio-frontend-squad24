@@ -11,17 +11,20 @@ import { useContext } from "react";
 import { UserContext } from "../../context/UserContext/UserContext";
 import ForwardedFileInput from "../FileInput";
 import { useToast } from "../../context/ToastContext";
+import CheckboxPassword from "../CheckboxPassword";
 
 export default function RegisterForm() {
   const {
     handleSubmit,
     register,
+    getValues,
+    watch,
     formState: { errors, isValid, isSubmitting },
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerFormSchema),
     mode: "onChange",
   });
-
+  watch();
   const { displayToast } = useToast();
   const { handleUser } = useContext(UserContext);
 
@@ -84,6 +87,12 @@ export default function RegisterForm() {
         {...register("confirmPassword")}
         error={errors.confirmPassword}
       />
+      {getValues('password') ? (
+        <CheckboxPassword
+          password={getValues('password')}
+          confirmPassword={getValues('confirmPassword')}
+        />
+      ) : null}
       <Button
         variant="primaryContained"
         text="Cadastrar"
