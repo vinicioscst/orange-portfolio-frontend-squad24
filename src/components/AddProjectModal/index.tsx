@@ -59,7 +59,7 @@ export default function AddProjectModal({ isOpen, onClose}: AddProjectModalProps
                 </div>
                 <Box sx={{display: "flex", flexDirection: "column", gap:"1rem", justifyContent: "stretch", width: '100%',  }}>
                     <Input label="Título" type="text" {...register("title")} error={errors.title}/>
-                    <ChipInput {...register("tags")}/>
+                    <ChipInput {...register("tags")} error={!!errors.tags}/>
                     <Input label="Link" type="text" {...register("link")} error={errors.link}/>
                     <TextField
                         sx={{width: "100%"}}
@@ -68,7 +68,7 @@ export default function AddProjectModal({ isOpen, onClose}: AddProjectModalProps
                         minRows={5}
                         maxRows={10}
                         {...register("description")} 
-                        error={!!errors.title}
+                        error={!!errors.description}
                     />
                 </Box>
             </form>
