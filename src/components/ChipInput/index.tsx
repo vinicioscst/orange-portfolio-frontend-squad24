@@ -1,4 +1,14 @@
-import { Box, Chip, MenuItem, FormControl, InputLabel, Select, SelectChangeEvent, OutlinedInput } from "@mui/material";
+import {
+  Box,
+  Chip,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Select,
+  SelectChangeEvent,
+  OutlinedInput,
+  FormHelperText,
+} from "@mui/material";
 import { ForwardedRef, forwardRef, useState } from "react";
 
 const ITEM_HEIGHT = 48;
@@ -12,9 +22,16 @@ const MenuProps = {
   },
 };
 
+interface IChipInputProps {
+  error?: boolean;
+}
+
 const tags = ["UX/UI", "Web", "Mobile", "API", "Game"];
 
-function ChipInput({ ...rest }, ref: ForwardedRef<HTMLInputElement>) {
+function ChipInput(
+  { error, ...rest }: IChipInputProps,
+  ref: ForwardedRef<HTMLInputElement>
+) {
   const [tagsName, setTagsName] = useState<string[]>([]);
 
   const handleChange = (event: SelectChangeEvent<typeof tagsName>) => {
@@ -22,25 +39,32 @@ function ChipInput({ ...rest }, ref: ForwardedRef<HTMLInputElement>) {
       target: { value },
     } = event;
     if (value.length <= 3) {
-        setTagsName(typeof value === "string" ? value.split(",") : value);
+      setTagsName(typeof value === "string" ? value.split(",") : value);
     }
   };
 
   return (
     <FormControl>
-      <InputLabel id="demo-multiple-chip-label">Tags</InputLabel>
+      <InputLabel id="demo-multiple-chip-label" error={error}>Tags</InputLabel>
       <Select
-        sx={{ width: '100%'}}
+        sx={{ width: "100%" }}
         labelId="demo-multiple-chip-label"
         id="demo-multiple-chip"
-        ref={ref}
-        {...rest}
         multiple
         value={tagsName}
         onChange={handleChange}
-        input={<OutlinedInput id="select-multiple-chip" label="Tags" />}
+        error={error}
+        input={
+          <OutlinedInput
+            id="select-multiple-chip"
+            label="Tags"
+            ref={ref}
+            {...rest}
+            error={error}
+          />
+        }
         renderValue={(selected) => (
-          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5}}>
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
             {selected.map((value: string) => (
               <Chip key={value} label={value} />
             ))}
@@ -54,6 +78,7 @@ function ChipInput({ ...rest }, ref: ForwardedRef<HTMLInputElement>) {
           </MenuItem>
         ))}
       </Select>
+      {error && <FormHelperText error={error}>Selecione pelo menos uma tag</FormHelperText>}
     </FormControl>
   );
 }
