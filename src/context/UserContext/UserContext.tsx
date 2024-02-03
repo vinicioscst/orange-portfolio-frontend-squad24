@@ -280,10 +280,15 @@ function UserProvider({ children }: IUserProvider) {
   }
 
   async function handleProject(formBody: projectFormData) {
-    if (formBody.image !== null || formBody.image !== undefined) {
+    if (formBody.images !== null && formBody.images !== undefined) {
       const formData = new FormData();
-      formData.append("file", formBody.image);
-
+  
+      if (typeof formBody.images === 'string') {
+        const blob = new Blob([formBody.images], {type: 'text/plain'});
+        formData.append("file", blob);
+      } else {
+        formData.append("file", formBody.images);
+      }
       const { data } = await api.post<IImageUploadResponse>(
         "/upload",
         formData
@@ -301,12 +306,12 @@ function UserProvider({ children }: IUserProvider) {
 
       return await createProject(body);
     } else {
-      const { title, tags, description, image, link } = formBody;
+      const { title, tags, description, images, link } = formBody;
       const body = {
         title,
         tags: tags.join(", "),
         description,
-        image,
+        image: images,
         link,
         createddate: `${new Date()}`,
       };

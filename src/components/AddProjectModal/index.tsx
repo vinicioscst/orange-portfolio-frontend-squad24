@@ -15,7 +15,7 @@ import ChipInput from "../ChipInput";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  ProjectFormData,
+  projectFormData,
   projectFormSchema,
 } from "../../schemas/projectsSchemas";
 import { UserContext } from "../../context/UserContext/UserContext";
@@ -48,7 +48,7 @@ export default function AddProjectModal({
     formState: { errors },
     watch,
     control,
-  } = useForm<ProjectFormData>({
+  } = useForm<projectFormData>({
     resolver: zodResolver(projectFormSchema),
     defaultValues: {
       description: "",
@@ -68,12 +68,12 @@ export default function AddProjectModal({
     }
   }
 
-    function submitData(data: ProjectFormData) {
+    function submitData(data: projectFormData) {
         const body = {
             title: data.title,
             tags: data.tags,
             link: data.link || undefined,
-            description: data.description || undefined,
+            description: data.description || "",
             image: projectImage || null
         }
 
@@ -193,7 +193,7 @@ export default function AddProjectModal({
         avatar="Avatar do usuário"
         altAvatar="Avatar do usuário"
         altImage="Imagem do usuário"
-        data={watch()}
+        data={{...watch(), images: watch().images || projectImage || ""}}
         onClick={closePreview}
         open={previewOpen}
         onClose={closePreview}

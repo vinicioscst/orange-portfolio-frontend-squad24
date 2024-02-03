@@ -14,10 +14,10 @@ export const projectFormSchema = z.object({
     description: z
       .string(),
     images: z
-      .string()
+      .string().optional()
   });
 
-export type ProjectFormData = z.infer<typeof projectFormSchema>;
+export type projectFormData = z.infer<typeof projectFormSchema>;
 
 export type ModalProjectData = {
   title: string;
