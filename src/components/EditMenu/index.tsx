@@ -50,7 +50,9 @@ function EditMenu({ handleEdit, handleDelete }: MenuProps) {
                     'aria-labelledby': 'edit-button',
                 }}
             >
-                <MenuItem onClick={handleEdit}>Editar</MenuItem>
+                <MenuItem onClick={handleEdit} sx={{
+                    paddingRight: '4rem'
+                }}>Editar</MenuItem>
                 <MenuItem onClick={handleDelete}>Excluir</MenuItem>
             </Menu>
         </>
