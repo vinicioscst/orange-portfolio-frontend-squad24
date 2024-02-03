@@ -3,14 +3,18 @@ import Header from "../../components/Header";
 import { Container } from "../../components/Container";
 import Input from "../../components/Input";
 import Card from "../../components/Card";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext/UserContext.tsx";
 
 function DiscoverPage() {
+  const [inputSearch, setInputSearch] = useState<string>("");
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.down("lg"));
 
   const {getProjects, allProjects, user} = useContext(UserContext)
+
+  const otherProjects = allProjects.filter(project => project.userid !== user?.userid)
+  const filteredProjects = otherProjects.filter((project) => project.tags.toUpperCase().includes(inputSearch.toUpperCase()));
 
   useEffect(() => {
     getProjects()
@@ -46,10 +50,10 @@ function DiscoverPage() {
             transformando experiências em conexões inesquecíveis
           </Typography>
         </Box>
-        <Input type="text" variant="outlined" label="Buscar tags" />
+        <Input type="text" variant="outlined" label="Buscar tags" onChange={(e) => setInputSearch(e.target.value)} />
         {allProjects.length > 0 ? (
           <Grid container spacing={2} sx={{ marginTop: "40px", marginBottom: "77px" }}>
-            {allProjects.filter(project => project.userid !== user?.userid).map((project) => {
+            {filteredProjects.map((project) => {
               const date = new Date(project.createddate);
               const formattedDate = `${date.getMonth() + 1}/${date
                 .getFullYear()

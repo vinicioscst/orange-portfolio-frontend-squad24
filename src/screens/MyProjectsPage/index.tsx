@@ -5,7 +5,7 @@ import Input from "../../components/Input";
 import { Container } from "../../components/Container";
 import Button from "../../components/Button";
 import Card from "../../components/Card";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import AddProjectModal from "../../components/AddProjectModal/index.tsx";
 import { UserContext } from "../../context/UserContext/UserContext.tsx";
 
@@ -13,7 +13,10 @@ function MyProjectsPage() {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.down("lg"));
 
+  const [inputSearch, setInputSearch] = useState<string>("");
   const {user, isAddProjectModalOpen, setIsAddProjectModalOpen} = useContext(UserContext)
+
+  const filteredProjects = user?.projects.filter((project) => project.tags?.toUpperCase().includes(inputSearch.toUpperCase()));
 
   function handleAddProject() {
     setIsAddProjectModalOpen(true)
@@ -60,10 +63,10 @@ function MyProjectsPage() {
           </Box>
         </Box>
         <Typography mb={2} color={"GrayText"} fontWeight={'bold'}>Meus projetos</Typography>
-        <Input type="text" variant="outlined" label="Buscar tags" />
+        <Input type="text" variant="outlined" label="Buscar tags" onChange={(e) => setInputSearch(e.target.value)} />
         {user?.projects[0].id !== null ? (
           <Grid container spacing={2} sx={{ marginTop: "40px", marginBottom: "77px" }}>
-            {user?.projects.map((project) => {
+            {filteredProjects?.map((project) => {
               const fullDate: Date = new Date(project.createddate)
               let year: number | string = fullDate.getFullYear() % 100
               let month: number | string = fullDate.getMonth() + 1
