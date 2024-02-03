@@ -1,7 +1,7 @@
 import { Grid, Modal, Typography, useMediaQuery, useTheme } from "@mui/material"
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
-import Button from "../Button";
 import { Link } from "react-router-dom";
+import Button from "../../Button";
 
 type SuccessModalProps = {
     title: string;
