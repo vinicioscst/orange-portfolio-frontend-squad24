@@ -1,9 +1,10 @@
-import { FormControl, InputLabel, TextField } from "@mui/material";
+import { FormControl, InputLabel, TextField, useTheme } from "@mui/material";
 import { ForwardedRef, forwardRef } from "react";
-import theme from "../../style/globalStyle";
+
 
 function FileInput({ ...rest }, ref: ForwardedRef<HTMLInputElement>
 ) {
+  const theme = useTheme()
   return (
     <FormControl>
       <InputLabel
