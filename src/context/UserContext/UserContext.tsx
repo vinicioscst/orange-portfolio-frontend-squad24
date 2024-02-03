@@ -51,7 +51,6 @@ function UserProvider({ children }: IUserProvider) {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(data)
 
       setUser(data);
       navigate(currentPath);
@@ -59,7 +58,6 @@ function UserProvider({ children }: IUserProvider) {
     } catch (error: any) {
       console.log(error);
     } finally {
-      console.log(user)
       setLoading(false);
     }
   }
