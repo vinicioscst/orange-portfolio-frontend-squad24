@@ -8,18 +8,35 @@ import Card from "../../components/Card";
 import { useContext, useState } from "react";
 import AddProjectModal from "../../components/AddProjectModal/index.tsx";
 import { UserContext } from "../../context/UserContext/UserContext.tsx";
+import ConfirmationModal from "../../components/ConfirmationModal/index.tsx";
 
 function MyProjectsPage() {
   const theme = useTheme();
   const isBetweenTabletAndMobile = useMediaQuery(theme.breakpoints.down(448));
 
   const [inputSearch, setInputSearch] = useState<string>("");
-  const { user, isAddProjectModalOpen, setIsAddProjectModalOpen, handleDeleteProject } = useContext(UserContext)
+  const {
+    user, isAddProjectModalOpen,
+    setIsAddProjectModalOpen, handleDeleteProject,
+    isConfirmationModalOpen,
+    setIsConfirmationModalOpen } = useContext(UserContext)
 
   const filteredProjects = user?.projects.filter((project) => project.tags?.toUpperCase().includes(inputSearch.toUpperCase()));
 
   function handleAddProject() {
     setIsAddProjectModalOpen(true)
+  }
+
+  function handleDelete() {
+    setIsConfirmationModalOpen(true)
+  }
+
+  function onClose() {
+    console.log('close')
+  }
+
+  function onCancel() {
+    setIsConfirmationModalOpen(false)
   }
 
   function handleEdit() {
@@ -51,7 +68,7 @@ function MyProjectsPage() {
                 {user?.fullname}
               </Typography>
               <Typography variant="subtitle1" component="div" gutterBottom>
-                Brasil
+                {user?.email}
               </Typography>
               <Button text="Adicionar Projeto" variant="primaryContained" type="button" onClick={handleAddProject}></Button>
             </Box>
@@ -75,8 +92,16 @@ function MyProjectsPage() {
                     date={formattedDate}
                     avatar={user?.profileimage !== null ? user?.profileimage : undefined}
                     alt={project.title}
-                    handleDelete={() => handleDeleteProject(project.id)}
+                    handleDelete={handleDelete}
                     handleEdit={handleEdit}
+                    onClose={onClose}
+                  />
+                  <ConfirmationModal
+                    isOpen={isConfirmationModalOpen}
+                    onDelete={() => handleDeleteProject(project.id)}
+                    onCancel={onCancel}
+                    onClose={onCancel}
+                    projectId={project.id}
                   />
                 </Grid>
               );

@@ -11,7 +11,7 @@ function DiscoverPage() {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.down("lg"));
 
-  const {getProjects, allProjects, user} = useContext(UserContext)
+  const { getProjects, allProjects, user } = useContext(UserContext)
 
   const otherProjects = allProjects.filter(project => project.userid !== user?.userid)
   const filteredProjects = otherProjects.filter((project) => project.tags.toUpperCase().includes(inputSearch.toUpperCase()));
@@ -67,6 +67,7 @@ function DiscoverPage() {
                     date={formattedDate}
                     avatar={project.user.profileImage}
                     alt={project.title}
+                    onClose={() => { }}
                   />
                 </Grid>
               );

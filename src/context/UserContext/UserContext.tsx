@@ -30,6 +30,7 @@ function UserProvider({ children }: IUserProvider) {
   const [allProjects, setAllProjects] = useState<AllProjectsResponse[] | []>([]);
   const [loading, setLoading] = useState(false);
   const [isAddProjectModalOpen, setIsAddProjectModalOpen] = useState(false);
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 
   const currentPath = window.location.pathname;
 
@@ -371,7 +372,9 @@ function UserProvider({ children }: IUserProvider) {
         setIsAddProjectModalOpen,
         getProjects,
         allProjects,
-        handleDeleteProject
+        handleDeleteProject,
+        isConfirmationModalOpen,
+        setIsConfirmationModalOpen
       }}
     >
       {children}
