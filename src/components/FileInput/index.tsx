@@ -11,8 +11,8 @@ function FileInput({ ...rest }, ref: ForwardedRef<HTMLInputElement>
         sx={{
           fontSize: "0.75rem",
           position: "absolute",
-          top: "-27px",
-          left: "-4px",
+          top: "-1.6875rem",
+          left: "-0.25rem",
           zIndex: "1",
           padding: "0 0.0625rem",
           backgroundColor: theme.palette.common.white,

@@ -38,8 +38,8 @@ function ModalProjectAdded({
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
                     boxShadow: 24,
-                    width: isSmall ? '700px' : '1024px',
-                    maxWidth: '1024px',
+                    width: isSmall ? '43.75rem' : '64rem',
+                    maxWidth: '64rem',
                     backgroundColor: theme.palette.neutral.main,
                     padding: isSmall ? '2rem 5rem' : '3rem 6rem',
                 }}
@@ -112,7 +112,7 @@ function ModalProjectAdded({
                         >{title}
                         </Typography>
                     </Grid>
-                    <Grid display="flex" gap="8px">
+                    <Grid display="flex" gap="0.5rem">
                         {tags.map((item) => (
                             <Chip label={item} />
                         )).slice(0, 2)}
@@ -125,7 +125,7 @@ function ModalProjectAdded({
                         style={{
                             width: isSmall ? '40rem' : '50rem',
                             height: isSmall ? '20rem' : '30rem',
-                            borderRadius: '4px'
+                            borderRadius: '0.25rem'
                         }}
                     />
                 </Grid>

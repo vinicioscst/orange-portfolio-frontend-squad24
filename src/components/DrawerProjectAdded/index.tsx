@@ -48,7 +48,7 @@ function DrawerProjectAdded({
                     borderTopRightRadius: 24,
                 }}
             >
-                <Grid container padding={'24px'} flexDirection="column">
+                <Grid container padding={'1.5rem'} flexDirection="column">
                     <Grid
                         sx={{
                             position: "absolute",
@@ -87,9 +87,9 @@ function DrawerProjectAdded({
                             src={image}
                             alt={altImage}
                             style={{
-                                width: '312px',
-                                height: '258px',
-                                borderRadius: '4px'
+                                width: '19.5rem',
+                                height: '16.125rem',
+                                borderRadius: '0.25rem'
                             }} />
                     </Grid>
                     <Grid
@@ -125,7 +125,7 @@ function DrawerProjectAdded({
                                 </Typography>
                             </Grid>
                         </Grid>
-                        <Grid display="flex" gap="8px" >
+                        <Grid display="flex" gap="0.5rem" >
                             {tags.map((item) => (
                                 <Chip label={item} />
                             )).slice(0, 2)}

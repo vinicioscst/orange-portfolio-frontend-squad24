@@ -20,14 +20,15 @@ export default function AddProjectModal({ isOpen, onClose}: AddProjectModalProps
 
     useEffect( () => {
         setOpen(isOpen);
+        reset()
     }, [isOpen])
 
     const theme = useTheme();
     const smallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
-    const { handleSubmit, register, formState: { errors } } = useForm<projectFormData>({
+    const { handleSubmit, register, reset, formState: { errors } } = useForm<projectFormData>({
         resolver: zodResolver(projectFormSchema)
-    }) 
+    })
 
     const {handleProject} = useContext(UserContext)
 
@@ -46,7 +47,6 @@ export default function AddProjectModal({ isOpen, onClose}: AddProjectModalProps
             description: data.description || undefined,
             image: projectImage || null
         }
-
         handleProject(body)
     }
 

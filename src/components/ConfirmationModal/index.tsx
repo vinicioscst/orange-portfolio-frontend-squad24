@@ -24,7 +24,7 @@ function ConfirmationModal({ open, onClose, onDelete, onCancel }: ConfirmationMo
         >
             <Grid
                 container
-                width={isMobile ? '312px' : '421px'}
+                width={isMobile ? '19.5rem' : '26.3125rem'}
                 spacing={isMobile ? 3 : 4}
                 padding={isMobile ? 3 : 5}
                 display="flex"

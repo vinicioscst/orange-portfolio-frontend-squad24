@@ -33,8 +33,7 @@ export const projectFormSchema = z.object({
     description: z
       .string().optional(),
     image: z
-      .any().optional(),
-    createddate: z.string()
+      .any().optional()
   });
 
   export type registerProject = z.infer<typeof registerProjectSchema>;

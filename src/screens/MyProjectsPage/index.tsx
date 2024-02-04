@@ -11,7 +11,7 @@ import { UserContext } from "../../context/UserContext/UserContext.tsx";
 
 function MyProjectsPage() {
   const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.down("lg"));
+  const isBetweenTabletAndMobile = useMediaQuery(theme.breakpoints.down(448));
 
   const [inputSearch, setInputSearch] = useState<string>("");
   const { user, isAddProjectModalOpen, setIsAddProjectModalOpen, handleDeleteProject } = useContext(UserContext)
@@ -32,18 +32,17 @@ function MyProjectsPage() {
       <Container>
         <Box
           sx={{
-            paddingY: "7rem",
-            paddingX: isDesktop ? "6rem" : "14.75rem",
+            padding: isBetweenTabletAndMobile ? "3.5rem 1rem 2.5rem" : "7rem 1rem 3.5rem",
           }}
         >
           <Box
             sx={{
               display: 'flex',
-              flexDirection: isDesktop ? "column" : "row",
+              flexDirection: isBetweenTabletAndMobile ? "column" : "row",
               alignItems: 'center',
               justifyContent: 'center',
               width: '100%',
-              gap: '2.625rem'
+              gap: isBetweenTabletAndMobile ? "1rem" : "2.625rem"
             }}
           >
             <Avatar src={user?.profileimage !== null ? user?.profileimage : undefined} alt={user?.fullname} sx={{ width: 122, height: 122 }} />
@@ -61,20 +60,11 @@ function MyProjectsPage() {
         <Typography mb={2} color={"GrayText"} fontWeight={'bold'}>Meus projetos</Typography>
         <Input type="text" variant="outlined" label="Buscar tags" onChange={(e) => setInputSearch(e.target.value)} />
         {user?.projects[0].id !== null ? (
-          <Grid container spacing={2} sx={{ marginTop: "40px", marginBottom: "77px" }}>
+          <Grid container spacing={2} sx={{ marginTop: "2.5rem", marginBottom: "4.8125rem" }}>
             {filteredProjects?.map((project) => {
-              const fullDate: Date = new Date(project.createddate)
-              let year: number | string = fullDate.getFullYear() % 100
-              let month: number | string = fullDate.getMonth() + 1
-
-              if (month < 10) {
-                month = '0' + month;
-              }
-              if (year < 10) {
-                year = '0' + year;
-              }
-
-              const formattedDate = `${month}/${year}`;
+              const date: Date = new Date(project.createddate)
+              const month = (date.getMonth() + 1).toString().padStart(2, '0');
+              const formattedDate = `${month}/${date.getFullYear().toString().slice(-2)}`
               return (
                 <Grid item xs={12} sm={6} md={4} key={project.id}>
                   <Card
@@ -93,28 +83,68 @@ function MyProjectsPage() {
             })}
           </Grid>
         ) : (
-          <Box onClick={handleAddProject} sx={{
-            width: '389px',
-            height: '258px',
+          <Box sx={{
             display: 'flex',
-            flexDirection: 'column',
+            flexWrap: 'wrap',
             justifyContent: 'center',
-            alignItems: 'center',
-            borderRadius: '4px',
-            marginTop: '40px',
-            marginBottom: '40px',
-            cursor: 'pointer'
+            alignItems: 'stretch',
+            borderRadius: '0.25rem',
+            paddingY: '2.5rem',
+            gap: "1.5rem"
           }}
           >
-            <Box sx={{
+            <Box onClick={handleAddProject} sx={{
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              gap: '1rem'
+              justifyContent: 'center',
+              width: "100%",
+              maxWidth: "24.3125rem",
+              gap: '1rem',
+              backgroundColor: theme.palette.neutral[70],
+              padding: "4.25rem 3.75rem",
+              borderRadius: "0.25rem",
+              cursor: 'pointer',
+              flexBasis: "12.5rem",
+              flexGrow: 1
             }}>
               <FilterIcon fontSize="large" sx={{ color: 'black', width: 46, height: 46 }} />
               <Typography fontSize="1rem" variant="subtitle1" color={"GrayText"}>Adicione seu primeiro projeto</Typography>
               <Typography fontSize="0.875rem" variant="subtitle1" color={"GrayText"}>Compartilhe seu talento com milhares de pessoas</Typography>
+            </Box>
+            <Box sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: "100%",
+              maxWidth: "24.3125rem",
+              height: isBetweenTabletAndMobile ? "18.1875rem" : "auto",
+              gap: '1rem',
+              backgroundColor: theme.palette.neutral[70],
+              opacity: 0.2,
+              padding: "4.25rem 3.75rem",
+              borderRadius: "0.25rem",
+              flexBasis: "12.5rem",
+              flexGrow: 1
+            }}>
+            </Box>
+            <Box sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: "100%",
+              maxWidth: "24.3125rem",
+              height: isBetweenTabletAndMobile ? "18.1875rem" : "auto",
+              gap: '1rem',
+              backgroundColor: theme.palette.neutral[70],
+              opacity: 0.2,
+              padding: "4.25rem 3.75rem",
+              borderRadius: "0.25rem",
+              flexBasis: "12.5rem",
+              flexGrow: 1
+            }}>
             </Box>
           </Box>
         )}

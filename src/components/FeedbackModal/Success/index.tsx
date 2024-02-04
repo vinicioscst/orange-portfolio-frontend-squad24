@@ -16,7 +16,7 @@ function SuccessModal({ title, open, onClose }: SuccessModalProps) {
         <Modal open={open} onClose={onClose}>
             <Grid
                 container
-                width={isMobile ? '312px' : '351px'}
+                width={isMobile ? '19.5rem' : '21.9375rem'}
                 spacing={isMobile ? 3 : 4}
                 padding={isMobile ? 3 : 5}
                 display="flex"
@@ -49,8 +49,8 @@ function SuccessModal({ title, open, onClose }: SuccessModalProps) {
                     <Grid>
                         <CheckCircleRoundedIcon
                             sx={{
-                                width: '50px',
-                                height: '50px',
+                                width: '3.125rem',
+                                height: '3.125rem',
                                 color: theme.palette.success.main
                             }} />
                     </Grid>

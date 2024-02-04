@@ -37,6 +37,7 @@ function RegisterPage() {
           gap: "1rem",
           width: isMediumSize ? "100vw" : "57.2vw",
           minHeight: "100dvh",
+          padding: isMediumSize ? "0" : "0 1rem"
         }}
       >
         <Typography
