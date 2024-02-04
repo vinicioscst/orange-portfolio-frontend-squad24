@@ -18,6 +18,7 @@ function Input(
 
   const [showPassword, setShowPassword] = useState(false);
   const theme = useTheme()
+  const theme = useTheme()
   function toggleShowPassword() {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   }
