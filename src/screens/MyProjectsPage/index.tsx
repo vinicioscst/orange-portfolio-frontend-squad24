@@ -14,7 +14,7 @@ function MyProjectsPage() {
   const isBetweenTabletAndMobile = useMediaQuery(theme.breakpoints.down(448));
 
   const [inputSearch, setInputSearch] = useState<string>("");
-  const {user, isAddProjectModalOpen, setIsAddProjectModalOpen} = useContext(UserContext)
+  const { user, isAddProjectModalOpen, setIsAddProjectModalOpen, handleDeleteProject } = useContext(UserContext)
 
   const filteredProjects = user?.projects.filter((project) => project.tags?.toUpperCase().includes(inputSearch.toUpperCase()));
 
@@ -24,10 +24,6 @@ function MyProjectsPage() {
 
   function handleEdit() {
     console.log('edit')
-  }
-
-  function handleDelete() {
-    console.log('delete')
   }
 
   return (
@@ -49,15 +45,15 @@ function MyProjectsPage() {
               gap: isBetweenTabletAndMobile ? "1rem" : "2.625rem"
             }}
           >
-            <Avatar src={user?.profileimage !== null ? user?.profileimage : undefined} alt={user?.fullname} sx={{ width: 122, height: 122}}/>
-          <Box>
-            <Typography variant="h6" component="div" gutterBottom>
-              {user?.fullname}
-            </Typography>
-            <Typography variant="subtitle1" component="div" gutterBottom>
-              Brasil
-            </Typography>
-            <Button text="Adicionar Projeto" variant="primaryContained" type="button" onClick={handleAddProject}></Button>
+            <Avatar src={user?.profileimage !== null ? user?.profileimage : undefined} alt={user?.fullname} sx={{ width: 122, height: 122 }} />
+            <Box>
+              <Typography variant="h6" component="div" gutterBottom>
+                {user?.fullname}
+              </Typography>
+              <Typography variant="subtitle1" component="div" gutterBottom>
+                Brasil
+              </Typography>
+              <Button text="Adicionar Projeto" variant="primaryContained" type="button" onClick={handleAddProject}></Button>
             </Box>
           </Box>
         </Box>
@@ -88,7 +84,7 @@ function MyProjectsPage() {
                     date={formattedDate}
                     avatar={user?.profileimage !== null ? user?.profileimage : undefined}
                     alt={project.title}
-                    handleDelete={handleDelete}
+                    handleDelete={() => handleDeleteProject(project.id)}
                     handleEdit={handleEdit}
                   />
                 </Grid>
@@ -113,7 +109,7 @@ function MyProjectsPage() {
               alignItems: 'center',
               gap: '1rem'
             }}>
-              <FilterIcon fontSize="large" sx={{ color: 'black', width: 46, height: 46}}/>
+              <FilterIcon fontSize="large" sx={{ color: 'black', width: 46, height: 46 }} />
               <Typography fontSize="1rem" variant="subtitle1" color={"GrayText"}>Adicione seu primeiro projeto</Typography>
               <Typography fontSize="0.875rem" variant="subtitle1" color={"GrayText"}>Compartilhe seu talento com milhares de pessoas</Typography>
             </Box>
