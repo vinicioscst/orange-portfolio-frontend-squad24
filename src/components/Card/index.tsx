@@ -14,7 +14,7 @@ type CardProps = {
     tags: string[] | null;
     handleEdit?: () => void;
     handleDelete?: () => void;
-    onClose: () => void;
+    onClose?: () => void;
 }
 
 function Card({ id, image, title, date, alt, avatar, tags, handleDelete, handleEdit, onClose }: CardProps) {
