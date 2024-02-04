@@ -3,6 +3,7 @@ import {
   ICreateUserBody,
   IGoogleLoginData,
   IImageUploadResponse,
+  IModalData,
   IUserContext,
   IUserProvider,
   LoadUserResponse,
@@ -31,7 +32,8 @@ function UserProvider({ children }: IUserProvider) {
   const [loading, setLoading] = useState(false);
   const [isAddProjectModalOpen, setIsAddProjectModalOpen] = useState(false);
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
-  const [selectedProjectId, setSelectedProjectId] = useState(0)
+  const [selectedProjectId, setSelectedProjectId] = useState(0);
+  const [modalData, setModalData] = useState<IModalData | null>()
 
   const currentPath = window.location.pathname;
 
@@ -45,17 +47,14 @@ function UserProvider({ children }: IUserProvider) {
       });
 
       getProjects();
-      displayToast({
-        message: "",
-        severity: "success",
-        title: "Projeto deletado com sucesso",
-        variant: "filled",
-        isLoading: false,
-      });
       loadUser(token);
-      setTimeout(() => {
-        setIsConfirmationModalOpen(false);
-      }, 1000);
+      
+      setIsConfirmationModalOpen(false);
+
+      setModalData({
+        title: "Projeto deletado com sucesso!",
+        open: true,
+      })
     } catch (error: any) {
       const err = error.response.data.mensagem;
 
@@ -276,14 +275,6 @@ function UserProvider({ children }: IUserProvider) {
   async function createProject(body: registerProject) {
     const token = Cookies.get("auth_token");
 
-    displayToast({
-      message: "",
-      severity: "info",
-      title: "Carregando",
-      variant: "filled",
-      isLoading: true,
-    });
-
     try {
       await api.post("/projects", body, {
         headers: {
@@ -291,17 +282,14 @@ function UserProvider({ children }: IUserProvider) {
         },
       });
 
-      displayToast({
-        message: "",
-        severity: "success",
-        title: "Projeto cadastrado com sucesso",
-        variant: "filled",
-        isLoading: false,
-      });
-
       loadUser(token);
       reset();
       setIsAddProjectModalOpen(false);
+
+      setModalData({
+        title: "Projeto adicionado com sucesso!",
+        open: true,
+      })
     } catch (error: any) {
       const err = error.response.data.mensagem;
 
@@ -319,7 +307,7 @@ function UserProvider({ children }: IUserProvider) {
     if (formBody.image !== null && formBody.image !== undefined) {
       const formData = new FormData();
       formData.append("file", formBody.image);
-      console.log(formBody.image)
+
       const { data } = await api.post<IImageUploadResponse>(
         "/upload",
         formData
@@ -380,7 +368,9 @@ function UserProvider({ children }: IUserProvider) {
         isConfirmationModalOpen,
         setIsConfirmationModalOpen,
         selectedProjectId,
-        setSelectedProjectId
+        setSelectedProjectId,
+        modalData,
+        setModalData
       }}
     >
       {children}

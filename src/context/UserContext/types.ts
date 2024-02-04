@@ -87,6 +87,10 @@ export interface IImageUploadResponse {
   Key: string;
   Bucket: string;
 }
+export interface IModalData {
+  title: string;
+  open: boolean;
+}
 
 export interface IUserContext {
   handleUser: (formData: RegisterFormData) => Promise<void>;
@@ -105,4 +109,6 @@ export interface IUserContext {
   setIsConfirmationModalOpen: React.Dispatch<React.SetStateAction<boolean>>
   setSelectedProjectId: React.Dispatch<React.SetStateAction<number>>
   selectedProjectId: number
+  setModalData: React.Dispatch<React.SetStateAction<IModalData | null | undefined>>
+  modalData: IModalData | null | undefined
 }

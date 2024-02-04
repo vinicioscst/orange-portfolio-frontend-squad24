@@ -9,6 +9,7 @@ import { useContext, useState } from "react";
 import AddProjectModal from "../../components/AddProjectModal/index.tsx";
 import { UserContext } from "../../context/UserContext/UserContext.tsx";
 import ConfirmationModal from "../../components/ConfirmationModal/index.tsx";
+import SuccessModal from "../../components/FeedbackModal/Success/index.tsx";
 
 function MyProjectsPage() {
   const theme = useTheme();
@@ -99,7 +100,6 @@ function MyProjectsPage() {
                   <ConfirmationModal
                     onCancel={onCancel}
                     onClose={onCancel}
-                    projectId={project.id}
                   />
                 </Grid>
               );
@@ -172,6 +172,7 @@ function MyProjectsPage() {
           </Box>
         )}
         <AddProjectModal isOpen={isAddProjectModalOpen} onClose={() => setIsAddProjectModalOpen(false)} />
+        <SuccessModal />
       </Container>
     </>
   );

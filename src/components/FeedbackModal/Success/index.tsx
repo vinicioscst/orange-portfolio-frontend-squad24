@@ -1,26 +1,30 @@
 import { Grid, Modal, Typography, useMediaQuery, useTheme } from "@mui/material"
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
-import { Link } from "react-router-dom";
 import Button from "../../Button";
+import { useContext } from "react";
+import { UserContext } from "../../../context/UserContext/UserContext";
 
-type SuccessModalProps = {
-    title: string;
-    open: boolean;
-    onClose: () => void;
-}
-
-function SuccessModal({ title, open, onClose }: SuccessModalProps) {
+function SuccessModal() {
     const theme = useTheme()
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+    const {setModalData, modalData} = useContext(UserContext)
+
+    function handleClose() {
+        setModalData({
+            title: "",
+            open: false
+        })
+    }
+
     return (
-        <Modal open={open} onClose={onClose}>
+        <Modal open={modalData !== null && modalData !== undefined ? modalData.open : false} onClose={handleClose}>
             <Grid
                 container
-                width={isMobile ? '19.5rem' : '21.9375rem'}
-                spacing={isMobile ? 3 : 4}
-                padding={isMobile ? 3 : 5}
+                maxWidth= {isMobile ? "19.5rem" : '21.9375rem'}
+                padding="2rem 1rem"
                 display="flex"
                 flexDirection="column"
+                alignItems="center"
                 zIndex={1}
                 bgcolor={theme.palette.neutral.main}
                 sx={{
@@ -35,7 +39,7 @@ function SuccessModal({ title, open, onClose }: SuccessModalProps) {
                     container
                     display="flex"
                     flexDirection="column"
-                    gap={4}
+                    gap="1.5rem"
                     alignItems="center"
                 >
                     <Grid>
@@ -43,7 +47,7 @@ function SuccessModal({ title, open, onClose }: SuccessModalProps) {
                             textAlign="center"
                             variant="h5"
                             color={theme.palette.neutral[110]}
-                        >{title}
+                        >{modalData?.title}
                         </Typography>
                     </Grid>
                     <Grid>
@@ -55,14 +59,12 @@ function SuccessModal({ title, open, onClose }: SuccessModalProps) {
                             }} />
                     </Grid>
                     <Grid>
-                        <Link to="/my-projects">
-                            <Button
-                                text="Voltar para projetos"
-                                type="button"
-                                variant="primaryContained"
-                                onClick={() => { }}
-                            />
-                        </Link>
+                        <Button
+                            text="Voltar para projetos"
+                            type="button"
+                            variant="primaryContained"
+                            onClick={handleClose}
+                        />
                     </Grid>
                 </Grid>
             </Grid>

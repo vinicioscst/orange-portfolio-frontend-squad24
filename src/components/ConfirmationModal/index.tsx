@@ -9,10 +9,9 @@ import { UserContext } from "../../context/UserContext/UserContext";
 type ConfirmationModalProps = {
     onClose: () => void;
     onCancel: () => void;
-    projectId: number;
 }
 
-function ConfirmationModal({ onClose, onCancel, projectId }: ConfirmationModalProps) {
+function ConfirmationModal({ onClose, onCancel }: ConfirmationModalProps) {
     const theme = useTheme()
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
     const {handleDeleteProject, isConfirmationModalOpen} = useContext(UserContext)
@@ -32,15 +31,12 @@ function ConfirmationModal({ onClose, onCancel, projectId }: ConfirmationModalPr
         }
     }
 
-    console.log('projectId: ' + projectId)
-
     return (
         <Modal
             open={open}
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
-            sx={{"::backdrop":{backgroundColor: "red"}}}
         >
             <Grid
                 container
@@ -78,10 +74,7 @@ function ConfirmationModal({ onClose, onCancel, projectId }: ConfirmationModalPr
                     <Grid>
                         <Button
                             type="button"
-                            onClick={() => {
-                                console.log('projectId da função: ' + projectId)
-                                handleDeleteProject()
-                            }}
+                            onClick={() => handleDeleteProject()}
                             variant="primaryContained"
                             text="EXCLUIR" />
                     </Grid>
