@@ -6,9 +6,8 @@ type MenuProps = {
     handleEdit: () => void;
     handleDelete: (projectId: number) => void;
     projectId: number;
-    onClose: () => void;
 }
-function EditMenu({ handleEdit, handleDelete, projectId, onClose }: MenuProps) {
+function EditMenu({ handleEdit, handleDelete, projectId }: MenuProps) {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -16,7 +15,6 @@ function EditMenu({ handleEdit, handleDelete, projectId, onClose }: MenuProps) {
     };
     const handleClose = () => {
         setAnchorEl(null);
-            onClose()
     };
 
     return (

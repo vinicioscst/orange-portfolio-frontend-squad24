@@ -5,6 +5,7 @@ import Input from "../../components/Input";
 import Card from "../../components/Card";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext/UserContext.tsx";
+import ProjectDetailModal from "../../components/ProjectDetailModal/index.tsx";
 
 function DiscoverPage() {
   const [inputSearch, setInputSearch] = useState<string>("");
@@ -67,7 +68,6 @@ function DiscoverPage() {
                     date={formattedDate}
                     avatar={project.user.profileImage}
                     alt={project.title}
-                    onClose={() => { }}
                   />
                 </Grid>
               );
@@ -79,6 +79,7 @@ function DiscoverPage() {
           </Box>
         )}
       </Container>
+      <ProjectDetailModal />
     </>
   );
 }

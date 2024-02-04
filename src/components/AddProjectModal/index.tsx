@@ -43,8 +43,8 @@ export default function AddProjectModal({ isOpen, onClose}: AddProjectModalProps
         const body = {
             title: data.title,
             tags: data.tags,
-            link: data.link || undefined,
-            description: data.description || undefined,
+            link: data.link || null,
+            description: data.description || null,
             image: projectImage || null
         }
         handleProject(body)
@@ -66,7 +66,7 @@ export default function AddProjectModal({ isOpen, onClose}: AddProjectModalProps
                         label="Descrição"
                         multiline={true}
                         minRows={5}
-                        maxRows={10}
+                        maxRows={5}
                         {...register("description")} 
                         error={!!errors.description}
                     />

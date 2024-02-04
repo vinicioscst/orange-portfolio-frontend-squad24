@@ -5,11 +5,13 @@ import Input from "../../components/Input";
 import { Container } from "../../components/Container";
 import Button from "../../components/Button";
 import Card from "../../components/Card";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AddProjectModal from "../../components/AddProjectModal/index.tsx";
 import { UserContext } from "../../context/UserContext/UserContext.tsx";
 import ConfirmationModal from "../../components/ConfirmationModal/index.tsx";
 import SuccessModal from "../../components/FeedbackModal/Success/index.tsx";
+import { useToast } from "../../context/ToastContext.tsx";
+import ProjectDetailModal from "../../components/ProjectDetailModal/index.tsx";
 
 function MyProjectsPage() {
   const theme = useTheme();
@@ -19,7 +21,13 @@ function MyProjectsPage() {
   const {
     user, isAddProjectModalOpen,
     setIsAddProjectModalOpen,
-    setIsConfirmationModalOpen, setSelectedProjectId } = useContext(UserContext)
+    setIsConfirmationModalOpen, setSelectedProjectId, getProjects } = useContext(UserContext)
+
+  const {displayToast} = useToast()
+
+  useEffect(() => {
+    getProjects()
+  }, [])
 
   const filteredProjects = user?.projects.filter((project) => project.tags?.toUpperCase().includes(inputSearch.toUpperCase()));
 
@@ -32,16 +40,18 @@ function MyProjectsPage() {
     setSelectedProjectId(projectId)
   }
 
-  function onClose() {
-    console.log('close')
-  }
-
   function onCancel() {
     setIsConfirmationModalOpen(false)
   }
 
   function handleEdit() {
-    console.log('edit')
+    displayToast({
+      message: "",
+      severity: "info",
+      title: "Funcionalidade a ser implementada",
+      variant: "filled",
+      isLoading: false,
+    });
   }
 
   return (
@@ -95,7 +105,6 @@ function MyProjectsPage() {
                     alt={project.title}
                     handleDelete={handleDelete}
                     handleEdit={handleEdit}
-                    onClose={onClose}
                   />
                   <ConfirmationModal
                     onCancel={onCancel}
@@ -173,6 +182,7 @@ function MyProjectsPage() {
         )}
         <AddProjectModal isOpen={isAddProjectModalOpen} onClose={() => setIsAddProjectModalOpen(false)} />
         <SuccessModal />
+        <ProjectDetailModal />
       </Container>
     </>
   );

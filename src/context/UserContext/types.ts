@@ -92,6 +92,11 @@ export interface IModalData {
   open: boolean;
 }
 
+export interface IOpenedProjectData {
+  project: AllProjectsResponse | null;
+  open: boolean;
+}
+
 export interface IUserContext {
   handleUser: (formData: RegisterFormData) => Promise<void>;
   loginUser: (formData: LoginFormData) => Promise<void>;
@@ -106,9 +111,14 @@ export interface IUserContext {
   allProjects: AllProjectsResponse[];
   handleDeleteProject: () => void;
   isConfirmationModalOpen: boolean;
-  setIsConfirmationModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-  setSelectedProjectId: React.Dispatch<React.SetStateAction<number>>
-  selectedProjectId: number
-  setModalData: React.Dispatch<React.SetStateAction<IModalData | null | undefined>>
-  modalData: IModalData | null | undefined
+  setIsConfirmationModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setSelectedProjectId: React.Dispatch<React.SetStateAction<number>>;
+  selectedProjectId: number;
+  setModalData: React.Dispatch<
+    React.SetStateAction<IModalData | null | undefined>
+  >;
+  modalData: IModalData | null | undefined;
+  setOpenedProjectData: React.Dispatch<React.SetStateAction<IOpenedProjectData | null | undefined>>;
+  openedProjectData: IOpenedProjectData | null | undefined;
+  handleDetailProject(id: number): Promise<void>;
 }

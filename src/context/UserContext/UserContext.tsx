@@ -4,6 +4,7 @@ import {
   IGoogleLoginData,
   IImageUploadResponse,
   IModalData,
+  IOpenedProjectData,
   IUserContext,
   IUserProvider,
   LoadUserResponse,
@@ -34,6 +35,7 @@ function UserProvider({ children }: IUserProvider) {
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState(0);
   const [modalData, setModalData] = useState<IModalData | null>()
+  const [openedProjectData, setOpenedProjectData] = useState<IOpenedProjectData | null>()
 
   const currentPath = window.location.pathname;
 
@@ -91,7 +93,13 @@ function UserProvider({ children }: IUserProvider) {
       navigate(currentPath);
       return data;
     } catch (error: any) {
-      console.log(error);
+      displayToast({
+        message: "",
+        severity: "error",
+        title: "Não foi possível carregar os dados do usuário",
+        variant: "filled",
+        isLoading: false,
+      });
     } finally {
       setLoading(false);
     }
@@ -291,12 +299,10 @@ function UserProvider({ children }: IUserProvider) {
         open: true,
       })
     } catch (error: any) {
-      const err = error.response.data.mensagem;
-
       displayToast({
         message: "",
         severity: "error",
-        title: `${err}`,
+        title: "No momento não é possível criar um projeto",
         variant: "filled",
         isLoading: false,
       });
@@ -347,7 +353,23 @@ function UserProvider({ children }: IUserProvider) {
         },
       });
       setAllProjects(data)
-    } catch (error) { }
+    } catch (error) {
+      displayToast({
+        message: "",
+        severity: "error",
+        title: "Não foi possível carregar os projetos",
+        variant: "filled",
+        isLoading: false,
+      });
+    }
+  }
+
+  async function handleDetailProject(id: number) {
+    const selectedProject = allProjects.filter((project) => project.id === id)
+    setOpenedProjectData({
+      project: selectedProject[0],
+      open: true
+    })
   }
 
   return (
@@ -370,7 +392,10 @@ function UserProvider({ children }: IUserProvider) {
         selectedProjectId,
         setSelectedProjectId,
         modalData,
-        setModalData
+        setModalData,
+        openedProjectData,
+        setOpenedProjectData,
+        handleDetailProject
       }}
     >
       {children}
