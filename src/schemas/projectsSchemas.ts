@@ -10,11 +10,11 @@ export const projectFormSchema = z.object({
       .min(1, { message: "No mínimo 1 tag necessária" })
       .max(3, { message: "No máximo 3 tags selecionadas"}),
     link: z
-      .string().optional(),
+      .string().optional().nullish(),
     description: z
-      .string().optional(),
+      .string().optional().nullish(),
     image: z
-      .any().optional()
+      .any().optional().nullish()
   });
 
   export type projectFormData = z.infer<typeof projectFormSchema>;
@@ -29,11 +29,11 @@ export const projectFormSchema = z.object({
       .min(1, { message: "No mínimo 1 tag necessária" })
       .max(3, { message: "No máximo 3 tags selecionadas"}),
     link: z
-      .string().optional(),
+      .string().optional().nullish(),
     description: z
-      .string().optional(),
+      .string().optional().nullish(),
     image: z
-      .any().optional()
+      .any().optional().nullish()
   });
 
   export type registerProject = z.infer<typeof registerProjectSchema>;
