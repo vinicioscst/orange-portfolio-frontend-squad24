@@ -5,8 +5,8 @@ import {
   Button,
   CardMedia,
   IconButton,
-  Link,
   Toolbar,
+  Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
@@ -22,6 +22,7 @@ function Header() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isMediumSize = useMediaQuery(theme.breakpoints.down("md"));
+  const isExtraSmallSize = useMediaQuery(theme.breakpoints.between("xs", 294));
 
   const {user, userLogout} = useContext(UserContext)
 
@@ -38,7 +39,9 @@ function Header() {
             padding: "0.75rem 0",
             display: "flex",
             flexDirection: "row",
-            justifyContent: "space-between",
+            flexWrap: "wrap",
+            gap: "0.5rem",
+            justifyContent: isExtraSmallSize ? "center" : "space-between",
             alignItems: "center",
             borderBottomLeftRadius: "0.25rem",
             borderBottomRightRadius: "0.25rem",
@@ -67,22 +70,22 @@ function Header() {
               }}
             >
               <Navigation to={"/my-projects"}>
-                <Link
+                <Typography
                   variant="h6"
-                  underline="hover"
                   color={theme.palette.neutral.main}
+                  sx={{"&:hover": {textDecoration: "underline"}}}
                 >
                   Meus Projetos
-                </Link>
+                </Typography>
               </Navigation>
               <Navigation to={"/discover"}>
-                <Link
+                <Typography
                   variant="h6"
-                  underline="hover"
                   color={theme.palette.neutral.main}
+                  sx={{"&:hover": {textDecoration: "underline"}}}
                 >
                   Descobrir
-                </Link>
+                </Typography>
               </Navigation>
             </Box>
           </Box>

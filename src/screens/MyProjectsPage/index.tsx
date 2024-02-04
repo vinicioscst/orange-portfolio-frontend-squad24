@@ -11,7 +11,7 @@ import { UserContext } from "../../context/UserContext/UserContext.tsx";
 
 function MyProjectsPage() {
   const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.down("lg"));
+  const isBetweenTabletAndMobile = useMediaQuery(theme.breakpoints.down(448));
 
   const [inputSearch, setInputSearch] = useState<string>("");
   const {user, isAddProjectModalOpen, setIsAddProjectModalOpen} = useContext(UserContext)
@@ -36,18 +36,17 @@ function MyProjectsPage() {
       <Container>
         <Box
           sx={{
-            paddingY: "7rem",
-            paddingX: isDesktop ? "6rem" : "14.75rem",
+            padding: isBetweenTabletAndMobile ? "3.5rem 1rem 2.5rem" : "7rem 1rem 3.5rem",
           }}
         >
           <Box
             sx={{
               display: 'flex',
-              flexDirection: isDesktop ? "column" : "row",
+              flexDirection: isBetweenTabletAndMobile ? "column" : "row",
               alignItems: 'center',
               justifyContent: 'center',
               width: '100%',
-              gap: '2.625rem'
+              gap: isBetweenTabletAndMobile ? "1rem" : "2.625rem"
             }}
           >
             <Avatar src={user?.profileimage !== null ? user?.profileimage : undefined} alt={user?.fullname} sx={{ width: 122, height: 122}}/>
@@ -98,12 +97,10 @@ function MyProjectsPage() {
           </Grid>
         ) : (
           <Box onClick={handleAddProject} sx={{
-            width: '389px',
-            height: '258px',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
-            alignItems: 'center',
+            alignItems: 'flex-start',
             borderRadius: '4px',
             marginTop: '40px',
             marginBottom: '40px',
