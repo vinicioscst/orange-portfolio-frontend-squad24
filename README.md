@@ -54,8 +54,55 @@ Se você tiver mais perguntas ou precisar de mais ajuda, sinta-se à vontade par
 ## Colaboradores da Equipe
 #Conheça a Squad-24 !
 
-- [Álvaro Silva Garcia](https://github.com/Alvarosig) - Front-end
-- [Carlos Wylliam de Oliveira Soares](https://github.com/carlos-wylliam) - Back-end
-- [Mariana Moreira Santos](https://github.com/mari-moreira) - Back-end
-- [Ravena Sousa Campos](https://github.com/ravenascampos) - Front-end
-- [Vinícios Soares Costa Paulino da Silva](https://github.com/vinicioscst) - Front-end e Back-end
+<table>
+  <tr>
+    <td align="center" style="padding: 10px;">    
+      <img src="https://github.com/Alvarosig.png" width="250px"/>
+       <br>
+        <sub>
+          <b>Álvaro Garcia</b>
+          <p> <a target="_blank" href="https://www.linkedin.com/in/alvarosig" ><img src="https://img.icons8.com/color/38/000000/linkedin.png"/></a> <a target="_blank" href="https://github.com/Alvarosig"><img src="https://img.icons8.com/ios-glyphs/38/000000/github.png"/></a>
+        </sub>
+      </a>
+  <p>Front-end</p>
+    </td>
+    <td align="center" style="padding: 10px;">
+       <img src="https://github.com/carlos-wylliam.png" width="250px"/>
+      <br>
+        <sub>
+          <b>Carlos Wylliam</b>
+          <p> <a target="_blank" href="https://www.linkedin.com/in/carlos-wylliam"><img src="https://img.icons8.com/color/38/000000/linkedin.png"/></a> <a target="_blank" href="https://github.com/carlos-wylliam"><img src="https://img.icons8.com/ios-glyphs/38/000000/github.png"/></a>
+        </sub>
+      </a>
+  <p>Back-end</p>
+    </td>
+    <td align="center" style="padding: 10px;">
+       <img src="https://github.com/mari-moreira.png" width="250px"/>
+      <br>
+        <sub>
+          <b>Mariana Moreira</b>
+          <p> <a target="_blank" href="https://www.linkedin.com/in/mariana-moreira-santos-39417828a/" ><img src="https://img.icons8.com/color/38/000000/linkedin.png"/></a> <a target="_blank" href="https://github.com/mari-moreira"><img src="https://img.icons8.com/ios-glyphs/38/000000/github.png"/></a>
+        </sub>
+      </a>
+  <p>Back-end</p>
+    </td>
+     <td align="center" style="padding: 10px;">
+      <img src="https://github.com/ravenascampos.png" width="250px"/>
+   <br>
+      <sub>
+          <b>Ravena Campos</b>
+          <p> <a target="_blank" href="https://www.linkedin.com/in/ravenascampos" ><img src="https://img.icons8.com/color/38/000000/linkedin.png"/></a> <a target="_blank" href="https://github.com/ravenascampos"><img src="https://img.icons8.com/ios-glyphs/38/000000/github.png"/></a>
+        </sub>
+      </a>
+    <p>Front-end</p>
+    </td>
+    <td align="center" style="padding: 10px;">
+      <img src="https://github.com/vinicioscst.png" width="250px"/>
+        <br>
+        <sub>
+          <b>Vinícius Soares</b>
+          <p> <a target="_blank" href="https://www.linkedin.com/in/" ><img src="https://img.icons8.com/color/38/000000/linkedin.png"/></a> <a target="_blank" href="https://github.com/vinicioscst"><img src="https://img.icons8.com/ios-glyphs/38/000000/github.png"/></a>
+        </sub>
+      </a>
+      <p>Front-end & Back-end</p>
+    </td>
