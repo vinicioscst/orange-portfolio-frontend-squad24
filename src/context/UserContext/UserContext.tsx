@@ -311,10 +311,10 @@ function UserProvider({ children }: IUserProvider) {
   }
 
   async function handleProject(formBody: projectFormData) {
-    if (formBody.image !== null || formBody.image !== undefined) {
+    if (formBody.image !== null && formBody.image !== undefined) {
       const formData = new FormData();
       formData.append("file", formBody.image);
-
+      console.log(formBody.image)
       const { data } = await api.post<IImageUploadResponse>(
         "/upload",
         formData
@@ -326,8 +326,7 @@ function UserProvider({ children }: IUserProvider) {
         tags: tags.join(", "),
         description,
         image: data.Location,
-        link,
-        createddate: `${new Date()}`,
+        link
       };
 
       return await createProject(body);
@@ -338,8 +337,7 @@ function UserProvider({ children }: IUserProvider) {
         tags: tags.join(", "),
         description,
         image,
-        link,
-        createddate: `${new Date()}`,
+        link
       };
 
       return await createProject(body);

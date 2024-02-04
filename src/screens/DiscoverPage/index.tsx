@@ -54,11 +54,9 @@ function DiscoverPage() {
         {allProjects.length > 0 ? (
           <Grid container spacing={2} sx={{ marginTop: "2.5rem", marginBottom: "4.8125rem" }}>
             {filteredProjects.map((project) => {
-              const date = new Date(project.createddate);
-              const formattedDate = `${date.getMonth() + 1}/${date
-                .getFullYear()
-                .toString()
-                .slice(-2)}`;
+              const date: Date = new Date(project.createddate);
+              const month = (date.getMonth() + 1).toString().padStart(2, '0');
+              const formattedDate = `${month}/${date.getFullYear().toString().slice(-2)}`
               return (
                 <Grid item xs={12} sm={6} md={4} key={project.id}>
                   <Card

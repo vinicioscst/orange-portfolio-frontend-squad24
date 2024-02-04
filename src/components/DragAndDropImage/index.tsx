@@ -1,6 +1,6 @@
 import { Box, CardMedia, Typography, useMediaQuery } from "@mui/material";
 import theme from "../../style/globalStyle";
-import { forwardRef, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { Collections, Upload } from "@mui/icons-material";
 import { useToast } from "../../context/ToastContext";
@@ -122,5 +122,4 @@ function DragAndDropImage({setProjectImage}: IDragAndDropImage) {
   );
 }
 
-const ForwardedDragAndDropImage = forwardRef(DragAndDropImage);
-export default ForwardedDragAndDropImage;
+export default DragAndDropImage;

@@ -3,6 +3,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 import React from 'react';
 import EditMenu from '../EditMenu';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import ProjectWithoutImage from '../../assets/project-without-image.svg'
 
 type CardProps = {
     id: number;
@@ -48,7 +49,7 @@ function Card({ id, image, title, date, alt, avatar, tags, handleDelete, handleE
                     width: '100%',
                     borderRadius: "0.25rem"
                 }}
-                image={image ? image : undefined}
+                image={image !== null && image !== undefined && image.trim() !== "" ? image : ProjectWithoutImage}
             />
 
             <CardContent sx={{padding: '0', paddingTop: '0.5rem'}}>
