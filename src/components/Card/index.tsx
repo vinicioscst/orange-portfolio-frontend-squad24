@@ -46,12 +46,12 @@ function Card({ id, image, title, date, alt, avatar, tags, handleDelete, handleE
                 sx={{
                     height: 258,
                     width: '100%',
-                    borderRadius: "4px"
+                    borderRadius: "0.25rem"
                 }}
                 image={image ? image : undefined}
             />
 
-            <CardContent sx={{padding: '0', paddingTop: '8px'}}>
+            <CardContent sx={{padding: '0', paddingTop: '0.5rem'}}>
                 <Grid
                     container
                     alignItems="center"
@@ -72,7 +72,7 @@ function Card({ id, image, title, date, alt, avatar, tags, handleDelete, handleE
                             }}
                         />
                         <Grid
-                            ml={'8px'}
+                            ml={'0.5rem'}
                             display="flex"
                             flexDirection={isMobile ? "column" : "row"}
                         >
@@ -84,8 +84,8 @@ function Card({ id, image, title, date, alt, avatar, tags, handleDelete, handleE
                             {isMobile ?
                                 null :
                                 <Typography sx={{
-                                    marginLeft: '8px',
-                                    marginRight: '8px'
+                                    marginLeft: '0.5rem',
+                                    marginRight: '0.5rem'
                                 }}
                                 >•
                                 </Typography>

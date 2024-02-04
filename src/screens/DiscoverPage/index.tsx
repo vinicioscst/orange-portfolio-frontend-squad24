@@ -40,7 +40,7 @@ function DiscoverPage() {
               fontSize: "2.125rem",
               fontWeight: "400",
               lineHeight: "2.125rem",
-              letterSpacing: "0.25px",
+              letterSpacing: "0.015622rem",
             }}
             color="InfoText"
             align="center"
@@ -52,7 +52,7 @@ function DiscoverPage() {
         </Box>
         <Input type="text" variant="outlined" label="Buscar tags" onChange={(e) => setInputSearch(e.target.value)} />
         {allProjects.length > 0 ? (
-          <Grid container spacing={2} sx={{ marginTop: "40px", marginBottom: "77px" }}>
+          <Grid container spacing={2} sx={{ marginTop: "2.5rem", marginBottom: "4.8125rem" }}>
             {filteredProjects.map((project) => {
               const date = new Date(project.createddate);
               const formattedDate = `${date.getMonth() + 1}/${date

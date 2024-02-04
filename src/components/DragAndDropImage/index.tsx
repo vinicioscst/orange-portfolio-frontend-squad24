@@ -61,7 +61,7 @@ function DragAndDropImage({setProjectImage}: IDragAndDropImage) {
         height: "19rem",
         backgroundColor: theme.palette.neutral[70],
         borderRadius: "0.25rem",
-        border: dropzone.isDragActive ? `1px solid ${theme.palette.primary.main}` : "0",
+        border: dropzone.isDragActive ? `0.0625rem solid ${theme.palette.primary.main}` : "0",
         cursor: "pointer",
       }}
     >

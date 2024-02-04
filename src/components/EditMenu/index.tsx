@@ -26,11 +26,11 @@ function EditMenu({ handleEdit, handleDelete }: MenuProps) {
                 aria-expanded={open ? 'true' : undefined}
                 onClick={handleClick}
                 sx={{
-                    width: '28px',
-                    height: '28px'
+                    width: '1.75rem',
+                    height: '1.75rem'
                 }}
             >
-                <Edit sx={{ fontSize: "18px" }} />
+                <Edit sx={{ fontSize: "1.125rem" }} />
             </IconButton>
             <Menu
                 id="edit-menu"

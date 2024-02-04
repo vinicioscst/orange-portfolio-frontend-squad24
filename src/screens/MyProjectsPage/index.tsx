@@ -60,7 +60,7 @@ function MyProjectsPage() {
         <Typography mb={2} color={"GrayText"} fontWeight={'bold'}>Meus projetos</Typography>
         <Input type="text" variant="outlined" label="Buscar tags" onChange={(e) => setInputSearch(e.target.value)} />
         {user?.projects[0].id !== null ? (
-          <Grid container spacing={2} sx={{ marginTop: "40px", marginBottom: "77px" }}>
+          <Grid container spacing={2} sx={{ marginTop: "2.5rem", marginBottom: "4.8125rem" }}>
             {filteredProjects?.map((project) => {
               const fullDate: Date = new Date(project.createddate)
               let year: number | string = fullDate.getFullYear() % 100
@@ -97,9 +97,9 @@ function MyProjectsPage() {
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'flex-start',
-            borderRadius: '4px',
-            marginTop: '40px',
-            marginBottom: '40px',
+            borderRadius: '0.25rem',
+            marginTop: '2.5rem',
+            marginBottom: '2.5rem',
             cursor: 'pointer'
           }}
           >
