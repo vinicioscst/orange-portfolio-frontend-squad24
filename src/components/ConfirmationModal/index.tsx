@@ -3,24 +3,23 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Button from "../Button"
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../context/UserContext/UserContext";
 
 type ConfirmationModalProps = {
-    isOpen: boolean;
     onClose: () => void;
-    onDelete: (projectId: number) => void;
     onCancel: () => void;
-    projectId: number;
 }
 
-function ConfirmationModal({ isOpen, onClose, onDelete, onCancel, projectId }: ConfirmationModalProps) {
+function ConfirmationModal({ onClose, onCancel }: ConfirmationModalProps) {
     const theme = useTheme()
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-    const [open, setOpen] = useState(isOpen);
+    const {handleDeleteProject, isConfirmationModalOpen} = useContext(UserContext)
+    const [open, setOpen] = useState(isConfirmationModalOpen);
 
     useEffect(() => {
-        setOpen(isOpen)
-    }, [isOpen])
+        setOpen(isConfirmationModalOpen)
+    }, [isConfirmationModalOpen])
 
     function handleClose() {
         setOpen(false);
@@ -52,7 +51,7 @@ function ConfirmationModal({ isOpen, onClose, onDelete, onCancel, projectId }: C
                     top: '50%',
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
-                    boxShadow: 24,
+                    boxShadow: '#0000001a 0px 0px 20px 0px'
                 }}
             >
                 <Grid container spacing={3}>
@@ -75,7 +74,7 @@ function ConfirmationModal({ isOpen, onClose, onDelete, onCancel, projectId }: C
                     <Grid>
                         <Button
                             type="button"
-                            onClick={() => onDelete(projectId)}
+                            onClick={() => handleDeleteProject()}
                             variant="primaryContained"
                             text="EXCLUIR" />
                     </Grid>

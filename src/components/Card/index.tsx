@@ -14,7 +14,7 @@ type CardProps = {
     avatar: string | undefined;
     tags: string[] | null;
     handleEdit?: () => void;
-    handleDelete?: () => void;
+    handleDelete?: (projectId: number) => void;
     onClose: () => void;
 }
 
@@ -40,7 +40,7 @@ function Card({ id, image, title, date, alt, avatar, tags, handleDelete, handleE
                     <EditMenu
                         onClose={onClose}
                         projectId={id}
-                        handleDelete={handleDelete}
+                        handleDelete={() => handleDelete(id)}
                         handleEdit={handleEdit}
                     />
                 </CardActions>

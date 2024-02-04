@@ -74,7 +74,9 @@ function DiscoverPage() {
             })}
           </Grid>
         ) : (
-          <Typography>Nenhum projeto adicionado ainda</Typography>
+          <Box sx={{padding: "3rem 1rem", margin: "0 auto"}}>
+            <Typography sx={{textAlign: "center"}}>Nenhum projeto adicionado ainda</Typography>
+          </Box>
         )}
       </Container>
     </>
