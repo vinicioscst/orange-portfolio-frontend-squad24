@@ -3,22 +3,39 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Button from "../Button"
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { useEffect, useState } from "react";
 
 type ConfirmationModalProps = {
-    open: boolean;
+    isOpen: boolean;
     onClose: () => void;
-    onDelete: () => void;
+    onDelete: (projectId: number) => void;
     onCancel: () => void;
+    projectId: number;
 }
 
-function ConfirmationModal({ open, onClose, onDelete, onCancel }: ConfirmationModalProps) {
+function ConfirmationModal({ isOpen, onClose, onDelete, onCancel, projectId }: ConfirmationModalProps) {
     const theme = useTheme()
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+    const [open, setOpen] = useState(isOpen);
+
+    useEffect(() => {
+        setOpen(isOpen)
+    }, [isOpen])
+
+    function handleClose() {
+        setOpen(false);
+        if (onClose) {
+            onClose()
+        }
+        if (onCancel) {
+            onCancel()
+        }
+    }
 
     return (
         <Modal
             open={open}
-            onClose={onClose}
+            onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
@@ -58,7 +75,7 @@ function ConfirmationModal({ open, onClose, onDelete, onCancel }: ConfirmationMo
                     <Grid>
                         <Button
                             type="button"
-                            onClick={onDelete}
+                            onClick={() => onDelete(projectId)}
                             variant="primaryContained"
                             text="EXCLUIR" />
                     </Grid>

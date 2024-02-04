@@ -14,9 +14,10 @@ type CardProps = {
     tags: string[] | null;
     handleEdit?: () => void;
     handleDelete?: () => void;
+    onClose: () => void;
 }
 
-function Card({ id, image, title, date, alt, avatar, tags, handleDelete, handleEdit }: CardProps) {
+function Card({ id, image, title, date, alt, avatar, tags, handleDelete, handleEdit, onClose }: CardProps) {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
     return (
@@ -36,6 +37,7 @@ function Card({ id, image, title, date, alt, avatar, tags, handleDelete, handleE
                     }}
                 >
                     <EditMenu
+                        onClose={onClose}
                         projectId={id}
                         handleDelete={handleDelete}
                         handleEdit={handleEdit}
@@ -51,7 +53,7 @@ function Card({ id, image, title, date, alt, avatar, tags, handleDelete, handleE
                 image={image ? image : undefined}
             />
 
-            <CardContent sx={{padding: '0', paddingTop: '8px'}}>
+            <CardContent sx={{ padding: '0', paddingTop: '8px' }}>
                 <Grid
                     container
                     alignItems="center"
@@ -97,9 +99,9 @@ function Card({ id, image, title, date, alt, avatar, tags, handleDelete, handleE
                             </Typography>
                         </Grid>
                     </Grid>
-                    <Grid sx={{display: 'flex', gap: '0.5rem'}}>
+                    <Grid sx={{ display: 'flex', gap: '0.5rem' }}>
                         {tags && tags.map((item) => (
-                            <Chip label={item} key={item}/>
+                            <Chip label={item} key={item} />
                         )).slice(0, 2)}
                     </Grid>
                 </Grid>
