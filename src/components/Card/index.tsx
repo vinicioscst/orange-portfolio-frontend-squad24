@@ -53,7 +53,7 @@ function Card({ id, image, title, date, alt, avatar, tags, handleDelete, handleE
                 image={image ? image : undefined}
             />
 
-            <CardContent sx={{ padding: '0', paddingTop: '8px' }}>
+            <CardContent sx={{ padding: '0', paddingTop: '0.5rem' }}>
                 <Grid
                     container
                     alignItems="center"
