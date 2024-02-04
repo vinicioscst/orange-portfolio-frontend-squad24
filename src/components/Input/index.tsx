@@ -1,5 +1,6 @@
 import { HelpOutline, Visibility, VisibilityOff } from "@mui/icons-material";
 import { TextField, TextFieldVariants, Tooltip, useTheme } from "@mui/material";
+import { TextField, TextFieldVariants, Tooltip, useTheme } from "@mui/material";
 import { ForwardedRef, forwardRef, useState } from "react";
 import { FieldError } from "react-hook-form";
 interface InputProps {
@@ -16,6 +17,7 @@ function Input(
   { label, variant = "outlined", type = "text", error, flexBasis, tooltip, onChange, ...rest }: InputProps, ref: ForwardedRef<HTMLInputElement>) {
 
   const [showPassword, setShowPassword] = useState(false);
+  const theme = useTheme()
   const theme = useTheme()
   function toggleShowPassword() {
     setShowPassword((prevShowPassword) => !prevShowPassword);
