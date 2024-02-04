@@ -22,19 +22,17 @@ function MyProjectsPage() {
     setIsConfirmationModalOpen } = useContext(UserContext)
 
   const filteredProjects = user?.projects.filter((project) => project.tags?.toUpperCase().includes(inputSearch.toUpperCase()));
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   function handleAddProject() {
     setIsAddProjectModalOpen(true)
   }
 
   function handleDelete() {
-    setAnchorEl(null)
     setIsConfirmationModalOpen(true)
   }
 
   function onClose() {
-    setAnchorEl(null)
+    console.log('close')
   }
 
   function onCancel() {

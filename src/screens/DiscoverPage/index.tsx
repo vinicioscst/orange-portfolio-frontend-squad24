@@ -69,6 +69,7 @@ function DiscoverPage() {
                     date={formattedDate}
                     avatar={project.user.profileImage}
                     alt={project.title}
+                    onClose={() => { }}
                   />
                 </Grid>
               );
