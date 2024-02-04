@@ -100,7 +100,9 @@ export interface IUserContext {
   isAddProjectModalOpen: boolean;
   getProjects: () => Promise<void>;
   allProjects: AllProjectsResponse[];
-  handleDeleteProject: (projectId: number) => void;
+  handleDeleteProject: () => void;
   isConfirmationModalOpen: boolean;
   setIsConfirmationModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setSelectedProjectId: React.Dispatch<React.SetStateAction<number>>
+  selectedProjectId: number
 }

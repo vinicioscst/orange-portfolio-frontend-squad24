@@ -31,13 +31,14 @@ function UserProvider({ children }: IUserProvider) {
   const [loading, setLoading] = useState(false);
   const [isAddProjectModalOpen, setIsAddProjectModalOpen] = useState(false);
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+  const [selectedProjectId, setSelectedProjectId] = useState(0)
 
   const currentPath = window.location.pathname;
 
-  const handleDeleteProject = async (projectId: number) => {
+  const handleDeleteProject = async () => {
     try {
       const token = Cookies.get("auth_token");
-      await api.delete(`/projects/${projectId}`, {
+      await api.delete(`/projects/${selectedProjectId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -52,6 +53,9 @@ function UserProvider({ children }: IUserProvider) {
         isLoading: false,
       });
       loadUser(token);
+      setTimeout(() => {
+        setIsConfirmationModalOpen(false);
+      }, 1000);
     } catch (error: any) {
       const err = error.response.data.mensagem;
 
@@ -374,7 +378,9 @@ function UserProvider({ children }: IUserProvider) {
         allProjects,
         handleDeleteProject,
         isConfirmationModalOpen,
-        setIsConfirmationModalOpen
+        setIsConfirmationModalOpen,
+        selectedProjectId,
+        setSelectedProjectId
       }}
     >
       {children}

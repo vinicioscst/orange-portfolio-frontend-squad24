@@ -17,9 +17,8 @@ function MyProjectsPage() {
   const [inputSearch, setInputSearch] = useState<string>("");
   const {
     user, isAddProjectModalOpen,
-    setIsAddProjectModalOpen, handleDeleteProject,
-    isConfirmationModalOpen,
-    setIsConfirmationModalOpen } = useContext(UserContext)
+    setIsAddProjectModalOpen,
+    setIsConfirmationModalOpen, setSelectedProjectId } = useContext(UserContext)
 
   const filteredProjects = user?.projects.filter((project) => project.tags?.toUpperCase().includes(inputSearch.toUpperCase()));
 
@@ -27,8 +26,9 @@ function MyProjectsPage() {
     setIsAddProjectModalOpen(true)
   }
 
-  function handleDelete() {
+  function handleDelete(projectId: number) {
     setIsConfirmationModalOpen(true)
+    setSelectedProjectId(projectId)
   }
 
   function onClose() {
@@ -97,8 +97,6 @@ function MyProjectsPage() {
                     onClose={onClose}
                   />
                   <ConfirmationModal
-                    isOpen={isConfirmationModalOpen}
-                    onDelete={() => handleDeleteProject(project.id)}
                     onCancel={onCancel}
                     onClose={onCancel}
                     projectId={project.id}
