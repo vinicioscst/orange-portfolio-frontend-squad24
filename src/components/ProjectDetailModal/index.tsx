@@ -14,6 +14,7 @@ import { Close } from "@mui/icons-material";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext/UserContext";
 import ProjectWithoutImage from "../../assets/project-without-image.svg";
+import Header from "../Header";
 
 function ProjectDetailModal() {
   const theme = useTheme();
@@ -44,8 +45,10 @@ function ProjectDetailModal() {
       }
       onClose={handleClose}
       fullWidth={true}
+      fullScreen={isMobile ? true : false}
       maxWidth={"xl"}
     >
+      {isMobile && <Header />}
       <DialogContent
         sx={{
           position: "relative",
