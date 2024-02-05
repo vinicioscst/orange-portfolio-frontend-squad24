@@ -11,19 +11,20 @@ import { UserContext } from "../../context/UserContext/UserContext.tsx";
 import ConfirmationModal from "../../components/ConfirmationModal/index.tsx";
 import SuccessModal from "../../components/FeedbackModal/Success/index.tsx";
 import { useToast } from "../../context/ToastContext.tsx";
-import ProjectDetailModal from "../../components/ProjectDetailModal/index.tsx";
+import { useColorMode } from "../../style/ColorMode/ColorModeCoxtext.tsx";
+import ModalProjectAdded from "../../components/ModalProjectAdded/index.tsx";
+import DrawerProjectAdded from "../../components/DrawerProjectAdded/index.tsx";
 
 function MyProjectsPage() {
   const theme = useTheme();
+  const [colorMode] = useColorMode();
   const isBetweenTabletAndMobile = useMediaQuery(theme.breakpoints.down(448));
-
+  const { displayToast } = useToast()
   const [inputSearch, setInputSearch] = useState<string>("");
   const {
     user, isAddProjectModalOpen,
     setIsAddProjectModalOpen,
     setIsConfirmationModalOpen, setSelectedProjectId, getProjects } = useContext(UserContext)
-
-  const {displayToast} = useToast()
 
   useEffect(() => {
     getProjects()
@@ -75,20 +76,40 @@ function MyProjectsPage() {
           >
             <Avatar src={user?.profileimage !== null ? user?.profileimage : undefined} alt={user?.fullname} sx={{ width: 122, height: 122 }} />
             <Box>
-              <Typography variant="h6" component="div" gutterBottom>
+              <Typography
+                variant="h6"
+                component="div"
+                gutterBottom
+                color={theme.palette.neutral[120]}
+              >
                 {user?.fullname}
               </Typography>
-              <Typography variant="subtitle1" component="div" gutterBottom>
+              <Typography
+                variant="subtitle1"
+                component="div"
+                gutterBottom
+                color={theme.palette.neutral[130]}
+              >
                 {user?.email}
               </Typography>
               <Button text="Adicionar Projeto" variant="primaryContained" type="button" onClick={handleAddProject}></Button>
             </Box>
           </Box>
         </Box>
-        <Typography mb={2} color={"GrayText"} fontWeight={'bold'}>Meus projetos</Typography>
-        <Input type="text" variant="outlined" label="Buscar tags" onChange={(e) => setInputSearch(e.target.value)} />
+        <Typography
+          mb={2}
+          color={theme.palette.neutral[120]}
+          fontWeight={'bold'}
+        >Meus projetos
+        </Typography>
+        <Input
+          type="text"
+          variant="outlined"
+          label="Buscar por tags"
+          onChange={(e) => setInputSearch(e.target.value)}
+        />
         {user?.projects[0].id !== null ? (
-          <Grid container spacing={2} sx={{ marginTop: "2.5rem", marginBottom: "4.8125rem" }}>
+          <Grid container spacing={2} rowSpacing={4} sx={{ marginTop: "2.5rem", marginBottom: "4.8125rem" }}>
             {filteredProjects?.map((project) => {
               const date: Date = new Date(project.createddate)
               const month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -133,7 +154,7 @@ function MyProjectsPage() {
               width: "100%",
               maxWidth: "24.3125rem",
               gap: '1rem',
-              backgroundColor: theme.palette.neutral[70],
+              backgroundColor: colorMode === 'dark' ? theme.palette.neutral[80] : theme.palette.neutral[70],
               padding: "4.25rem 3.75rem",
               borderRadius: "0.25rem",
               cursor: 'pointer',
@@ -141,8 +162,8 @@ function MyProjectsPage() {
               flexGrow: 1
             }}>
               <FilterIcon fontSize="large" sx={{ color: 'black', width: 46, height: 46 }} />
-              <Typography fontSize="1rem" variant="subtitle1" color={"GrayText"}>Adicione seu primeiro projeto</Typography>
-              <Typography fontSize="0.875rem" variant="subtitle1" color={"GrayText"}>Compartilhe seu talento com milhares de pessoas</Typography>
+              <Typography fontSize="1rem" variant="subtitle1" color={colorMode === 'dark' ? theme.palette.neutral.main : theme.palette.neutral[120]}>Adicione seu primeiro projeto</Typography>
+              <Typography fontSize="0.875rem" variant="subtitle1" color={colorMode === 'dark' ? theme.palette.neutral.main : theme.palette.neutral[120]}>Compartilhe seu talento com milhares de pessoas</Typography>
             </Box>
             <Box sx={{
               display: 'flex',
@@ -153,7 +174,7 @@ function MyProjectsPage() {
               maxWidth: "24.3125rem",
               height: isBetweenTabletAndMobile ? "18.1875rem" : "auto",
               gap: '1rem',
-              backgroundColor: theme.palette.neutral[70],
+              backgroundColor: colorMode === 'dark' ? theme.palette.neutral[80] : theme.palette.neutral[70],
               opacity: 0.2,
               padding: "4.25rem 3.75rem",
               borderRadius: "0.25rem",
@@ -170,7 +191,7 @@ function MyProjectsPage() {
               maxWidth: "24.3125rem",
               height: isBetweenTabletAndMobile ? "18.1875rem" : "auto",
               gap: '1rem',
-              backgroundColor: theme.palette.neutral[70],
+              backgroundColor: colorMode === 'dark' ? theme.palette.neutral[80] : theme.palette.neutral[70],
               opacity: 0.2,
               padding: "4.25rem 3.75rem",
               borderRadius: "0.25rem",
@@ -182,7 +203,7 @@ function MyProjectsPage() {
         )}
         <AddProjectModal isOpen={isAddProjectModalOpen} onClose={() => setIsAddProjectModalOpen(false)} />
         <SuccessModal />
-        <ProjectDetailModal />
+        {isBetweenTabletAndMobile ? <DrawerProjectAdded /> : <ModalProjectAdded />}
       </Container>
     </>
   );

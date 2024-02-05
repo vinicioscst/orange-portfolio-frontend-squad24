@@ -3,6 +3,7 @@ import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { Collections, Upload } from "@mui/icons-material";
 import { useToast } from "../../context/ToastContext";
+import { useColorMode } from "../../style/ColorMode/ColorModeCoxtext";
 
 
 interface IDragAndDropImage {
@@ -13,7 +14,7 @@ interface IDragAndDropImage {
 function DragAndDropImage({ setProjectImage }: IDragAndDropImage) {
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-
+  const [colorMode] = useColorMode();
   const { displayToast } = useToast()
 
   const [file, setFile] = useState<string | null>(null);
@@ -60,7 +61,7 @@ function DragAndDropImage({ setProjectImage }: IDragAndDropImage) {
           alignItems: "center",
           width: "100%",
           height: "19rem",
-          backgroundColor: theme.palette.neutral[70],
+          backgroundColor: colorMode === 'dark' ? theme.palette.neutral[80] : theme.palette.neutral[70],
           borderRadius: "0.25rem",
           border: dropzone.isDragActive ? `0.0625rem solid ${theme.palette.primary.main}` : "0",
           cursor: "pointer",
@@ -109,7 +110,7 @@ function DragAndDropImage({ setProjectImage }: IDragAndDropImage) {
               />
             )}
 
-            <Typography variant="body2" color={theme.palette.neutral[120]}>
+            <Typography variant="body2" color={colorMode === 'dark' ? theme.palette.neutral.main : theme.palette.neutral[120]}>
               {dropzone.isDragActive
                 ? "Arraste o seu arquivo até aqui"
                 : "Compartilhe seu talento com milhares de pessoas"}

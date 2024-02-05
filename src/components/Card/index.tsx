@@ -21,7 +21,7 @@ type CardProps = {
 function Card({ id, image, title, date, alt, avatar, tags, handleDelete, handleEdit }: CardProps) {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-    const {handleDetailProject} = useContext(UserContext)
+    const { handleDetailProject } = useContext(UserContext)
 
     return (
         <MuiCard
@@ -29,6 +29,7 @@ function Card({ id, image, title, date, alt, avatar, tags, handleDelete, handleE
             sx={{
                 width: '100%',
                 position: "relative",
+                height: '100%'
             }}
         >
             {handleEdit && handleDelete ? (
@@ -57,7 +58,7 @@ function Card({ id, image, title, date, alt, avatar, tags, handleDelete, handleE
                 image={image !== null && image !== undefined && image.trim() !== "" ? image : ProjectWithoutImage}
             />
 
-            <CardContent sx={{padding: '0', paddingTop: '0.5rem'}}>
+            <CardContent sx={{ padding: '1rem 0.5rem' }}>
                 <Grid
                     container
                     alignItems="center"
@@ -85,6 +86,7 @@ function Card({ id, image, title, date, alt, avatar, tags, handleDelete, handleE
                             <Typography
                                 variant='subtitle1'
                                 color={theme.palette.neutral[120]}
+                                noWrap
                             >{title}
                             </Typography>
                             {isMobile ?

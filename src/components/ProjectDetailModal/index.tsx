@@ -39,7 +39,7 @@ function ProjectDetailModal() {
     <Dialog
       open={
         openedProjectData?.project !== null &&
-        openedProjectData?.project !== undefined
+          openedProjectData?.project !== undefined
           ? openedProjectData?.open
           : false
       }
@@ -201,8 +201,8 @@ function ProjectDetailModal() {
             }}
             image={
               openedProjectData?.project?.image !== null &&
-              openedProjectData?.project?.image !== undefined &&
-              openedProjectData?.project.image.trim() !== ""
+                openedProjectData?.project?.image !== undefined &&
+                openedProjectData?.project.image.trim() !== ""
                 ? openedProjectData?.project?.image
                 : ProjectWithoutImage
             }

@@ -16,7 +16,6 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import MobileMenu from "../MobileMenu";
 import Logo from "../../assets/logo.svg";
 import { Link as Navigation } from "react-router-dom";
-import { Container } from "../Container";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext/UserContext";
 import { useColorMode } from "../../style/ColorMode/ColorModeCoxtext";
@@ -27,17 +26,22 @@ function Header() {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isMediumSize = useMediaQuery(theme.breakpoints.down("md"));
   const isExtraSmallSize = useMediaQuery(theme.breakpoints.between("xs", 294));
-
   const { user, userLogout } = useContext(UserContext)
 
   return (
     <AppBar
-      sx={{
-        position: "static",
-        width: "100%"
-      }}
+      position="static"
+      sx={{ width: "100%" }}
     >
-      <Container>
+      <Box
+        sx={{
+          width: '100%',
+          maxWidth: '1280px',
+          padding: '0 8px 0 8px',
+          margin: 'auto'
+
+        }}
+      >
         <Toolbar
           sx={{
             padding: "0.75rem 0",
@@ -76,7 +80,6 @@ function Header() {
               <Navigation to={"/my-projects"}>
                 <Typography
                   variant="h6"
-                  color={theme.palette.neutral.main}
                   sx={{ "&:hover": { textDecoration: "underline" } }}
                 >
                   Meus Projetos
@@ -85,7 +88,6 @@ function Header() {
               <Navigation to={"/discover"}>
                 <Typography
                   variant="h6"
-                  color={theme.palette.neutral.main}
                   sx={{ "&:hover": { textDecoration: "underline" } }}
                 >
                   Descobrir
@@ -98,27 +100,26 @@ function Header() {
             <IconButton
               onClick={toggleColorMode}
               sx={{
-                backgroundColor: theme.palette.primary.main,
-                color: theme.palette.neutral.main,
+                backgroundColor:
+                  colorMode === 'dark' ? theme.palette.neutral[70] : theme.palette.primary.main,
+                color: colorMode === 'dark' ? theme.palette.neutral[120] : theme.palette.neutral.main,
                 "&:hover": {
                   backgroundColor: theme.palette.primary[80],
                 },
               }}
             >
-              {colorMode === 'dark' ? <DarkModeIcon sx={{ color: theme.palette.neutral.main }} /> : <LightModeIcon sx={{ color: theme.palette.neutral.main }} />}
+              {colorMode === 'dark' ? <DarkModeIcon /> : <LightModeIcon />}
             </IconButton>
             <Button
-              sx={{
-                color: theme.palette.neutral.main,
-                display: isMobile ? "none" : "flex",
-              }}
+              variant="text"
+              sx={{ display: isMobile ? "none" : "flex" }}
               onClick={() => userLogout()}
             >
               Sair
             </Button>
           </Box>
         </Toolbar>
-      </Container>
+      </Box>
     </AppBar>
   );
 }

@@ -150,6 +150,13 @@ export const lightTheme: ThemeOptions = {
         MuiButton: {
             variants: [
                 {
+                    props: { variant: 'text' },
+                    style: {
+                        backgroundColor: '#222244',
+                        color: '#FCFDFF'
+                    }
+                },
+                {
                     props: { variant: 'primaryContained' },
                     style: {
                         fontSize: '0.937rem',
@@ -162,7 +169,8 @@ export const lightTheme: ThemeOptions = {
                             backgroundColor: '#CC4400',
                         },
                         '&: disabled': {
-                            backgroundColor: '#E6E9F2'
+                            backgroundColor: '#E6E9F2',
+                            color: '#C2C4CC'
                         }
                     }
                 },
@@ -173,14 +181,15 @@ export const lightTheme: ThemeOptions = {
                         fontWeight: 500,
                         letterSpacing: '0.46px',
                         textTransform: 'uppercase',
-                        color: '#818388',
-                        backgroundColor: '#C2C4CC',
+                        color: '#FF5522',
+                        backgroundColor: 'none',
                         '&:hover': {
-                            color: '#C2C4CC',
-                            backgroundColor: '#818388',
+                            color: '#CC4400',
+                            backgroundColor: 'none',
                         },
                         '&: disabled': {
-                            backgroundColor: '#E6E9F2'
+                            backgroundColor: '#E6E9F2',
+                            color: '#C2C4CC'
                         }
                     }
                 }
@@ -210,7 +219,7 @@ export const lightTheme: ThemeOptions = {
                         fontWeight: 400,
                         letterSpacing: '0.4px',
                         color: '#0B0C0D',
-                        backgroundColor: '#E6E9F2'
+                        backgroundColor: '#FFEE99'
                     }
                 }
             ]

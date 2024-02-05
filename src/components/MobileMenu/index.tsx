@@ -11,10 +11,12 @@ import {
 import { useContext, useState } from "react";
 import { UserContext } from "../../context/UserContext/UserContext";
 import { Link } from "react-router-dom";
+import { useColorMode } from "../../style/ColorMode/ColorModeCoxtext";
 
 function MobileMenu() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const theme = useTheme();
+  const [colorMode] = useColorMode();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const isOpen = Boolean(anchorEl);
 
@@ -32,7 +34,7 @@ function MobileMenu() {
       <IconButton
         sx={{
           display: smallScreen ? "inline-flex" : "none",
-          backgroundColor: theme.palette.primary.main,
+          backgroundColor: colorMode === 'dark' ? theme.palette.neutral[70] : theme.palette.primary.main,
           color: theme.palette.neutral.main,
           "&:hover": {
             backgroundColor: theme.palette.primary[80],

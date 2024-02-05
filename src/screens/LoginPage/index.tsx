@@ -1,6 +1,7 @@
 import {
   Box,
   CardMedia,
+  Grid,
   Typography,
   useMediaQuery,
   useTheme,
@@ -9,14 +10,21 @@ import Illustration from "../../assets/loginpage-illustration.svg";
 import LoginForm from "../../components/LoginForm";
 import { Link } from "react-router-dom";
 import GoogleLoginButton from "../../components/GoogleLoginButton";
+import { useColorMode } from "../../style/ColorMode/ColorModeCoxtext";
 
 function LoginPage() {
   const theme = useTheme();
+  const [colorMode] = useColorMode();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isMediumSize = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <section className="flex justify-center items-stretch w-full max-w-screen-xl px-5 md:px-0 mx-auto">
+    <Grid
+      container
+      sx={{
+        backgroundColor: colorMode === 'dark' ? theme.palette.primary.main : theme.palette.neutral.main
+      }}
+    >
       <CardMedia
         component="img"
         image={Illustration}
@@ -43,7 +51,7 @@ function LoginPage() {
       >
         <Typography
           variant={isMobile ? "h5" : "h3"}
-          color={theme.palette.primary[90]}
+          color={colorMode === 'dark' ? theme.palette.neutral[120] : theme.palette.primary[90]}
           sx={{ textAlign: "center" }}
         >
           Entre no Orange Portfólio
@@ -58,18 +66,19 @@ function LoginPage() {
             paddingY: "1rem",
           }}
         >
-          <Box sx={{alignSelf: "center", paddingBottom: "1rem"}}>
+          <Box sx={{ alignSelf: "center", paddingBottom: "1rem" }}>
             <GoogleLoginButton />
           </Box>
           <LoginForm />
           <Link to={"/register"}>
-            <Typography variant="subtitle1" color={theme.palette.neutral[100]}>
+            <Typography variant="subtitle1" color={theme.palette.info[70]}>
               Cadastre-se
             </Typography>
           </Link>
         </Box>
       </Box>
-    </section>
+    </Grid>
+
   );
 }
 

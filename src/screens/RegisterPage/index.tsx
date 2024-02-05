@@ -1,6 +1,7 @@
 import {
   Box,
   CardMedia,
+  Grid,
   Typography,
   useMediaQuery,
   useTheme,
@@ -8,14 +9,21 @@ import {
 import FormRegister from "../../components/RegisterForm";
 import Illustration from "../../assets/registerpage-illustration.svg";
 import { Link } from "react-router-dom";
+import { useColorMode } from "../../style/ColorMode/ColorModeCoxtext";
 
 function RegisterPage() {
   const theme = useTheme();
+  const [colorMode] = useColorMode();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isMediumSize = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <section className="flex justify-center items-stretch w-full max-w-screen-xl px-5 md:px-0 mx-auto">
+    <Grid
+      container
+      sx={{
+        backgroundColor: colorMode === 'dark' ? theme.palette.primary.main : theme.palette.neutral.main
+      }}
+    >
       <CardMedia
         component="img"
         image={Illustration}
@@ -42,7 +50,7 @@ function RegisterPage() {
       >
         <Typography
           variant={isMobile ? "h5" : "h3"}
-          color={theme.palette.primary[90]}
+          color={colorMode === 'dark' ? theme.palette.neutral[120] : theme.palette.primary[90]}
         >
           Cadastre-se
         </Typography>
@@ -57,13 +65,13 @@ function RegisterPage() {
           }}
         >
           <FormRegister />
-          
-            <Typography variant="subtitle1" color={theme.palette.neutral[100]}>
-              Já possui cadastro? <Link to={"/"} className="font-medium">Faça login</Link>
-            </Typography>
+
+          <Typography variant="subtitle1" color={theme.palette.neutral[100]}>
+            Já possui cadastro? <Link to={"/"} className="font-medium" style={{ color: theme.palette.info[70] }}>Faça login</Link>
+          </Typography>
         </Box>
       </Box>
-    </section>
+    </Grid>
   );
 }
 

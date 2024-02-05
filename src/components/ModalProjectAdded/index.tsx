@@ -1,35 +1,37 @@
-import { Avatar, Box, Chip, Grid, IconButton, Link, Modal, Typography, useMediaQuery, useTheme } from "@mui/material"
+import { Avatar, Box, Chip, Grid, IconButton, Link, Modal, Typography, useMediaQuery, useTheme } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext/UserContext";
+import ProjectWithoutImage from "../../assets/project-without-image.svg";
+import { useColorMode } from "../../style/ColorMode/ColorModeCoxtext";
 
-type ProjectAddedProps = {
-    title: React.ReactNode;
-    altImage: string;
-    image: string;
-    avatar: string;
-    altAvatar: string;
-    subtitle: React.ReactNode;
-    date: React.ReactNode;
-    description: React.ReactNode;
-    tags: string[];
-    link: string;
-    onClick: () => void;
-    open: boolean;
-    onClose: () => void;
-}
-
-function ModalProjectAdded({
-    title, altImage, image,
-    avatar, subtitle, date,
-    description, tags, link,
-    altAvatar, onClick, open,
-    onClose }: ProjectAddedProps) {
+function ModalProjectAdded() {
     const theme = useTheme();
+    const [colorMode] = useColorMode();
     const isSmall = useMediaQuery(theme.breakpoints.down("lg"))
+    const { openedProjectData, setOpenedProjectData } = useContext(UserContext);
+    const date: Date = new Date(
+        openedProjectData?.project?.createddate as string
+    );
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const formattedDate = `${month}/${date.getFullYear().toString().slice(-2)}`;
+
+    function handleClose() {
+        setOpenedProjectData({
+            project: null,
+            open: false,
+        });
+    }
 
     return (
         <Modal
-            open={open}
-            onClose={onClose}
+            open={
+                openedProjectData?.project !== null &&
+                    openedProjectData?.project !== undefined
+                    ? openedProjectData?.open
+                    : false
+            }
+            onClose={handleClose}
         >
             <Box
                 sx={{
@@ -40,7 +42,8 @@ function ModalProjectAdded({
                     boxShadow: 24,
                     width: isSmall ? '43.75rem' : '64rem',
                     maxWidth: '64rem',
-                    backgroundColor: theme.palette.neutral.main,
+                    borderRadius: '10px',
+                    backgroundColor: colorMode === 'dark' ? theme.palette.primary[100] : theme.palette.neutral.main,
                     padding: isSmall ? '2rem 5rem' : '3rem 6rem',
                 }}
             >
@@ -53,11 +56,11 @@ function ModalProjectAdded({
 
                         }}>
                         <IconButton
-                            onClick={onClick}
+                            onClick={handleClose}
                             sx={{
                                 height: 24,
                                 width: 24,
-                                backgroundColor: theme.palette.neutral.main,
+                                backgroundColor: colorMode === 'dark' ? theme.palette.primary[100] : theme.palette.neutral.main,
                                 color: theme.palette.neutral[130],
 
                                 '&:hover': {
@@ -83,8 +86,8 @@ function ModalProjectAdded({
                         alignItems="center"
                     >
                         <Avatar
-                            src={avatar}
-                            alt={altAvatar}
+                            src={openedProjectData?.project?.user.profileImage}
+                            alt={openedProjectData?.project?.user.fullname}
                             sx={{
                                 width: '2.5rem',
                                 height: '2.5rem'
@@ -95,12 +98,12 @@ function ModalProjectAdded({
                                 variant="subtitle1"
                                 color={theme.palette.neutral[120]}
                                 fontWeight="bold"
-                            >{subtitle}
+                            > {openedProjectData?.project?.user.fullname}
                             </Typography>
                             <Typography
                                 variant="subtitle1"
                                 color={theme.palette.neutral[110]}
-                            >{date}
+                            >{formattedDate}
                             </Typography>
                         </Grid>
                     </Grid>
@@ -109,19 +112,27 @@ function ModalProjectAdded({
                             variant="h5"
                             color={theme.palette.neutral[120]}
                             textAlign="center"
-                        >{title}
+                        >{openedProjectData?.project?.title}
                         </Typography>
                     </Grid>
                     <Grid display="flex" gap="0.5rem">
-                        {tags.map((item) => (
-                            <Chip label={item} />
-                        )).slice(0, 2)}
+                        {openedProjectData?.project?.tags &&
+                            openedProjectData?.project?.tags
+                                .split(", ")
+                                .map((tag) => <Chip label={tag} key={tag} />)
+                                .slice(0, 2)}
                     </Grid>
                 </Grid>
                 <Grid>
                     <img
-                        src={image}
-                        alt={altImage}
+                        src={
+                            openedProjectData?.project?.image !== null &&
+                                openedProjectData?.project?.image !== undefined &&
+                                openedProjectData?.project.image.trim() !== ""
+                                ? openedProjectData?.project?.image
+                                : ProjectWithoutImage
+                        }
+                        alt={openedProjectData?.project?.title}
                         style={{
                             width: isSmall ? '40rem' : '50rem',
                             height: isSmall ? '20rem' : '30rem',
@@ -134,7 +145,7 @@ function ModalProjectAdded({
                         variant="body1"
                         color={theme.palette.neutral[120]}
                     >
-                        {description}
+                        {openedProjectData?.project?.description}
                     </Typography>
                     <Grid mt="2rem">
                         <Typography
@@ -146,8 +157,8 @@ function ModalProjectAdded({
                             variant="body2"
                             color={theme.palette.info[80]}
                             underline="hover"
-                            href={link}
-                        >{link}
+                            href={openedProjectData?.project?.link}
+                        >{openedProjectData?.project?.link}
                         </Link>
                     </Grid>
                 </Grid>
