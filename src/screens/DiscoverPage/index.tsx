@@ -5,7 +5,6 @@ import Input from "../../components/Input";
 import Card from "../../components/Card";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext/UserContext.tsx";
-import ProjectDetailModal from "../../components/ProjectDetailModal/index.tsx";
 import { useColorMode } from "../../style/ColorMode/ColorModeCoxtext.tsx";
 import DrawerProjectAdded from "../../components/DrawerProjectAdded/index.tsx";
 import ModalProjectAdded from "../../components/ModalProjectAdded/index.tsx";
