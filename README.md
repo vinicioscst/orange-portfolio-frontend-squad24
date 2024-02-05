@@ -52,7 +52,7 @@ Lembre-se, cada rota corresponderá a um componente React diferente, e esses com
 Se você tiver mais perguntas ou precisar de mais ajuda, sinta-se à vontade para perguntar.
 
 ## Colaboradores da Equipe
-#Conheça a Squad-24 !
+### Conheça a Squad-24 !
 
 <table>
   <tr>
@@ -100,9 +100,9 @@ Se você tiver mais perguntas ou precisar de mais ajuda, sinta-se à vontade par
       <img src="https://github.com/vinicioscst.png" width="250px"/>
         <br>
         <sub>
-          <b>Vinícius Soares</b>
-          <p> <a target="_blank" href="https://www.linkedin.com/in/" ><img src="https://img.icons8.com/color/38/000000/linkedin.png"/></a> <a target="_blank" href="https://github.com/vinicioscst"><img src="https://img.icons8.com/ios-glyphs/38/000000/github.png"/></a>
+          <b>Vinícios Soares</b>
+          <p> <a target="_blank" href="https://www.linkedin.com/in/vinicioscst" ><img src="https://img.icons8.com/color/38/000000/linkedin.png"/></a> <a target="_blank" href="https://github.com/vinicioscst"><img src="https://img.icons8.com/ios-glyphs/38/000000/github.png"/></a>
         </sub>
       </a>
-      <p>Front-end & Back-end</p>
+      <p>Full Stack</p>
     </td>
