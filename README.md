@@ -1,4 +1,4 @@
-# Projeto Orange Juice Hackathon - V5.0 | Squad-24 | Front-end
+# Programa Orange Juice Hackathon - V5.0 | Squad-24 | Front-end
 
 <p align="center">
   <img alt="Favicon" width='30%' src="https://github.com/vinicioscst/orange-portfolio-frontend-squad24/blob/main/src/assets/logo.svg"  />
