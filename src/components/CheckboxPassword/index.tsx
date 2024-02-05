@@ -3,6 +3,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import { useEffect, useState } from "react";
 import { numericRegex, specialRegex } from "./checkboxPassword.schemas";
+import { useColorMode } from "../../style/ColorMode/ColorModeCoxtext";
 
 type CheckboxPasswordProps = {
     password: string;
@@ -11,6 +12,7 @@ type CheckboxPasswordProps = {
 
 function CheckboxPassword({ password, confirmPassword }: CheckboxPasswordProps) {
     const theme = useTheme();
+    const [colorMode] = useColorMode();
     const [passwordValidity, setPasswordValidity] = useState({
         minLength: false,
         minLowerCase: false,
@@ -33,7 +35,10 @@ function CheckboxPassword({ password, confirmPassword }: CheckboxPasswordProps) 
     }, [password, confirmPassword]);
 
     return (
-        <Card sx={{ backgroundColor: theme.palette.neutral.main, padding: '0.5rem' }}>
+        <Card sx={{
+            backgroundColor: colorMode === 'dark' ? theme.palette.primary[100] : theme.palette.neutral.main,
+            padding: '0.5rem'
+        }}>
             <CardContent>
                 <Grid
                     container

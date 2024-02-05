@@ -1,41 +1,42 @@
-import { Avatar, Box, Chip, Grid, IconButton, Link, SwipeableDrawer, Typography, useTheme } from "@mui/material";
+import { Avatar, Box, Chip, Drawer, Grid, IconButton, Link, Typography, useTheme } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext/UserContext";
+import ProjectWithoutImage from "../../assets/project-without-image.svg";
+import { useColorMode } from "../../style/ColorMode/ColorModeCoxtext";
 
-type DrawerProps = {
-    title: React.ReactNode;
-    altImage: string;
-    image: string;
-    avatar: string;
-    altAvatar: string;
-    subtitle: React.ReactNode;
-    date: React.ReactNode;
-    description: React.ReactNode;
-    tags: string[];
-    link: string;
-    onClick: () => void;
-    open: boolean;
-    onClose: () => void;
-    onOpen: () => void;
-}
-
-function DrawerProjectAdded({
-    title, altImage, image,
-    avatar, subtitle, date,
-    description, tags, link,
-    altAvatar, onClick, open,
-    onClose, onOpen }: DrawerProps) {
+function DrawerProjectAdded() {
     const theme = useTheme();
+    const [colorMode] = useColorMode();
+    const { openedProjectData, setOpenedProjectData } = useContext(UserContext);
+    const date: Date = new Date(
+        openedProjectData?.project?.createddate as string
+    );
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const formattedDate = `${month}/${date.getFullYear().toString().slice(-2)}`;
+
+    function handleClose() {
+        setOpenedProjectData({
+            project: null,
+            open: false,
+        });
+    }
 
     return (
-        <SwipeableDrawer
+        <Drawer
             anchor="bottom"
-            open={open}
-            onClose={onClose}
-            onOpen={onOpen}
+            open={
+                openedProjectData?.project !== null &&
+                    openedProjectData?.project !== undefined
+                    ? openedProjectData?.open
+                    : false
+            }
+            onClose={handleClose}
             ModalProps={{
                 sx: {
                     '.MuiPaper-elevation': {
                         backgroundColor: 'transparent',
+                        overflow: 'visible'
                     }
                 }
             }}
@@ -43,7 +44,7 @@ function DrawerProjectAdded({
             <Box
                 sx={{
                     position: "relative",
-                    backgroundColor: theme.palette.neutral.main,
+                    backgroundColor: colorMode === 'dark' ? theme.palette.primary[100] : theme.palette.neutral.main,
                     borderTopLeftRadius: 24,
                     borderTopRightRadius: 24,
                 }}
@@ -57,11 +58,11 @@ function DrawerProjectAdded({
 
                         }}>
                         <IconButton
-                            onClick={onClick}
+                            onClick={handleClose}
                             sx={{
                                 height: 24,
                                 width: 24,
-                                backgroundColor: theme.palette.neutral.main,
+                                backgroundColor: colorMode === 'dark' ? theme.palette.primary[100] : theme.palette.neutral.main,
                                 color: theme.palette.neutral[130],
 
                                 '&:hover': {
@@ -79,13 +80,19 @@ function DrawerProjectAdded({
                                 margin: '3.5rem 0 2rem 0',
                                 textAlign: 'center'
                             }}
-                        >{title}
+                        >{openedProjectData?.project?.title}
                         </Typography>
                     </Grid>
                     <Grid maxWidth={312} maxHeight={258}>
                         <img
-                            src={image}
-                            alt={altImage}
+                            src={
+                                openedProjectData?.project?.image !== null &&
+                                    openedProjectData?.project?.image !== undefined &&
+                                    openedProjectData?.project.image.trim() !== ""
+                                    ? openedProjectData?.project?.image
+                                    : ProjectWithoutImage
+                            }
+                            alt={openedProjectData?.project?.title}
                             style={{
                                 width: '19.5rem',
                                 height: '16.125rem',
@@ -104,8 +111,8 @@ function DrawerProjectAdded({
                             flexDirection="row"
                             alignItems="center">
                             <Avatar
-                                src={avatar}
-                                alt={altAvatar}
+                                src={openedProjectData?.project?.user.profileImage}
+                                alt={openedProjectData?.project?.user.fullname}
                                 sx={{
                                     width: '2.5rem',
                                     height: '2.5rem'
@@ -116,19 +123,21 @@ function DrawerProjectAdded({
                                     variant="subtitle1"
                                     fontWeight='bold'
                                     color={theme.palette.neutral[120]}
-                                >{subtitle}
+                                >{openedProjectData?.project?.user.fullname}
                                 </Typography>
                                 <Typography
                                     variant="subtitle1"
                                     color={theme.palette.neutral[110]}
-                                >{date}
+                                >{formattedDate}
                                 </Typography>
                             </Grid>
                         </Grid>
                         <Grid display="flex" gap="0.5rem" >
-                            {tags.map((item) => (
-                                <Chip label={item} />
-                            )).slice(0, 2)}
+                            {openedProjectData?.project?.tags &&
+                                openedProjectData?.project?.tags
+                                    .split(", ")
+                                    .map((tag) => <Chip label={tag} key={tag} />)
+                                    .slice(0, 2)}
                         </Grid>
                     </Grid>
                     <Grid mt="1.5rem">
@@ -136,7 +145,7 @@ function DrawerProjectAdded({
                             variant="body1"
                             color={theme.palette.neutral[120]}
                         >
-                            {description}
+                            {openedProjectData?.project?.description}
                         </Typography>
                     </Grid>
                     <Grid mt="2rem">
@@ -148,13 +157,13 @@ function DrawerProjectAdded({
                         <Link
                             color={theme.palette.info[80]}
                             underline="hover"
-                            href={link}
-                        >{link}
+                            href={openedProjectData?.project?.link}
+                        >{openedProjectData?.project?.link}
                         </Link>
                     </Grid>
                 </Grid>
             </Box>
-        </SwipeableDrawer>
+        </Drawer>
     );
 }
 

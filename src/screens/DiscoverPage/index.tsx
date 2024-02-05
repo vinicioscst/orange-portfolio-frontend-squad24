@@ -5,12 +5,16 @@ import Input from "../../components/Input";
 import Card from "../../components/Card";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext/UserContext.tsx";
-import ProjectDetailModal from "../../components/ProjectDetailModal/index.tsx";
+import { useColorMode } from "../../style/ColorMode/ColorModeCoxtext.tsx";
+import DrawerProjectAdded from "../../components/DrawerProjectAdded/index.tsx";
+import ModalProjectAdded from "../../components/ModalProjectAdded/index.tsx";
 
 function DiscoverPage() {
   const [inputSearch, setInputSearch] = useState<string>("");
   const theme = useTheme();
+  const [colorMode] = useColorMode();
   const isDesktop = useMediaQuery(theme.breakpoints.down("lg"));
+  const isBetweenTabletAndMobile = useMediaQuery(theme.breakpoints.down(448));
 
   const { getProjects, allProjects, user } = useContext(UserContext)
 
@@ -43,7 +47,7 @@ function DiscoverPage() {
               lineHeight: "2.125rem",
               letterSpacing: "0.015622rem",
             }}
-            color="InfoText"
+            color={colorMode === 'dark' ? theme.palette.primary[70] : theme.palette.primary.main}
             align="center"
             m={"auto"}
           >
@@ -53,7 +57,7 @@ function DiscoverPage() {
         </Box>
         <Input type="text" variant="outlined" label="Buscar tags" onChange={(e) => setInputSearch(e.target.value)} />
         {allProjects.length > 0 ? (
-          <Grid container spacing={2} sx={{ marginTop: "2.5rem", marginBottom: "4.8125rem" }}>
+          <Grid container spacing={2} rowSpacing={4} sx={{ marginTop: "2.5rem", marginBottom: "4.8125rem" }}>
             {filteredProjects.map((project) => {
               const date: Date = new Date(project.createddate);
               const month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -74,12 +78,16 @@ function DiscoverPage() {
             })}
           </Grid>
         ) : (
-          <Box sx={{padding: "3rem 1rem", margin: "0 auto"}}>
-            <Typography sx={{textAlign: "center"}}>Nenhum projeto adicionado ainda</Typography>
+          <Box sx={{ padding: "3rem 1rem", margin: "0 auto" }}>
+            <Typography
+              color={colorMode === 'dark' ? theme.palette.primary[70] : theme.palette.primary.main}
+              sx={{ textAlign: "center" }}
+            >Nenhum projeto adicionado ainda
+            </Typography>
           </Box>
         )}
+        {isBetweenTabletAndMobile ? <DrawerProjectAdded /> : <ModalProjectAdded />}
       </Container>
-      <ProjectDetailModal />
     </>
   );
 }
