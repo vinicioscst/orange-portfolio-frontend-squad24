@@ -59,6 +59,7 @@ Além da possibilidade de cadastrar e buscar projetos, incluímos algumas funcio
 ### 2.2. Em desenvolvimento
 
 - [ ] **Possibilidade de editar o projeto**
+- [ ] **Paginação**
     
 ### 2.3. Inovação
 
