@@ -10,21 +10,25 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { Notifications } from "@mui/icons-material";
+// import { Notifications } from "@mui/icons-material";
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 import MobileMenu from "../MobileMenu";
 import Logo from "../../assets/logo.svg";
 import { Link as Navigation } from "react-router-dom";
 import { Container } from "../Container";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext/UserContext";
+import { useColorMode } from "../../style/ColorMode/ColorModeCoxtext";
 
 function Header() {
   const theme = useTheme();
+  const [colorMode, toggleColorMode] = useColorMode();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isMediumSize = useMediaQuery(theme.breakpoints.down("md"));
   const isExtraSmallSize = useMediaQuery(theme.breakpoints.between("xs", 294));
 
-  const {user, userLogout} = useContext(UserContext)
+  const { user, userLogout } = useContext(UserContext)
 
   return (
     <AppBar
@@ -73,7 +77,7 @@ function Header() {
                 <Typography
                   variant="h6"
                   color={theme.palette.neutral.main}
-                  sx={{"&:hover": {textDecoration: "underline"}}}
+                  sx={{ "&:hover": { textDecoration: "underline" } }}
                 >
                   Meus Projetos
                 </Typography>
@@ -82,7 +86,7 @@ function Header() {
                 <Typography
                   variant="h6"
                   color={theme.palette.neutral.main}
-                  sx={{"&:hover": {textDecoration: "underline"}}}
+                  sx={{ "&:hover": { textDecoration: "underline" } }}
                 >
                   Descobrir
                 </Typography>
@@ -90,8 +94,9 @@ function Header() {
             </Box>
           </Box>
           <Box sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <Avatar sx={{ width: 40, height: 40 }} src={user?.profileimage !== null ? user?.profileimage : undefined} alt={user?.fullname}/>
+            <Avatar sx={{ width: 40, height: 40 }} src={user?.profileimage !== null ? user?.profileimage : undefined} alt={user?.fullname} />
             <IconButton
+              onClick={toggleColorMode}
               sx={{
                 backgroundColor: theme.palette.primary.main,
                 color: theme.palette.neutral.main,
@@ -100,7 +105,7 @@ function Header() {
                 },
               }}
             >
-              <Notifications sx={{ color: theme.palette.neutral.main }} />
+              {colorMode === 'dark' ? <DarkModeIcon sx={{ color: theme.palette.neutral.main }} /> : <LightModeIcon sx={{ color: theme.palette.neutral.main }} />}
             </IconButton>
             <Button
               sx={{
