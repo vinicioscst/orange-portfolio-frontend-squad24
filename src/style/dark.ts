@@ -309,3 +309,46 @@ export const darkTheme: ThemeOptions = {
         },
     }
 }
+
+declare module '@mui/material/styles' {
+    interface PaletteColor {
+        60?: string,
+        70?: string,
+        80?: string,
+        90?: string,
+        100?: string,
+        110?: string,
+        120?: string,
+        130?: string,
+    }
+
+    interface SimplePaletteColorOptions {
+        60?: string,
+        70?: string,
+        80?: string,
+        90?: string,
+        100?: string,
+        110?: string,
+        120?: string,
+        130?: string,
+    }
+
+    interface Palette {
+        neutral: Palette['primary']
+    }
+
+    interface PaletteOptions {
+        neutral: PaletteOptions['primary']
+    }
+
+    interface BreakpointOverrides {
+        xxl: true
+    }
+}
+
+declare module '@mui/material/Button' {
+    interface ButtonPropsVariantOverrides {
+        primaryContained: true;
+        secondaryContained: true;
+    }
+}
