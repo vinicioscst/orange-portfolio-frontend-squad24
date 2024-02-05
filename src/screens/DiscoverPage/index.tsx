@@ -7,12 +7,15 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext/UserContext.tsx";
 import ProjectDetailModal from "../../components/ProjectDetailModal/index.tsx";
 import { useColorMode } from "../../style/ColorMode/ColorModeCoxtext.tsx";
+import DrawerProjectAdded from "../../components/DrawerProjectAdded/index.tsx";
+import ModalProjectAdded from "../../components/ModalProjectAdded/index.tsx";
 
 function DiscoverPage() {
   const [inputSearch, setInputSearch] = useState<string>("");
   const theme = useTheme();
   const [colorMode] = useColorMode();
   const isDesktop = useMediaQuery(theme.breakpoints.down("lg"));
+  const isBetweenTabletAndMobile = useMediaQuery(theme.breakpoints.down(448));
 
   const { getProjects, allProjects, user } = useContext(UserContext)
 
@@ -84,7 +87,7 @@ function DiscoverPage() {
             </Typography>
           </Box>
         )}
-        <ProjectDetailModal />
+        {isBetweenTabletAndMobile ? <DrawerProjectAdded /> : <ModalProjectAdded />}
       </Container>
     </>
   );
