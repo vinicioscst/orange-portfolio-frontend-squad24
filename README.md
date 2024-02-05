@@ -32,7 +32,9 @@ O Orange Portifólio é uma plataforma única que reúne os melhores talentos de
 Desenvolvida com React.js e utilizando a API desenvolvida em Node.js, Express e PostgreSQL, a aplicação oferece ótimo desempenho e fácil manutenção.
 Além da possibilidade de cadastrar e buscar projetos, incluímos algumas funcionalidades, como checkbox de requisitos de senha e darkmode.
 
-[Figma do projeto](https://www.figma.com/file/utDx59m5Opz1lDSN1J4r9I/Desafio---Programa-de-Forma%C3%A7%C3%A3o-5.0?type=design&node-id=171-2351&mode=design&t=e2CL8emjA2XPacJ9-0)
+  👉 [Figma do projeto](https://www.figma.com/file/utDx59m5Opz1lDSN1J4r9I/Desafio---Programa-de-Forma%C3%A7%C3%A3o-5.0?type=design&node-id=171-2351&mode=design&t=e2CL8emjA2XPacJ9-0)
+
+  👉 [Repositório da API](https://github.com/vinicioscst/orange-portfolio-backend-squad24)
 
 ## 2. Funcionalidades
 
