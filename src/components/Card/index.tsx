@@ -1,9 +1,10 @@
 import { Avatar, CardActions, CardContent, CardMedia, Chip, Card as MuiCard, Typography, useTheme } from '@mui/material/';
 import Grid from '@mui/material/Unstable_Grid2';
-import React from 'react';
+import React, { useContext } from 'react';
 import EditMenu from '../EditMenu';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import ProjectWithoutImage from '../../assets/project-without-image.svg'
+import { UserContext } from '../../context/UserContext/UserContext';
 
 type CardProps = {
     id: number;
@@ -15,12 +16,13 @@ type CardProps = {
     tags: string[] | null;
     handleEdit?: () => void;
     handleDelete?: (projectId: number) => void;
-    onClose: () => void;
 }
 
-function Card({ id, image, title, date, alt, avatar, tags, handleDelete, handleEdit, onClose }: CardProps) {
+function Card({ id, image, title, date, alt, avatar, tags, handleDelete, handleEdit }: CardProps) {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+    const {handleDetailProject} = useContext(UserContext)
+
     return (
         <MuiCard
             elevation={0}
@@ -38,7 +40,6 @@ function Card({ id, image, title, date, alt, avatar, tags, handleDelete, handleE
                     }}
                 >
                     <EditMenu
-                        onClose={onClose}
                         projectId={id}
                         handleDelete={() => handleDelete(id)}
                         handleEdit={handleEdit}
@@ -49,8 +50,10 @@ function Card({ id, image, title, date, alt, avatar, tags, handleDelete, handleE
                 sx={{
                     height: 258,
                     width: '100%',
-                    borderRadius: "0.25rem"
+                    borderRadius: "0.25rem",
+                    cursor: "pointer"
                 }}
+                onClick={() => handleDetailProject(id)}
                 image={image !== null && image !== undefined && image.trim() !== "" ? image : ProjectWithoutImage}
             />
 
