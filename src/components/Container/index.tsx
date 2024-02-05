@@ -13,7 +13,7 @@ export function Container({ children }: { children: React.ReactNode }) {
             sx={{ overflow: 'hidden' }}
             style={{
                 width: '100%',
-                height: '100%',
+                minHeight: 'calc(100dvh - 4rem)',
                 backgroundColor: colorMode === 'dark'
                     ? theme.palette.primary.main
                     : theme.palette.neutral.main
